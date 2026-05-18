@@ -1,0 +1,132 @@
+.question-container {
+    height: auto;
+    width: 50%;
+    z-index: 100;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(145deg,
+            rgba(68, 46, 72, 0.78),
+            rgba(42, 29, 49, 0.92));
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: fixed;
+    top: 20%;
+
+    padding: 1rem 1rem;
+
+
+}
+
+.question-number {
+    font-size: 14px;
+    color: #d7c8d8;
+    letter-spacing: 1px;
+    margin-bottom: 28px;
+}
+
+.question-title {
+    font-size: 1rem;
+    color: white;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 30px;
+}
+
+.choices-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 150px 150px;
+
+    gap: 18px;
+    padding: 0 0.5rem;
+
+}
+
+.choice-card {
+    overflow: hidden;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(225, 155, 255, 0.35);
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.choice-card:hover {
+    transform: translateY(-5px);
+
+    border-color: #d070ff;
+
+    box-shadow:
+        0 0 20px rgba(186, 97, 255, 0.25);
+}
+
+.choice-card img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    display: block;
+}
+
+.choice-text {
+    text-align: center;
+    padding: 14px;
+
+    color: white;
+    font-size: 18px;
+    font-weight: 400;
+
+    background:
+        linear-gradient(to bottom,
+            rgba(90, 57, 91, 0.8),
+            rgba(74, 45, 77, 0.95));
+}
+
+.button-group {
+    margin-top: 34px;
+
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+}
+
+.btn {
+    min-width: 180px;
+
+    padding: 15px 20px;
+
+    border-radius: 10px;
+    border: 1px solid #9c49ff;
+
+    background:
+        linear-gradient(180deg,
+            #24003f,
+            #160022);
+
+    color: white;
+
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 18px rgba(160, 73, 255, 0.4);
+
+    border-color: #c26fff;
+}

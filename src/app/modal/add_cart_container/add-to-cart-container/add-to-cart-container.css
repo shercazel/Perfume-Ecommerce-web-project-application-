@@ -1,0 +1,141 @@
+.addTocart {
+    position: fixed;
+    top: 110px;
+    right: 0%;
+    height: 420px;
+    width: 400px;
+    background-color: rgba(255, 0, 247, 0.041);
+    border: 1px solid #fea1d777;
+    z-index: 5;
+    backdrop-filter: blur(30px);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    row-gap: 0.1rem;
+
+     padding: 0.5rem 0rem;
+
+}
+
+div.cartbox {
+    width: 100%;
+}
+
+div.cartbox:nth-child(1) {
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0rem 1rem;
+}
+
+div.cartbox span {
+    color: var(--c2-color);
+    font-weight: 400;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+}
+
+div.cartbox:nth-child(2) {
+    display: flex;
+    flex-direction: row;
+    height: 50%;
+    gap: 10px;
+    padding: 1rem;
+}
+
+div.cartbox:nth-child(2) .imageProduct {
+    width: 40%;
+    overflow: hidden;
+}
+
+.imageProduct img {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+
+
+}
+
+
+
+
+div.cartbox:nth-child(2) .contentProduct {
+    width: 60%;
+}
+
+.contentProduct h4 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 0px;
+    color: var(--main-color);
+}
+
+.contentProduct p {
+    font-size: 1rem;
+    font-weight: 300;
+    letter-spacing: 0px;
+    color: rgba(255, 255, 255, 0.644);
+
+}
+
+.contentProduct span {
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0px;
+    color: rgba(255, 255, 255, 0.662);
+
+}
+
+
+div.cartbox:nth-child(3) {
+    height: 30%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 10px;
+}
+
+.cartbox button {
+    width: 80%;
+    position: relative;
+
+    padding: 0.8rem 0rem;
+    border-radius: 25px;
+    border: 1px solid var(--c2-color);
+
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+
+    cursor: pointer;
+    transition: 0.3s ease;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cartbox button:nth-child(1) {
+    background: var(--c5-color);
+}
+
+.check-btn {
+    background: #ff009530;
+    backdrop-filter: blur(10px);
+}
+
+.check-btn span {
+    color: white;
+}
