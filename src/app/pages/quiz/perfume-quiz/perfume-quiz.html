@@ -1,63 +1,90 @@
 <div class="question-container">
-
+    @if (!showResult) {
     <p class="question-number">
-        {{qContent[0].questionNumber}}
+        {{ currentQuestion.questionNumber }}
     </p>
 
     <h1 class="question-title">
-        {{qContent[0].questionTitle}}
+        {{ currentQuestion.questionTitle }}
     </h1>
 
-    <div class="choices-grid">
-
-        <div class="choice-card">
-            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop"
-                alt="">
-
-            <div class="choice-text">
-                Natural & Fresh
-            </div>
-        </div>
-
-        <div class="choice-card">
-            <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=1200&auto=format&fit=crop"
-                alt="">
-
-            <div class="choice-text">
-                Soft & Gentle
-            </div>
-        </div>
-
-        <div class="choice-card">
-            <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=1200&auto=format&fit=crop"
-                alt="">
-
-            <div class="choice-text">
-                Bold & Intense
-            </div>
-        </div>
-
-        <div class="choice-card">
-            <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1200&auto=format&fit=crop"
-                alt="">
-
-            <div class="choice-text">
-                Warm & Familiar
-            </div>
-        </div>
-
+    <div class="quiz-progress">
+        @for (question of qContent; track question.questionNumber; let index = $index) {
+        <span [class.active]="index <= currentQuestionIndex"></span>
+        }
     </div>
 
-    <div class="button-group">
+    <div class="choices-grid">
+        @for (choice of currentQuestion.choices; track choice.choiceText; let choiceIndex = $index) {
+        <button
+            class="choice-card"
+            type="button"
+            [class.selected]="selectedChoice === choiceIndex"
+            (click)="selectChoice(choiceIndex)"
+        >
+            <img [src]="choice.choiceImage" [alt]="choice.choiceText">
 
-        <button class="btn">
+            <span class="choice-text">
+                {{ choice.choiceText }}
+            </span>
+        </button>
+        }
+    </div>
+
+    @if (selectedChoice === null) {
+    <p class="helper-text">Choose one option before continuing.</p>
+    }
+
+    <div class="button-group">
+        <button
+            class="btn"
+            type="button"
+            [disabled]="currentQuestionIndex === 0"
+            (click)="previousQuestion()"
+        >
             PREVIOUS
         </button>
 
-        <button class="btn">
-            NEXT
+        <button
+            class="btn"
+            type="button"
+            [disabled]="selectedChoice === null"
+            (click)="nextQuestion()"
+        >
+            {{ currentQuestionIndex === qContent.length - 1 ? 'SEE RESULT' : 'NEXT' }}
         </button>
-
     </div>
+    } @else {
+    <div class="result-container">
+        <p class="question-number">YOUR SCENT MATCH</p>
 
+        <h1 class="question-title">
+            Recommended Perfume
+        </h1>
+
+        <div class="result-card">
+            <div class="result-image">
+                <span>VS</span>
+            </div>
+
+            <div class="result-content">
+                <h2>Result Container</h2>
+                <p>
+                    Placeholder muna ito for the recommended perfume. Pwede mo na
+                    i-polish later with real product image, scent notes, and CTA.
+                </p>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button class="btn" type="button" (click)="previousQuestion()">
+                BACK
+            </button>
+
+            <button class="btn" type="button" (click)="restartQuiz()">
+                RETAKE QUIZ
+            </button>
+        </div>
+    </div>
+    }
 </div>

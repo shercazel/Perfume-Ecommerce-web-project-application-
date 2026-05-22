@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { CommonModule, LowerCasePipe, UpperCasePipe } from '@angular/common';
+import { UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-home-page',
@@ -8,9 +8,137 @@ import { CommonModule, LowerCasePipe, UpperCasePipe } from '@angular/common';
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
 })
-export class HomePage {
+export class HomePage implements OnInit, OnDestroy {
 
   heroBackgroundImage = './heroSec.png';
+  activeShowcaseSlides = [0, 0, 0, 0, 0];
+  private autoSlideTimer?: ReturnType<typeof setInterval>;
+
+  showcaseSlides = [
+    [
+      {
+        image: 'assets/images/carouselImage/honeyPerf.svg',
+        alt: 'Honey perfume collection',
+      },
+      {
+        image: 'assets/images/carouselImage/perfBlue.png',
+        alt: 'Blue perfume collection',
+      },
+      {
+        image: 'assets/images/carouselImage/romanceImg.svg',
+        alt: 'Romance perfume collection',
+      },
+    ],
+    [
+      {
+        image: 'assets/images/carouselImage/perfBlue.png',
+        alt: 'Fresh perfume collection',
+      },
+      {
+        image: 'assets/images/carouselImage/romanceImg.svg',
+        alt: 'Romantic perfume collection',
+      },
+      {
+        image: 'assets/images/carouselImage/honeyPerf.svg',
+        alt: 'Sweet perfume collection',
+      },
+    ],
+    [
+      {
+        image: 'assets/images/carouselImage/romanceImg.svg',
+        alt: 'Romance fragrance bottle',
+      },
+      {
+        image: 'assets/images/carouselImage/honeyPerf.svg',
+        alt: 'Honey fragrance bottle',
+      },
+      {
+        image: 'assets/images/carouselImage/perfBlue.png',
+        alt: 'Blue fragrance bottle',
+      },
+    ],
+    [
+      {
+        image: 'assets/images/carouselImage/honeyPerf.svg',
+        alt: 'Sweet scent highlight',
+      },
+      {
+        image: 'assets/images/carouselImage/perfBlue.png',
+        alt: 'Clean scent highlight',
+      },
+      {
+        image: 'assets/images/carouselImage/romanceImg.svg',
+        alt: 'Romantic scent highlight',
+      },
+    ],
+    [
+      {
+        image: 'assets/images/carouselImage/perfBlue.png',
+        alt: 'Everyday perfume highlight',
+      },
+      {
+        image: 'assets/images/carouselImage/honeyPerf.svg',
+        alt: 'Warm perfume highlight',
+      },
+      {
+        image: 'assets/images/carouselImage/romanceImg.svg',
+        alt: 'Evening perfume highlight',
+      },
+    ],
+  ];
+
+  ngOnInit() {
+    this.startAutoSlide();
+  }
+
+  ngOnDestroy() {
+    this.stopAutoSlide();
+  }
+
+  setShowcaseSlide(showcaseIndex: number, slideIndex: number) {
+    this.activeShowcaseSlides[showcaseIndex] = slideIndex;
+    this.restartAutoSlide();
+  }
+
+  moveShowcaseSlide(showcaseIndex: number, direction: number) {
+    const slidesLength = this.showcaseSlides[showcaseIndex].length;
+    const nextSlide =
+      (this.activeShowcaseSlides[showcaseIndex] + direction + slidesLength) %
+      slidesLength;
+
+    this.setShowcaseSlide(showcaseIndex, nextSlide);
+  }
+
+  getShowcaseTransform(showcaseIndex: number) {
+    return `translateX(-${this.activeShowcaseSlides[showcaseIndex] * 100}%)`;
+  }
+
+  private startAutoSlide() {
+    this.autoSlideTimer = setInterval(() => {
+      this.showcaseSlides.forEach((_, showcaseIndex) => {
+        this.moveShowcaseSlideWithoutReset(showcaseIndex, 1);
+      });
+    }, 3000);
+  }
+
+  private stopAutoSlide() {
+    if (this.autoSlideTimer) {
+      clearInterval(this.autoSlideTimer);
+    }
+  }
+
+  private restartAutoSlide() {
+    this.stopAutoSlide();
+    this.startAutoSlide();
+  }
+
+  private moveShowcaseSlideWithoutReset(showcaseIndex: number, direction: number) {
+    const slidesLength = this.showcaseSlides[showcaseIndex].length;
+
+    this.activeShowcaseSlides[showcaseIndex] =
+      (this.activeShowcaseSlides[showcaseIndex] + direction + slidesLength) %
+      slidesLength;
+  }
 
   promCards = [
     {

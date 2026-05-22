@@ -99,107 +99,47 @@
 
     <section id="product-showcase" aria-label="Collections Showcase">
         <div id="showcase-container">
+            @for (showcase of showcaseSlides; track $index; let showcaseIndex = $index) {
             <div class="showcase">
+                <button
+                    class="slider-control prev-control"
+                    type="button"
+                    aria-label="Previous slide"
+                    (click)="moveShowcaseSlide(showcaseIndex, -1)"
+                >
+                    <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+                </button>
 
-                <div class="carousel-track">
-
+                <div class="carousel-track" [style.transform]="getShowcaseTransform(showcaseIndex)">
+                    @for (slide of showcase; track slide.image) {
                     <div class="card">
-                        <img src="assets/images/carouselImage/honeyPerf.svg" alt="Tease Fragrance 1">
+                        <img [src]="slide.image" [alt]="slide.alt">
                     </div>
-
-                    <div class="card">
-                        <img src="assets/images/carouselImage/perfBlue.png" alt="Tease Fragrance 2">
-                    </div>
-
-                    <div class="card">
-                        <img src="assets/images/carouselImage/romanceImg.svg" alt="Tease Fragrance 3">
-                    </div>
-
+                    }
                 </div>
 
-                <!-- dots -->
+                <button
+                    class="slider-control next-control"
+                    type="button"
+                    aria-label="Next slide"
+                    (click)="moveShowcaseSlide(showcaseIndex, 1)"
+                >
+                    <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                </button>
 
-
-            </div>
-            <div class="showcase">
-
-                <div class="carousel-track">
-                    <div class="card">
-                        <img src="assets/images/carouselImage/honeyPerf.svg" alt="Tease Fragrance 1">
-                    </div>
-
-                    <div class="card">
-                        <img src="assets/images/carouselImage/perfBlue.png" alt="Tease Fragrance 2">
-                    </div>
-
-                    <div class="card">
-                        <img src="assets/images/carouselImage/romanceImg.svg" alt="Tease Fragrance 3">
-                    </div>
-
+                <div class="dots" aria-label="Slide navigation">
+                    @for (slide of showcase; track slide.image; let slideIndex = $index) {
+                    <button
+                        class="dot"
+                        type="button"
+                        [class.active]="activeShowcaseSlides[showcaseIndex] === slideIndex"
+                        [attr.aria-label]="'Go to slide ' + (slideIndex + 1)"
+                        (click)="setShowcaseSlide(showcaseIndex, slideIndex)"
+                    ></button>
+                    }
                 </div>
-                <!-- dots -->
-
             </div>
-            <div class="showcase">
-
-                <div class="carousel-track">
-
-                    <div class="card">
-                        <img src="assets/images/carouselImage/honeyPerf.svg" alt="Tease Fragrance 1">
-                    </div>
-
-                    <div class="card">
-                        <img src="assets/images/carouselImage/perfBlue.png" alt="Tease Fragrance 2">
-                    </div>
-
-                    <div class="card">
-                        <img src="assets/images/carouselImage/romanceImg.svg" alt="Tease Fragrance 3">
-                    </div>
-
-                </div>
-                <!-- dots -->
-
-            </div>
-            <div class="showcase">
-
-                <div class="carousel-track">
-
-                    <div class="card">
-                        <img src="assets/images/carouselImage/honeyPerf.svg" alt="Tease Fragrance 1">
-                    </div>
-
-                    <div class="card">
-                        <img src="assets/images/carouselImage/perfBlue.png" alt="Tease Fragrance 2">
-                    </div>
-
-                    <div class="card">
-                        <img src="assets/images/carouselImage/romanceImg.svg" alt="Tease Fragrance 3">
-                    </div>
-
-                </div>
-                <!-- dots -->
-
-            </div>
-            <div class="showcase">
-
-                <div class="carousel-track">
-
-                    <div class="card">
-                        <img src="assets/images/carouselImage/honeyPerf.svg" alt="Tease Fragrance 1">
-                    </div>
-
-                    <div class="card">
-                        <img src="assets/images/carouselImage/perfBlue.png" alt="Tease Fragrance 2">
-                    </div>
-
-                    <div class="card">
-                        <img src="assets/images/carouselImage/romanceImg.svg" alt="Tease Fragrance 3">
-                    </div>
-
-                </div>
-                <!-- dots -->
-
-            </div>
+            }
         </div>
     </section>
 

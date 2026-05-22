@@ -406,30 +406,22 @@ main {
     box-shadow: 0 0 10px rgba(255, 180, 245, 0.2);
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(10px);
+    position: relative;
 
 }
 
 .carousel-track {
     display: flex;
-    overflow-x: auto;
-
-    scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
-
-    scrollbar-width: none;
-}
-
-.carousel-track::-webkit-scrollbar {
-    display: none;
-    /* Chrome, Safari, Edge */
+    height: 100%;
+    transition: transform 0.55s ease;
+    will-change: transform;
 }
 
 .card,
 .cardAura {
     flex: 0 0 100%;
-    scroll-snap-align: center;
-
-
+    min-width: 100%;
+    height: 100%;
 }
 
 .card img {
@@ -443,24 +435,61 @@ main {
 
 /* dots */
 .dots {
+    position: absolute;
+    left: 50%;
+    bottom: 14px;
+    z-index: 4;
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin-top: 1rem;
+    align-items: center;
+    gap: 7px;
+    transform: translateX(-50%);
 }
 
 .dot {
-    width: 10px;
-    height: 10px;
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border: 0;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.55);
     transition: 0.3s ease;
     cursor: pointer;
 }
 
 .dot.active {
-    width: 30px;
+    width: 22px;
     background: white;
+}
+
+.slider-control {
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+    width: 34px;
+    height: 34px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    background: rgba(7, 0, 33, 0.45);
+    color: white;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transform: translateY(-50%);
+    transition: 0.25s ease;
+}
+
+.slider-control:hover {
+    background: rgba(251, 130, 200, 0.8);
+    transform: translateY(-50%) scale(1.08);
+}
+
+.prev-control {
+    left: 12px;
+}
+
+.next-control {
+    right: 12px;
 }
 
 

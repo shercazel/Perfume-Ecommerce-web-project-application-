@@ -21,6 +21,8 @@ import { authGuard } from './guards/auth-guard';
 import { Login } from './auth/login/login/login';
 import { Signup } from './auth/signUp/signup/signup';
 import { ResetPassword } from './auth/resetPassword/reset-password/reset-password';
+import { AdminDashboard } from './pages/admin/admin-dashboard/admin-dashboard';
+import { AdminModulePage } from './pages/admin/admin-module-page/admin-module-page';
 
 export const routes: Routes = [
   {
@@ -121,5 +123,99 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminLayout,
+    children: [
+      {
+        path: '',
+        component: AdminDashboard,
+      },
+      {
+        path: 'products',
+        component: AdminModulePage,
+        data: {
+          title: 'Products',
+          description: 'Manage perfume products, prices, stocks, and product visibility.',
+        },
+      },
+      {
+        path: 'orders',
+        component: AdminModulePage,
+        data: {
+          title: 'Orders',
+          description: 'Track customer orders, statuses, payments, and fulfillment.',
+        },
+      },
+      {
+        path: 'users',
+        component: AdminModulePage,
+        data: {
+          title: 'Users',
+          description: 'View registered customers and account activity.',
+        },
+      },
+      {
+        path: 'categories',
+        component: AdminModulePage,
+        data: {
+          title: 'Categories',
+          description: 'Organize perfume collections, scent types, and category groups.',
+        },
+      },
+      {
+        path: 'banners',
+        component: AdminModulePage,
+        data: {
+          title: 'Banners',
+          description: 'Manage homepage banners, campaign images, and promotional displays.',
+        },
+      },
+      {
+        path: 'sales',
+        component: AdminModulePage,
+        data: {
+          title: 'Sales',
+          description: 'Review sales performance once orders start coming in.',
+        },
+      },
+      {
+        path: 'top-products',
+        component: AdminModulePage,
+        data: {
+          title: 'Top Products',
+          description: 'Monitor best-selling perfumes and product demand.',
+        },
+      },
+      {
+        path: 'user-trends',
+        component: AdminModulePage,
+        data: {
+          title: 'User Trends',
+          description: 'Analyze customer registrations and user growth over time.',
+        },
+      },
+      {
+        path: 'reports',
+        component: AdminModulePage,
+        data: {
+          title: 'Reports',
+          description: 'Generate summaries for sales, orders, users, and inventory.',
+        },
+      },
+      {
+        path: 'profile',
+        component: AdminModulePage,
+        data: {
+          title: 'Profile',
+          description: 'Manage admin profile information and account preferences.',
+        },
+      },
+      {
+        path: 'settings',
+        component: AdminModulePage,
+        data: {
+          title: 'Settings',
+          description: 'Configure admin panel behavior and system preferences.',
+        },
+      },
+    ],
   },
 ];
