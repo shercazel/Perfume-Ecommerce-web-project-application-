@@ -98,11 +98,11 @@ export const routes: Routes = [
       {
         path: 'showCart',
         component: AddToCartContainer,
+        canActivate: [authGuard],
       },
       {
         path: 'promoDiscount',
         component: PromoDiscount,
-        canActivate: [authGuard],
       },
     ],
   },
