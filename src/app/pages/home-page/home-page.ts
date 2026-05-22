@@ -10,12 +10,6 @@ import { CommonModule, LowerCasePipe, UpperCasePipe } from '@angular/common';
 })
 export class HomePage {
 
-
-
-
-
-
-
   heroBackgroundImage = './heroSec.png';
 
   promCards = [

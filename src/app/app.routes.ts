@@ -18,8 +18,9 @@ import { PerfumeQuiz } from './pages/quiz/perfume-quiz/perfume-quiz';
 import { PromoDiscount } from './pages/promo/promo-discount/promo-discount';
 import { CartProduct } from './pages/cart_product/cart-product/cart-product';
 import { authGuard } from './guards/auth-guard';
-import { Component } from '@angular/core';
 import { Login } from './auth/login/login/login';
+import { Signup } from './auth/signUp/signup/signup';
+import { ResetPassword } from './auth/resetPassword/reset-password/reset-password';
 
 export const routes: Routes = [
   {
@@ -106,8 +107,16 @@ export const routes: Routes = [
     ],
   },
   {
-    path: 'auth',
-    component: Login
+    path: 'login',
+    component: Login,
+  },
+  {
+    path: 'createAccount',
+    component: Signup,
+  },
+  {
+    path: 'resetPassword',
+    component: ResetPassword,
   },
   {
     path: 'admin',

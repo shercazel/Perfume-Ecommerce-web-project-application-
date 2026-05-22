@@ -1,50 +1,80 @@
-<section class="login-section hero-section">
+<section class="Main-container">
+  <div class="login-section">
 
-  <div class="hero-container login-container">
+    <!-- LEFT SIDE -->
+    <div class="left-panel">
 
-    <!-- LEFT HERO TEXT -->
-    <div class="hero-content login-hero">
+      <div class="decor decor-top"></div>
+      <div class="decor decor-circle"></div>
+      <div class="decor decor-small"></div>
 
-      <div class="hero-badge">
-        <span class="badge1">Secure Access</span>
-        <span class="badge2">System Login Portal</span>
+      <div class="left-content">
+        <h1>VOTRESCENT <br> start here</h1>
+        <p>Create an account to explore out collection</p>
       </div>
-
-      <h1 class="hero-heading">
-        Welcome Back <span>Explorer</span>
-      </h1>
-
-      <p class="hero-description">
-        Login to continue accessing your dashboard, records, and system features.
-      </p>
-
+      <div class="bottom-circle"></div>
     </div>
 
-    <!-- RIGHT LOGIN CARD -->
-    <div class="login-box">
+    <!-- RIGHT SIDE -->
+    <div class="right-panel">
 
-      <h2 class="login-title">Sign In</h2>
-      <p class="login-sub">Enter your credentials</p>
+      <div class="login-box">
 
-      <form>
-        <label>Email</label>
-        <input type="email" placeholder="you@example.com">
+        <div class="logo">
+          VS
+        </div>
 
-        <label>Password</label>
-        <input type="password" placeholder="••••••••">
+        <h2>Hello! Welcome back</h2>
 
-        <button class="btn-primary" type="submit">
-          <span class="heroBtnA">Login</span>
-          <span class="heroBtnB">Enter System <i>→</i></span>
-        </button>
-      </form>
+        <form (ngSubmit)="login()">
 
-      <div class="login-footer">
-        Forgot password?
+          <div class="input-group">
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your email address"
+              [(ngModel)]="email"
+              required
+            >
+          </div>
+
+          <div class="input-group">
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              [(ngModel)]="password"
+              required
+            >
+          </div>
+
+          @if (errorMessage) {
+          <p class="form-error">{{ errorMessage }}</p>
+          }
+
+          <div class="options">
+            <label>
+              <input type="checkbox">
+              Remember me
+            </label>
+
+            <a routerLink="/resetPassword">Reset Password?</a>
+          </div>
+
+          <button type="submit">Login</button>
+
+        </form>
+
+        <p class="signup-text">
+          Don't have an account?
+          <a routerLink="/createAccount">Create Account</a>
+        </p>
+
       </div>
 
     </div>
 
   </div>
-
 </section>
