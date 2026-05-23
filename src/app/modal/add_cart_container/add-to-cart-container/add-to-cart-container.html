@@ -1,0 +1,38 @@
+<div class="addTocart">
+    <div class="cartbox">
+        <span>Added to Cart
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </span>
+        <span>
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </span>
+    </div>
+    <div class="cartbox">
+        <div class="imageProduct">
+            <img src="assets/images/carouselImage/honeyPerf.svg" alt="Perfume Ni Sherwin">
+        </div>
+        <div class="contentProduct">
+            <h4>{{name}}</h4>
+            <p>eau de perfume</p>
+            <p>size</p>
+            <p>{{price | currency: 'PHP'}}</p>
+            <p>{{today | date: 'MM/dd/yyyy/a'}}</p>
+            <p>Discount: {{discount | percent}}</p>
+        </div>
+    </div>
+    <div class="cartbox">
+        <button class="view-cartBtn">
+            <span class="btn-text">
+                View the Cart (quantity)
+                <i class="fa-solid fa-arrow-right"></i>
+            </span>
+        </button>
+
+        <button class="check-btn">
+            <span class="btn-text">
+                Check Out
+                <i class="fa-solid fa-arrow-right"></i>
+            </span>
+        </button>
+    </div>
+</div>

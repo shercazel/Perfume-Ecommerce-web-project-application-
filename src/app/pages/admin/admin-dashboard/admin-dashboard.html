@@ -1,0 +1,147 @@
+<section class="metric-grid">
+  @for (stat of stats; track stat.label) {
+  <article class="metric-card">
+    <i class="fa-solid {{ stat.icon }}" aria-hidden="true"></i>
+    <div>
+      <p>{{ stat.label }}</p>
+      <h3>{{ stat.value }}</h3>
+      <span>{{ stat.trend }}</span>
+    </div>
+  </article>
+  }
+</section>
+
+<section class="dashboard-grid">
+  <article class="panel orders-panel">
+    <div class="panel-header">
+      <h3>Orders Overview</h3>
+      <button type="button">View All Orders</button>
+    </div>
+
+    <div class="filter-row">
+      @for (filter of orderFilters; track filter) {
+      <button type="button" [class.active]="filter === 'All'">{{ filter }}</button>
+      }
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Status</th>
+            <th>Total</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (orders.length === 0) {
+          <tr>
+            <td colspan="6" class="empty-cell">
+              No orders yet. New customer orders will appear here.
+            </td>
+          </tr>
+          }
+
+          @for (order of orders; track order.id) {
+          <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.customer }}</td>
+            <td>
+              <span class="status-pill" [class]="getStatusClass(order.status)">
+                {{ order.status }}
+              </span>
+            </td>
+            <td>{{ order.total }}</td>
+            <td>{{ order.date }}</td>
+            <td>
+              <button class="icon-btn" type="button">
+                <i class="fa-regular fa-eye" aria-hidden="true"></i>
+              </button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </article>
+
+  <article class="panel sales-panel">
+    <div class="panel-header">
+      <h3>Sales Overview</h3>
+      <button type="button">This Month <i class="fa-solid fa-chevron-down"></i></button>
+    </div>
+
+    <div class="line-chart">
+      <div class="chart-grid"></div>
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+        <polyline [attr.points]="getSalesPolyline()"></polyline>
+      </svg>
+      <div class="chart-labels">
+        <span>May 1</span>
+        <span>May 8</span>
+        <span>May 15</span>
+        <span>May 22</span>
+        <span>May 29</span>
+      </div>
+    </div>
+  </article>
+
+  <article class="panel products-panel">
+    <div class="panel-header">
+      <h3>Top Performing Products</h3>
+      <button type="button">View All</button>
+    </div>
+
+    <div class="product-list">
+      @if (topProducts.length === 0) {
+      <div class="empty-panel">
+        No product sales yet.
+      </div>
+      }
+
+      @for (product of topProducts; track product.name; let index = $index) {
+      <div class="product-row">
+        <span class="rank">{{ product.rank }}</span>
+        <img [src]="getProductImage(index)" [alt]="product.name">
+        <strong>{{ product.name }}</strong>
+        <span>{{ product.sales }}</span>
+      </div>
+      }
+    </div>
+  </article>
+
+  <article class="panel trends-panel">
+    <div class="panel-header">
+      <h3>User Registration Trends</h3>
+      <button type="button">This Month <i class="fa-solid fa-chevron-down"></i></button>
+    </div>
+
+    <div class="bar-chart">
+      @for (bar of trendBars; track $index; let index = $index) {
+      <div class="bar-item">
+        <span class="bar" [style.height]="getTrendHeight(bar)"></span>
+        <small>{{ trendLabels[index] }}</small>
+      </div>
+      }
+    </div>
+  </article>
+
+  <article class="panel donut-panel">
+    <h3>Order Status Distribution</h3>
+
+    <div class="donut-content">
+      <div class="donut-chart empty"></div>
+      <div class="legend">
+        @for (item of statusLegend; track item.label) {
+        <span>
+          <i [style.background]="item.color"></i>
+          {{ item.label }}
+        </span>
+        }
+      </div>
+    </div>
+  </article>
+</section>

@@ -1,0 +1,119 @@
+<section class="Main-container">
+
+  <div class="signup-section">
+
+    <!-- LEFT SIDE -->
+    <div class="left-panel">
+
+      <div class="decor decor-top"></div>
+      <div class="decor decor-circle"></div>
+      <div class="decor decor-small"></div>
+
+      <div class="left-content">
+        <span class="tag">Luxury Fragrance</span>
+
+        <h1>Create Your <br> Account</h1>
+
+        <p>
+          Join VOTRESCENT and discover premium scents crafted for elegance and style.
+        </p>
+      </div>
+
+      <div class="bottom-circle"></div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="right-panel">
+
+      <div class="signup-box">
+
+        <div class="logo">
+          VS
+        </div>
+
+        <h2>Create Account</h2>
+
+        <form (ngSubmit)="createAccount()">
+
+          <div class="input-grid">
+
+            <div class="input-group">
+              <label>First Name</label>
+              <input
+                type="text"
+                name="firstName"
+                placeholder="Enter first name"
+                [(ngModel)]="firstName"
+                required
+              >
+            </div>
+
+            <div class="input-group">
+              <label>Last Name</label>
+              <input
+                type="text"
+                name="lastName"
+                placeholder="Enter last name"
+                [(ngModel)]="lastName"
+                required
+              >
+            </div>
+
+          </div>
+
+          <div class="input-group">
+            <label>Email Address</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              [(ngModel)]="email"
+              required
+            >
+          </div>
+
+          <div class="input-group">
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Create password"
+              [(ngModel)]="password"
+              required
+            >
+          </div>
+
+          <div class="input-group">
+            <label>Confirm Password</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm password"
+              [(ngModel)]="confirmPassword"
+              required
+            >
+          </div>
+
+          @if (errorMessage) {
+          <p class="form-error">{{ errorMessage }}</p>
+          }
+
+          <button type="submit" [disabled]="isLoading">
+            {{ isLoading ? 'Creating...' : 'Create Account' }}
+          </button>
+
+        </form>
+
+        <p class="signin-text">
+          Already have an account?
+          <a routerLink="/login">Sign In</a>
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

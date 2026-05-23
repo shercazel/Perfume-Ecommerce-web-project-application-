@@ -1,0 +1,48 @@
+<section class="admin-shell">
+  <aside class="admin-sidebar">
+    <div class="admin-brand">
+      <span class="brand-icon">
+        <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
+      </span>
+      <div>
+        <h1>Votrescent</h1>
+        <p>Admin Panel</p>
+      </div>
+    </div>
+
+    @for (group of navGroups; track group.title) {
+    <div class="nav-group">
+      <p>{{ group.title }}</p>
+      <nav aria-label="Admin navigation">
+        @for (item of group.items; track item.label) {
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: item.route === '/admin' }"
+        >
+          <i class="fa-solid {{ item.icon }}" aria-hidden="true"></i>
+          <span>{{ item.label }}</span>
+        </a>
+        }
+      </nav>
+    </div>
+    }
+  </aside>
+
+  <main class="admin-dashboard">
+    <header class="admin-header">
+      <div class="page-title">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        <h2>Admin</h2>
+      </div>
+
+      <div class="admin-tools">
+        <i class="fa-regular fa-bell" aria-hidden="true"></i>
+        <span class="admin-avatar"></span>
+        <button type="button">Admin <i class="fa-solid fa-chevron-down"></i></button>
+      </div>
+    </header>
+
+    <router-outlet></router-outlet>
+  </main>
+</section>
