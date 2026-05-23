@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "id": "a52c10f5-3815-4c31-8fb3-91c0ea48e079",
+      "firstName": "shercas",
+      "lastName": "castillo",
+      "email": "swer@gmail.com",
+      "passwordHash": "ca7acd99065a00c7a5a8d5ab98b18ea4360de1d7e62f9e9c69b6ed308fd5d90f93fbd1a60b6f49ac762d2eea93da928f37296c67472236e6e59aa9ceb4fe1f33",
+      "passwordSalt": "7a5501ca431aa5e3cc68dfb8ceee4e6e",
+      "createdAt": "2026-05-23T06:00:04.619Z"
+    }
+  ]
+}

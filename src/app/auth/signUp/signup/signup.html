@@ -99,8 +99,8 @@
           <p class="form-error">{{ errorMessage }}</p>
           }
 
-          <button type="submit">
-            Create Account
+          <button type="submit" [disabled]="isLoading">
+            {{ isLoading ? 'Creating...' : 'Create Account' }}
           </button>
 
         </form>

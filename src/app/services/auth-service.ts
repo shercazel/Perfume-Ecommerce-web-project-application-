@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
 
 export interface UserAccount {
   firstName: string;
@@ -7,53 +9,39 @@ export interface UserAccount {
   password: string;
 }
 
+export interface CurrentUser {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
+interface AuthResponse {
+  token: string;
+  user: CurrentUser;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly usersKey = 'votrescent_users';
+  private readonly apiUrl = 'http://localhost:3000/api/auth';
   private readonly tokenKey = 'token';
   private readonly currentUserKey = 'currentUser';
 
-  createAccount(account: UserAccount): boolean {
-    const users = this.getUsers();
-    const email = account.email.trim().toLowerCase();
+  constructor(private http: HttpClient) {}
 
-    if (users.some((user) => user.email === email)) {
-      return false;
-    }
-
-    users.push({
-      ...account,
-      email,
-    });
-
-    localStorage.setItem(this.usersKey, JSON.stringify(users));
-    return true;
+  createAccount(account: UserAccount): Observable<{ message: string; user: CurrentUser }> {
+    return this.http.post<{ message: string; user: CurrentUser }>(`${this.apiUrl}/signup`, account);
   }
 
-  login(email: string, password: string): boolean {
-    const normalizedEmail = email.trim().toLowerCase();
-    const user = this.getUsers().find(
-      (account) =>
-        account.email === normalizedEmail && account.password === password
-    );
-
-    if (!user) {
-      return false;
-    }
-
-    localStorage.setItem(this.tokenKey, `local-token-${Date.now()}`);
-    localStorage.setItem(
-      this.currentUserKey,
-      JSON.stringify({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
+  login(email: string, password: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, { email, password }).pipe(
+      tap((response) => {
+        localStorage.setItem(this.tokenKey, response.token);
+        localStorage.setItem(this.currentUserKey, JSON.stringify(response.user));
       })
     );
-
-    return true;
   }
 
   logout() {
@@ -65,17 +53,7 @@ export class AuthService {
     return !!localStorage.getItem(this.tokenKey);
   }
 
-  private getUsers(): UserAccount[] {
-    const savedUsers = localStorage.getItem(this.usersKey);
-
-    if (!savedUsers) {
-      return [];
-    }
-
-    try {
-      return JSON.parse(savedUsers) as UserAccount[];
-    } catch {
-      return [];
-    }
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
   }
 }

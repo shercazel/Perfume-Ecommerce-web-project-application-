@@ -63,7 +63,9 @@
             <a routerLink="/resetPassword">Reset Password?</a>
           </div>
 
-          <button type="submit">Login</button>
+          <button type="submit" [disabled]="isLoading">
+            {{ isLoading ? 'Logging in...' : 'Login' }}
+          </button>
 
         </form>
 
