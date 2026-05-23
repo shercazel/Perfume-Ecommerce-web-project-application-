@@ -1,0 +1,82 @@
+<section class="Main-container">
+  <div class="login-section">
+
+    <!-- LEFT SIDE -->
+    <div class="left-panel">
+
+      <div class="decor decor-top"></div>
+      <div class="decor decor-circle"></div>
+      <div class="decor decor-small"></div>
+
+      <div class="left-content">
+        <h1>VOTRESCENT <br> start here</h1>
+        <p>Create an account to explore out collection</p>
+      </div>
+      <div class="bottom-circle"></div>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="right-panel">
+
+      <div class="login-box">
+
+        <div class="logo">
+          VS
+        </div>
+
+        <h2>Hello! Welcome back</h2>
+
+        <form (ngSubmit)="login()">
+
+          <div class="input-group">
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your email address"
+              [(ngModel)]="email"
+              required
+            >
+          </div>
+
+          <div class="input-group">
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              [(ngModel)]="password"
+              required
+            >
+          </div>
+
+          @if (errorMessage) {
+          <p class="form-error">{{ errorMessage }}</p>
+          }
+
+          <div class="options">
+            <label>
+              <input type="checkbox">
+              Remember me
+            </label>
+
+            <a routerLink="/resetPassword">Reset Password?</a>
+          </div>
+
+          <button type="submit" [disabled]="isLoading">
+            {{ isLoading ? 'Logging in...' : 'Login' }}
+          </button>
+
+        </form>
+
+        <p class="signup-text">
+          Don't have an account?
+          <a routerLink="/createAccount">Create Account</a>
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>

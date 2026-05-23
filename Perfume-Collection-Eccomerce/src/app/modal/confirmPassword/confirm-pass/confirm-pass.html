@@ -1,0 +1,23 @@
+<div class="modal-overlay">
+  <div class="confirm-modal">
+    <div class="modal-icon">
+      <i class="fa-solid fa-check"></i>
+    </div>
+
+    <h2>Password Updated</h2>
+
+    <p>
+      Your password has been successfully updated. You can now login using your
+      new password.
+    </p>
+
+    <div class="modal-buttons">
+      <button class="cancel-btn" type="button" (click)="closeModal.emit()">
+        Cancel
+      </button>
+      <button class="confirm-btn" type="button" routerLink="/login">
+        Back to Login
+      </button>
+    </div>
+  </div>
+</div>

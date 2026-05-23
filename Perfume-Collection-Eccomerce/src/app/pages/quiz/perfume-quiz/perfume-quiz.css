@@ -1,0 +1,233 @@
+.question-container {
+    height: auto;
+    width: 50%;
+    z-index: 100;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(145deg,
+            rgba(68, 46, 72, 0.78),
+            rgba(42, 29, 49, 0.92));
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: fixed;
+    top: 20%;
+
+    padding: 1rem 1rem;
+
+
+}
+
+.question-number {
+    font-size: 14px;
+    color: #d7c8d8;
+    letter-spacing: 1px;
+    margin-bottom: 28px;
+}
+
+.question-title {
+    font-size: 1rem;
+    color: white;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 30px;
+}
+
+.choices-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 150px 150px;
+
+    gap: 18px;
+    padding: 0 0.5rem;
+
+}
+
+.choice-card {
+    overflow: hidden;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(225, 155, 255, 0.35);
+    cursor: pointer;
+    transition: 0.3s ease;
+    padding: 0;
+    text-align: left;
+}
+
+.choice-card:hover,
+.choice-card.selected {
+    transform: translateY(-5px);
+
+    border-color: #d070ff;
+
+    box-shadow:
+        0 0 20px rgba(186, 97, 255, 0.25);
+}
+
+.choice-card.selected {
+    outline: 2px solid #f2b6ff;
+    outline-offset: 3px;
+}
+
+.choice-card img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    display: block;
+}
+
+.choice-text {
+    display: block;
+    text-align: center;
+    padding: 14px;
+
+    color: white;
+    font-size: 18px;
+    font-weight: 400;
+
+    background:
+        linear-gradient(to bottom,
+            rgba(90, 57, 91, 0.8),
+            rgba(74, 45, 77, 0.95));
+}
+
+.quiz-progress {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.quiz-progress span {
+    height: 5px;
+    flex: 1;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.quiz-progress span.active {
+    background: linear-gradient(90deg, #FB82C8, #B786FD);
+}
+
+.helper-text {
+    margin: 18px 0 0;
+    color: #d7c8d8;
+    font-size: 13px;
+    text-align: center;
+}
+
+.button-group {
+    margin-top: 34px;
+
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+}
+
+.btn {
+    min-width: 180px;
+
+    padding: 15px 20px;
+
+    border-radius: 10px;
+    border: 1px solid #9c49ff;
+
+    background:
+        linear-gradient(180deg,
+            #24003f,
+            #160022);
+
+    color: white;
+
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 18px rgba(160, 73, 255, 0.4);
+
+    border-color: #c26fff;
+}
+
+.btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+    transform: none;
+    box-shadow: none;
+}
+
+.result-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.result-card {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 20px;
+    align-items: center;
+    border: 1px solid rgba(225, 155, 255, 0.35);
+    border-radius: 16px;
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.result-image {
+    min-height: 180px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(145deg, #24003f, #7b2ad6);
+    color: white;
+    font-size: 44px;
+    font-weight: 700;
+}
+
+.result-content h2 {
+    color: white;
+    margin-bottom: 12px;
+    font-size: 1.4rem;
+}
+
+.result-content p {
+    color: #d7c8d8;
+    line-height: 1.7;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 900px) {
+    .question-container {
+        width: 90%;
+        top: 12%;
+    }
+
+    .result-card {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .choices-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, 130px);
+    }
+
+    .btn {
+        min-width: 130px;
+    }
+}
