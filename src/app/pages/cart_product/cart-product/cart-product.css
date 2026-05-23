@@ -92,6 +92,24 @@
     font-weight: 600;
 }
 
+.price-group {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.product-old-price {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.85rem;
+    text-decoration: line-through;
+}
+
+.line-total {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+}
+
 .checkout-link {
     width: fit-content;
 
@@ -125,6 +143,11 @@
     cursor: pointer;
 
     font-size: 1rem;
+}
+
+.qty-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.35;
 }
 
 .qty-value {
@@ -192,6 +215,27 @@
 
 .checkout-btn:hover {
     background: #bb57ff;
+}
+
+.checkout-btn:disabled {
+    border-color: rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.45);
+    cursor: not-allowed;
+}
+
+.checkout-btn:disabled:hover {
+    background: transparent;
+}
+
+.checkout-message {
+    color: #f0b8ff;
+    font-size: 0.95rem;
+    margin-top: 1rem;
+}
+
+.empty-cart {
+    color: rgba(255, 255, 255, 0.75);
+    padding: 2rem 0;
 }
 
 /* ========================= */

@@ -1,208 +1,31 @@
-<!-- Product Grid -->
 <div class="product-grid">
-
-    <!-- CARD -->
-    <div class="card">
-        <span class="badge">20% OFF</span>
+    <div class="card" *ngFor="let product of allCollection">
+        <span class="badge">{{product.discountRate ?? 0 | percent}} OFF</span>
         <span class="heart"><i class="fa-solid fa-heart"></i></span>
 
-        <div class="img-box"></div>
+        <div class="img-box">
+            <img [src]="product.imagePath" [alt]="product.perfName">
+        </div>
 
         <div class="info">
-            <h4>{{allCollection[0].perfName}}</h4>
-            <p>{{allCollection[0].description}}</p>
+            <h4>{{product.perfName}}</h4>
+            <p>{{product.description}}</p>
+            <p>{{product.size}}</p>
             <div class="price">
-                <span class="new">₱79.00</span>
-                <span class="old">₱99.00</span>
+                <span class="new">{{product.price | currency: 'PHP'}}</span>
+                <span class="old">{{product.originalPrice | currency: 'PHP'}}</span>
             </div>
-            <button class="cart-btn"> <i class="fa-solid fa-cart-shopping"></i> Add to Cart</button>
+            <button class="cart-btn" type="button" (click)="addToCart(product)">
+                <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+            </button>
         </div>
     </div>
-
-    <!-- Repeat cards -->
-    <div class="card">
-        <span class="badge">20% OFF</span>
-        <span class="heart"><i class="fa-solid fa-heart"></i></span>
-
-        <div class="img-box"></div>
-        <div class="info">
-            <h4>PERFUME NAME</h4>
-            <p>short intro
-                this is a short description
-            </p>
-            <div class="price">
-                <span class="new">₱79.00</span>
-                <span class="old">₱99.00</span>
-            </div>
-            <button class="cart-btn"> <i class="fa-solid fa-cart-shopping"></i> Add to Cart</button>
-
-        </div>
-    </div>
-
-
-    <div class="card">
-        <span class="badge">20% OFF</span>
-        <span class="heart"><i class="fa-solid fa-heart"></i></span>
-
-        <div class="img-box"></div>
-        <div class="info">
-            <h4>PERFUME NAME</h4>
-            <p>short intro
-
-            </p>
-            <div class="price">
-                <span class="new">₱79.00</span>
-                <span class="old">₱99.00</span>
-            </div>
-            <button class="cart-btn"> <i class="fa-solid fa-cart-shopping"></i> Add to Cart</button>
-
-
-        </div>
-    </div>
-
-    <div class="card">
-        <span class="badge">20% OFF</span>
-        <span class="heart"><i class="fa-solid fa-heart"></i></span>
-
-        <div class="img-box"></div>
-        <div class="info">
-            <h4>PERFUME NAME</h4>
-            <p>short intro</p>
-            <div class="price">
-                <span class="new">₱79.00</span>
-                <span class="old">₱99.00</span>
-            </div>
-            <button class="cart-btn"> <i class="fa-solid fa-cart-shopping"></i> Add to Cart</button>
-
-
-        </div>
-    </div>
-    <div class="card">
-        <span class="badge">20% OFF</span>
-        <span class="heart"><i class="fa-solid fa-heart"></i></span>
-
-        <div class="img-box"></div>
-        <div class="info">
-            <h4>PERFUME NAME</h4>
-            <p>short intro</p>
-            <div class="price">
-                <span class="new">₱79.00</span>
-                <span class="old">₱99.00</span>
-            </div>
-            <button class="cart-btn"> <i class="fa-solid fa-cart-shopping"></i> Add to Cart</button>
-
-
-        </div>
-    </div>
-    <div class="card">
-        <span class="badge">20% OFF</span>
-        <span class="heart"><i class="fa-solid fa-heart"></i></span>
-
-        <div class="img-box"></div>
-        <div class="info">
-            <h4>PERFUME NAME</h4>
-            <p>short intro</p>
-            <div class="price">
-                <span class="new">₱79.00</span>
-                <span class="old">₱99.00</span>
-            </div>
-            <button class="cart-btn"> <i class="fa-solid fa-cart-shopping"></i> Add to Cart</button>
-
-
-        </div>
-    </div>
-    <div class="card">
-        <span class="badge">20% OFF</span>
-        <span class="heart"><i class="fa-solid fa-heart"></i></span>
-
-        <div class="img-box"></div>
-        <div class="info">
-            <h4>PERFUME NAME</h4>
-            <p>short intro</p>
-            <div class="price">
-                <span class="new">₱79.00</span>
-                <span class="old">₱99.00</span>
-            </div>
-            <button class="cart-btn"> <i class="fa-solid fa-cart-shopping"></i> Add to Cart</button>
-
-
-        </div>
-    </div>
-    <div class="card">
-        <span class="badge">20% OFF</span>
-        <span class="heart"><i class="fa-solid fa-heart"></i></span>
-
-        <div class="img-box"></div>
-        <div class="info">
-            <h4>PERFUME NAME</h4>
-            <p>short intro</p>
-            <div class="price">
-                <span class="new">₱79.00</span>
-                <span class="old">₱99.00</span>
-            </div>
-            <button class="cart-btn"> <i class="fa-solid fa-cart-shopping"></i> Add to Cart</button>
-
-
-        </div>
-    </div>
-    <div class="card">
-        <span class="badge">20% OFF</span>
-        <span class="heart"><i class="fa-solid fa-heart"></i></span>
-
-        <div class="img-box"></div>
-        <div class="info">
-            <h4>PERFUME NAME</h4>
-            <p>short intro</p>
-            <div class="price">
-                <span class="new">₱79.00</span>
-                <span class="old">₱99.00</span>
-            </div>
-            <button class="cart-btn"> <i class="fa-solid fa-cart-shopping"></i> Add to Cart</button>
-
-
-        </div>
-    </div>
-    <div class="card">
-        <span class="badge">20% OFF</span>
-        <span class="heart"><i class="fa-solid fa-heart"></i></span>
-
-        <div class="img-box"></div>
-        <div class="info">
-            <h4>PERFUME NAME</h4>
-            <p>short intro</p>
-            <div class="price">
-                <span class="new">₱79.00</span>
-                <span class="old">₱99.00</span>
-            </div>
-            <button class="cart-btn"> <i class="fa-solid fa-cart-shopping"></i> Add to Cart</button>
-
-        </div>
-    </div>
-    <div class="card">
-        <span class="badge">20% OFF</span>
-        <span class="heart"><i class="fa-solid fa-heart"></i></span>
-
-        <div class="img-box"></div>
-        <div class="info">
-            <h4>PERFUME NAME</h4>
-            <p>short intro</p>
-            <div class="price">
-                <span class="new">₱79.00</span>
-                <span class="old">₱99.00</span>
-            </div>
-            <button class="cart-btn"> <i class="fa-solid fa-cart-shopping"></i> Add to Cart</button>
-
-
-        </div>
-    </div>
-
 </div>
 
-<!-- Pagination -->
 <div class="pagination">
-    <button>‹</button>
+    <button>&lsaquo;</button>
     <button class="active">1</button>
     <button>2</button>
     <button>3</button>
-    <button>›</button>
+    <button>&rsaquo;</button>
 </div>

@@ -4,10 +4,8 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-collection',
-  imports: [RouterLink,RouterOutlet,],
+  imports: [RouterLink, RouterOutlet],
   templateUrl: './collection.html',
   styleUrl: './collection.css',
 })
-export class Collection {
-
-}
+export class Collection {}

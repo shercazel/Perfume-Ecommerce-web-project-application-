@@ -1,34 +1,46 @@
-<div class="addTocart">
+<div class="addTocart" [class.open]="cartService.cartPreviewOpen()">
     <div class="cartbox">
         <span>Added to Cart
             <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
         </span>
-        <span>
+        <button class="close-btn" type="button" aria-label="Close cart preview" (click)="closePreview()">
             <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-        </span>
+        </button>
     </div>
-    <div class="cartbox">
+
+    <div class="cartbox" *ngIf="cartService.latestItem() as item; else emptyCart">
         <div class="imageProduct">
-            <img src="assets/images/carouselImage/honeyPerf.svg" alt="Perfume Ni Sherwin">
+            <img [src]="item.imagePath" [alt]="item.perfName">
         </div>
         <div class="contentProduct">
-            <h4>{{name}}</h4>
-            <p>eau de perfume</p>
-            <p>size</p>
-            <p>{{price | currency: 'PHP'}}</p>
+            <h4>{{item.perfName}}</h4>
+            <p>{{item.description}}</p>
+            <p>{{item.size}}</p>
+            <p>Quantity: {{item.quantity}}</p>
+            <p>Price: {{item.price | currency: 'PHP'}}</p>
+            <p *ngIf="item.originalPrice">Basic Price: {{item.originalPrice | currency: 'PHP'}}</p>
+            <p *ngIf="item.discountRate">Discount: {{item.discountRate | percent}}</p>
+            <p *ngIf="item.discountRate">Less: {{cartService.itemDiscountTotal(item) | currency: 'PHP'}}</p>
+            <p>Total: {{cartService.itemTotal(item) | currency: 'PHP'}}</p>
             <p>{{today | date: 'MM/dd/yyyy/a'}}</p>
-            <p>Discount: {{discount | percent}}</p>
         </div>
     </div>
+
+    <ng-template #emptyCart>
+        <div class="cartbox empty-state">
+            <p>No item in your cart yet.</p>
+        </div>
+    </ng-template>
+
     <div class="cartbox">
-        <button class="view-cartBtn">
+        <button class="view-cartBtn" type="button" routerLink="/cartProduct">
             <span class="btn-text">
-                View the Cart (quantity)
+                View the Cart ({{cartService.totalQuantity()}})
                 <i class="fa-solid fa-arrow-right"></i>
             </span>
         </button>
 
-        <button class="check-btn">
+        <button class="check-btn" type="button" routerLink="/cartProduct">
             <span class="btn-text">
                 Check Out
                 <i class="fa-solid fa-arrow-right"></i>

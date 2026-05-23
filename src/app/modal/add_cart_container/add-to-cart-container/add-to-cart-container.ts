@@ -1,17 +1,21 @@
-import { CurrencyPipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { DatePipe } from '@angular/common';
-import { PercentPipe } from '@angular/common';
+import { CurrencyPipe, DatePipe, NgIf, PercentPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { CartService } from '../../../services/cart-service';
 
 @Component({
   selector: 'app-add-to-cart-container',
-  imports: [CurrencyPipe, DatePipe, PercentPipe],
+  standalone: true,
+  imports: [CurrencyPipe, DatePipe, NgIf, PercentPipe, RouterLink],
   templateUrl: './add-to-cart-container.html',
-  styleUrl: './add-to-cart-container.css',
+  styleUrls: ['./add-to-cart-container.css'],
 })
 export class AddToCartContainer {
-  price = '129.00';
-  name = 'Perfume Name';
   today = new Date();
-  discount = 0.2;
+
+  constructor(public readonly cartService: CartService) {}
+
+  closePreview() {
+    this.cartService.hideCartPreview();
+  }
 }
