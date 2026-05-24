@@ -11,3 +11,255 @@
           ╵     [32m~~~~~~~~[0m
 
 [39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgIf is not used within the template of CollectionProductGrid[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/collection-product-grid/collection-product-grid.ts:12:33:
+[37m      12 │   imports: [CurrencyPipe, NgFor, [32mNgIf[37m, PercentPipe],
+         ╵                                  [32m~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1185: Merge conflict marker encountered.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:0:0:
+[37m      0 │ [32m[37m
+        ╵ [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1185: Merge conflict marker encountered.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:6:0:
+[37m      6 │ [32m=======[37m
+        ╵ [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1185: Merge conflict marker encountered.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:9:0:
+[37m      9 │ [32m>>>>>>>[37m 092f09eb2e1c6049bc4fc7dc407bdba7c9c9faab
+        ╵ [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:13:12:
+[37m      13 │   imports: [[32mCollectionProductGrid[37m],
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~[0m
+
+  Unknown reference.
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:13:12:
+[37m      13 │   imports: [[32mCollectionProductGrid[37m],
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'CollectionProductGrid'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:13:12:
+[37m      13 │   imports: [[32mCollectionProductGrid[37m],
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1185: Merge conflict marker encountered.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:17:0:
+[37m      17 │ [32m<<<<<<<[37m HEAD
+         ╵ [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1185: Merge conflict marker encountered.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:43:0:
+[37m      43 │ [32m=======[37m
+         ╵ [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1185: Merge conflict marker encountered.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:47:0:
+[37m      47 │ [32m>>>>>>>[37m 092f09eb2e1c6049bc4fc7dc407bdba7c9c9faab
+         ╵ [32m~~~~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgIf is not used within the template of CollectionProductGrid[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/collection-product-grid/collection-product-grid.ts:12:33:
+[37m      12 │   imports: [CurrencyPipe, NgFor, [32mNgIf[37m, PercentPipe],
+         ╵                                  [32m~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1185: Merge conflict marker encountered.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:0:0:
+[37m      0 │ [32m[37m
+        ╵ [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1185: Merge conflict marker encountered.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:6:0:
+[37m      6 │ [32m=======[37m
+        ╵ [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1185: Merge conflict marker encountered.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:9:0:
+[37m      9 │ [32m>>>>>>>[37m 092f09eb2e1c6049bc4fc7dc407bdba7c9c9faab
+        ╵ [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:13:12:
+[37m      13 │   imports: [[32mCollectionProductGrid[37m],
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~[0m
+
+  Unknown reference.
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:13:12:
+[37m      13 │   imports: [[32mCollectionProductGrid[37m],
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'CollectionProductGrid'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:13:12:
+[37m      13 │   imports: [[32mCollectionProductGrid[37m],
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1185: Merge conflict marker encountered.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:17:0:
+[37m      17 │ [32m<<<<<<<[37m HEAD
+         ╵ [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1185: Merge conflict marker encountered.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:43:0:
+[37m      43 │ [32m=======[37m
+         ╵ [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1185: Merge conflict marker encountered.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:47:0:
+[37m      47 │ [32m>>>>>>>[37m 092f09eb2e1c6049bc4fc7dc407bdba7c9c9faab
+         ╵ [32m~~~~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgIf is not used within the template of CollectionProductGrid[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/collection-product-grid/collection-product-grid.ts:12:33:
+[37m      12 │   imports: [CurrencyPipe, NgFor, [32mNgIf[37m, PercentPipe],
+         ╵                                  [32m~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1185: Merge conflict marker encountered.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:0:0:
+[37m      0 │ [32m[37m
+        ╵ [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1185: Merge conflict marker encountered.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:6:0:
+[37m      6 │ [32m=======[37m
+        ╵ [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1185: Merge conflict marker encountered.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:9:0:
+[37m      9 │ [32m>>>>>>>[37m 092f09eb2e1c6049bc4fc7dc407bdba7c9c9faab
+        ╵ [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:13:12:
+[37m      13 │   imports: [[32mCollectionProductGrid[37m],
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~[0m
+
+  Unknown reference.
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:13:12:
+[37m      13 │   imports: [[32mCollectionProductGrid[37m],
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'CollectionProductGrid'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:13:12:
+[37m      13 │   imports: [[32mCollectionProductGrid[37m],
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1185: Merge conflict marker encountered.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:17:0:
+[37m      17 │ [32m<<<<<<<[37m HEAD
+         ╵ [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1185: Merge conflict marker encountered.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:43:0:
+[37m      43 │ [32m=======[37m
+         ╵ [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1185: Merge conflict marker encountered.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/all_collection/all-collection/all-collection.ts:47:0:
+[37m      47 │ [32m>>>>>>>[37m 092f09eb2e1c6049bc4fc7dc407bdba7c9c9faab
+         ╵ [32m~~~~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgIf is not used within the template of CollectionProductGrid[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/collection-product-grid/collection-product-grid.ts:12:33:
+[37m      12 │   imports: [CurrencyPipe, NgFor, [32mNgIf[37m, PercentPipe],
+         ╵                                  [32m~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './pages/collection/all_collection/all-collection/all-collection' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.routes.ts:8:30:
+[37m      8 │ ...ion } from [32m'./pages/collection/all_collection/all-collection/all[37m...
+        ╵               [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "./pages/collection/all_collection/all-collection/all-collection"[0m
+
+    src/app/app.routes.ts:7:30:
+[37m      7 │ ...ion } from [32m'./pages/collection/all_collection/all-collection/all[37m...
+        ╵               [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgIf is not used within the template of CollectionProductGrid[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/collection-product-grid/collection-product-grid.ts:12:33:
+[37m      12 │   imports: [CurrencyPipe, NgFor, [32mNgIf[37m, PercentPipe],
+         ╵                                  [32m~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './pages/collection/all_collection/all-collection/all-collection' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.routes.ts:8:30:
+[37m      8 │ ...ion } from [32m'./pages/collection/all_collection/all-collection/all[37m...
+        ╵               [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "./pages/collection/all_collection/all-collection/all-collection"[0m
+
+    src/app/app.routes.ts:7:30:
+[37m      7 │ ...ion } from [32m'./pages/collection/all_collection/all-collection/all[37m...
+        ╵               [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
