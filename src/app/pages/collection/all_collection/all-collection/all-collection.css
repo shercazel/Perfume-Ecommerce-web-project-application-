@@ -1,4 +1,9 @@
-/* GRID */
+.collection-page {
+    width: auto;
+    height: auto;
+
+}
+
 .product-grid {
     padding: 5rem;
     width: 100%;
@@ -50,7 +55,7 @@
     mask-composite: exclude;
 }
 
-.card > * {
+.card>* {
     position: relative;
     z-index: 1;
 }
@@ -101,7 +106,7 @@
 .img-box img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 /* text */
@@ -187,4 +192,19 @@
         row-gap: 30px;
     }
 
+}
+
+@media (min-width: 1280px) {
+    .collection-page {
+        width: 1280px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .product-grid {
+        width: 1300px;
+    }
 }

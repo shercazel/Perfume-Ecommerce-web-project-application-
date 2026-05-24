@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { finalize, TimeoutError } from 'rxjs';
 import { AuthService } from '../../../services/auth-service';
 
 @Component({
@@ -22,9 +23,16 @@ export class Signup {
   constructor(private authService: AuthService, private router: Router) {}
 
   createAccount() {
+    if (this.isLoading) return;
+
     this.errorMessage = '';
 
-    if (!this.firstName.trim() || !this.lastName.trim() || !this.email.trim() || !this.password) {
+    if (
+      !this.firstName.trim() ||
+      !this.lastName.trim() ||
+      !this.email.trim() ||
+      !this.password
+    ) {
       this.errorMessage = 'Please complete all required fields.';
       return;
     }
@@ -40,18 +48,31 @@ export class Signup {
       lastName: this.lastName,
       email: this.email,
       password: this.password,
-    }).subscribe({
+    }).pipe(finalize(() => {
+      this.isLoading = false;
+    })).subscribe({
       next: () => {
         this.router.navigate(['/login']);
       },
-      error: (error: HttpErrorResponse) => {
-        this.errorMessage = error.error?.message || 'Unable to create account. Please try again.';
-        this.isLoading = false;
-      },
-      complete: () => {
-        this.isLoading = false;
+      error: (error: HttpErrorResponse | TimeoutError) => {
+        this.errorMessage = this.getErrorMessage(
+          error,
+          'Unable to create account. Please try again.'
+        );
       },
     });
+  }
+
+  private getErrorMessage(error: HttpErrorResponse | TimeoutError, fallbackMessage: string): string {
+    if (error instanceof TimeoutError) {
+      return 'Create account is taking too long. Please check if the server is running on localhost:3000.';
+    }
+
+    if (error.status === 0) {
+      return 'Cannot connect to the server. Please start the API server on localhost:3000.';
+    }
+
+    return error.error?.message || fallbackMessage;
   }
 
 }

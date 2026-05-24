@@ -73,26 +73,28 @@
             >
           </div>
 
-          <div class="input-group">
-            <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Create password"
-              [(ngModel)]="password"
-              required
-            >
-          </div>
+          <div class="input-grid">
+            <div class="input-group">
+              <label>Password</label>
+              <input
+                type="password"
+                name="password"
+                placeholder="Create password"
+                [(ngModel)]="password"
+                required
+              >
+            </div>
 
-          <div class="input-group">
-            <label>Confirm Password</label>
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm password"
-              [(ngModel)]="confirmPassword"
-              required
-            >
+            <div class="input-group">
+              <label>Confirm Password</label>
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm password"
+                [(ngModel)]="confirmPassword"
+                required
+              >
+            </div>
           </div>
 
           @if (errorMessage) {

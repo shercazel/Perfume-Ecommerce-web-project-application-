@@ -15,6 +15,8 @@
     justify-content: space-between;
     gap: 5rem;
     flex-wrap: wrap;
+    flex-direction: column;
+    /* mobile default */
 }
 
 /* LEFT */
@@ -40,7 +42,8 @@
 }
 
 .footer-brand h2 {
-    font-size: 3rem;
+    font-size: 2.3rem;
+    /* mobile default */
     line-height: 1.2;
     margin-bottom: 1.5rem;
     color: var(--c2-color);
@@ -63,18 +66,14 @@
 
 .footer-buttons button {
     position: relative;
-
     padding: 1rem 1.8rem;
     border-radius: 7px;
     border: none;
-
     font-size: 0.95rem;
     font-weight: 600;
     letter-spacing: 0.5px;
-
     cursor: pointer;
     transition: 0.3s ease;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -124,7 +123,8 @@
 /* RIGHT */
 .footer-links-wrapper {
     display: flex;
-    gap: 5rem;
+    gap: 3rem;
+    /* mobile default */
     flex-wrap: wrap;
 }
 
@@ -154,15 +154,16 @@
     border-top: 1px solid #1a1a1a;
     margin-top: 5rem;
     padding-top: 2rem;
-
     display: flex;
     justify-content: space-between;
     gap: 2rem;
     flex-wrap: wrap;
+    flex-direction: column;
+    /* mobile default */
 }
 
 .footer-bottom p {
-    color: var(--c2-color)
+    color: var(--c2-color);
 }
 
 .footer-payment {
@@ -180,22 +181,38 @@
     font-size: .9rem;
 }
 
-/* RESPONSIVE */
-@media (max-width: 900px) {
+/* RESPONSIVE — min-width (mobile-first) */
+@media (min-width: 501px) {
+    /* styles that were in max-width: 500px go here as resets if needed */
+}
 
+@media (min-width: 901px) {
     .footer-container {
-        flex-direction: column;
+        flex-direction: row;
     }
 
     .footer-links-wrapper {
-        gap: 3rem;
+        gap: 5rem;
     }
 
     .footer-brand h2 {
-        font-size: 2.3rem;
+        font-size: 3rem;
     }
 
     .footer-bottom {
-        flex-direction: column;
+        flex-direction: row;
+    }
+}
+
+@media (min-width: 1280px) {
+    .footer {
+        justify-content: center;
+        align-items: center;
+    }
+     .footer-container {
+        justify-content: center;
+    }
+    .footer-bottom{
+        justify-content: center;
     }
 }

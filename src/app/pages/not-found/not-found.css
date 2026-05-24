@@ -1,0 +1,57 @@
+.not-found-page {
+  min-height: 72svh;
+  display: grid;
+  place-items: center;
+  padding: 9rem 1.5rem 5rem;
+  background:
+    radial-gradient(circle at 74% 18%, rgba(217, 111, 212, 0.28), transparent 30%),
+    linear-gradient(90deg, #050014 0%, #17002d 55%, #310022 100%);
+  color: white;
+  text-align: center;
+}
+
+.not-found-content {
+  width: min(560px, 100%);
+}
+
+.not-found-content p {
+  color: #f2b6ff;
+  font-size: clamp(4rem, 14vw, 8rem);
+  font-weight: 900;
+  line-height: 0.9;
+  margin: 0 0 1rem;
+}
+
+.not-found-content h1 {
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  margin: 0 0 0.8rem;
+}
+
+.not-found-content span {
+  color: rgba(255, 255, 255, 0.72);
+  display: block;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.not-found-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 2rem;
+}
+
+.not-found-actions a {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: white;
+  font-weight: 800;
+  padding: 0.85rem 1.15rem;
+  text-decoration: none;
+}
+
+.not-found-actions a:first-child {
+  background: #bb57ff;
+  border-color: #bb57ff;
+}

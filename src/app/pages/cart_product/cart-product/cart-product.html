@@ -7,7 +7,16 @@
                 Your cart is empty.
             </div>
 
+            <label class="select-all-row" *ngIf="cartService.cartItems().length > 0">
+                <input type="checkbox" [checked]="allItemsSelected" (change)="toggleAllItems()">
+                Select all items
+            </label>
+
             <article class="cart-card" *ngFor="let item of cartService.cartItems()">
+                <label class="item-select" [attr.aria-label]="'Select ' + item.perfName">
+                    <input type="checkbox" [checked]="isSelected(item)" (change)="toggleItemSelection(item)">
+                </label>
+
                 <img [src]="item.imagePath" [alt]="item.perfName" class="product-image">
 
                 <div class="product-details">
@@ -32,8 +41,8 @@
                         </div>
                     </div>
 
-                    <button class="checkout-link" type="button">
-                        Checkout
+                    <button class="checkout-link" type="button" (click)="checkoutItem(item)">
+                        Checkout this item
                     </button>
 
                     <div class="quantity-wrapper">
@@ -62,18 +71,23 @@
 
             <ng-container *ngIf="checkoutStep === 'cart'">
                 <div class="summary-row">
+                    <span>Selected Items</span>
+                    <span>{{selectedItems.length}}</span>
+                </div>
+
+                <div class="summary-row">
                     <span>Basic Price</span>
-                    <span>{{cartService.originalSubtotal() | currency: 'PHP'}}</span>
+                    <span>{{selectedOriginalSubtotal | currency: 'PHP'}}</span>
                 </div>
 
                 <div class="summary-row">
                     <span>Discount</span>
-                    <span>-{{cartService.discountTotal() | currency: 'PHP'}}</span>
+                    <span>-{{selectedDiscountTotal | currency: 'PHP'}}</span>
                 </div>
 
                 <div class="summary-row">
                     <span>Subtotal</span>
-                    <span>{{cartService.subtotal() | currency: 'PHP'}}</span>
+                    <span>{{selectedSubtotal | currency: 'PHP'}}</span>
                 </div>
 
                 <div class="summary-row">
@@ -85,7 +99,7 @@
 
                 <div class="summary-row total">
                     <span>Total</span>
-                    <span>{{cartService.total() | currency: 'PHP'}}</span>
+                    <span>{{selectedTotal | currency: 'PHP'}}</span>
                 </div>
 
                 <p class="checkout-message" *ngIf="checkoutMessage">
@@ -95,10 +109,10 @@
                 <button
                     class="checkout-btn"
                     type="button"
-                    [disabled]="cartService.cartItems().length === 0"
+                    [disabled]="cartService.cartItems().length === 0 || selectedItems.length === 0"
                     (click)="startCheckout()"
                 >
-                    Proceed to Checkout
+                    Proceed to Checkout Selected
                 </button>
             </ng-container>
 
@@ -140,6 +154,14 @@
             </form>
 
             <div class="confirmation-panel" *ngIf="checkoutStep === 'confirmation'">
+                <div class="checkout-items">
+                    <h3>Selected Items</h3>
+                    <div class="checkout-item-row" *ngFor="let item of selectedItems">
+                        <span>{{item.perfName}} x {{item.quantity}}</span>
+                        <span>{{itemTotal(item) | currency: 'PHP'}}</span>
+                    </div>
+                </div>
+                <div class="summary-divider"></div>
                 <div class="summary-row">
                     <span>Name</span>
                     <span>{{customer.name}}</span>
@@ -159,7 +181,7 @@
                 <div class="summary-divider"></div>
                 <div class="summary-row total">
                     <span>Total</span>
-                    <span>{{cartService.total() | currency: 'PHP'}}</span>
+                    <span>{{selectedTotal | currency: 'PHP'}}</span>
                 </div>
 
                 <button class="checkout-btn secondary" type="button" (click)="backToDetails()">

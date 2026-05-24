@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @if (errorMessage) {
 <p class="collection-error">{{errorMessage}}</p>
 }
@@ -6,30 +7,38 @@
     <div class="card" *ngFor="let product of allCollection">
         <span class="badge">{{product.discountRate ?? 0 | percent}} OFF</span>
         <span class="heart"><i class="fa-solid fa-heart"></i></span>
+=======
+<section class="collection-page">
+    <div class="product-grid">
+        <div class="card" *ngFor="let product of allCollection">
+            <span class="badge">{{product.discountRate ?? 0 | percent}} OFF</span>
+            <span class="heart"><i class="fa-solid fa-heart"></i></span>
+>>>>>>> 40b6d332aec0162550b627198b541a1301a7b004
 
-        <div class="img-box">
-            <img [src]="product.imagePath" [alt]="product.perfName">
-        </div>
-
-        <div class="info">
-            <h4>{{product.perfName}}</h4>
-            <p>{{product.description}}</p>
-            <p>{{product.size}}</p>
-            <div class="price">
-                <span class="new">{{product.price | currency: 'PHP'}}</span>
-                <span class="old">{{product.originalPrice | currency: 'PHP'}}</span>
+            <div class="img-box">
+                <img [src]="product.imagePath" [alt]="product.perfName">
             </div>
-            <button class="cart-btn" type="button" (click)="addToCart(product)">
-                <i class="fa-solid fa-cart-shopping"></i> Add to Cart
-            </button>
+
+            <div class="info">
+                <h4>{{product.perfName}}</h4>
+                <p>{{product.description}}</p>
+                <p>{{product.size}}</p>
+                <div class="price">
+                    <span class="new">{{product.price | currency: 'PHP'}}</span>
+                    <span class="old">{{product.originalPrice | currency: 'PHP'}}</span>
+                </div>
+                <button class="cart-btn" type="button" (click)="addToCart(product)">
+                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                </button>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="pagination">
-    <button>&lsaquo;</button>
-    <button class="active">1</button>
-    <button>2</button>
-    <button>3</button>
-    <button>&rsaquo;</button>
-</div>
+    <div class="pagination">
+        <button>&lsaquo;</button>
+        <button class="active">1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>&rsaquo;</button>
+    </div>
+</section>
