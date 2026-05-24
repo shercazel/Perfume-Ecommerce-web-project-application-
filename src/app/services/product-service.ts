@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { CartProductItem } from './cart-service';
+import { apiUrl } from './api-url';
 
 interface ApiProduct {
   id: number;
@@ -18,7 +19,7 @@ interface ApiProduct {
   providedIn: 'root',
 })
 export class ProductService {
-  private readonly apiUrl = 'http://localhost:3000/api/products';
+  private readonly apiUrl = apiUrl('/api/products');
   private readonly fallbackImage = 'assets/images/carouselImage/perfBlue.png';
 
   constructor(private readonly http: HttpClient) {}

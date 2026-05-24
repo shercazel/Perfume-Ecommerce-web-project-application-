@@ -5,17 +5,25 @@ const {
   createUserAccount,
   getLocations,
   getProducts,
+  getUserCart,
   loginUser,
   resetUserPassword,
+  saveUserCart,
   testConnection,
   updateUserProfile,
 } = require('../databse');
 
 const PORT = 3000;
 
+function getAllowedOrigin(request) {
+  const origin = request.headers.origin;
+
+  return origin || 'http://localhost:4200';
+}
+
 function sendJson(response, statusCode, payload) {
   response.writeHead(statusCode, {
-    'Access-Control-Allow-Origin': 'http://localhost:4200',
+    'Access-Control-Allow-Origin': response.allowedOrigin || 'http://localhost:4200',
     'Access-Control-Allow-Methods': 'GET,POST,PUT,OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Content-Type': 'application/json',
@@ -198,7 +206,47 @@ async function handleCreateOrder(request, response) {
   });
 }
 
+async function handleGetCart(request, response) {
+  const url = new URL(request.url, `http://${request.headers.host}`);
+  const userId = url.searchParams.get('userId');
+
+  if (!userId || !Number.isFinite(Number(userId))) {
+    sendJson(response, 400, { message: 'A valid user ID is required.' });
+    return;
+  }
+
+  sendJson(response, 200, { items: await getUserCart(Number(userId)) });
+}
+
+async function handleSaveCart(request, response) {
+  const cart = await readBody(request);
+
+  if (!cart.userId || !Number.isFinite(Number(cart.userId)) || !Array.isArray(cart.items)) {
+    sendJson(response, 400, { message: 'A valid user ID and cart items are required.' });
+    return;
+  }
+
+  const invalidItem = cart.items.some(
+    (item) =>
+      !item?.id ||
+      !String(item.name || item.perfName || '').trim() ||
+      !Number.isFinite(Number(item.quantity)) ||
+      Number(item.quantity) < 0 ||
+      !Number.isFinite(Number(item.price)) ||
+      Number(item.price) <= 0,
+  );
+
+  if (invalidItem) {
+    sendJson(response, 400, { message: 'One or more cart items are missing valid product details.' });
+    return;
+  }
+
+  sendJson(response, 200, { items: await saveUserCart(Number(cart.userId), cart.items) });
+}
+
 const server = http.createServer(async (request, response) => {
+  response.allowedOrigin = getAllowedOrigin(request);
+
   if (request.method === 'OPTIONS') {
     sendJson(response, 204, {});
     return;
@@ -237,6 +285,16 @@ const server = http.createServer(async (request, response) => {
 
     if (request.method === 'GET' && request.url === '/api/products') {
       sendJson(response, 200, await getProducts());
+      return;
+    }
+
+    if (request.method === 'GET' && request.url.startsWith('/api/cart')) {
+      await handleGetCart(request, response);
+      return;
+    }
+
+    if (request.method === 'PUT' && request.url === '/api/cart') {
+      await handleSaveCart(request, response);
       return;
     }
 

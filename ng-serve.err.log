@@ -263,3 +263,52 @@
         ╵               [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 
 [39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgIf is not used within the template of CollectionProductGrid[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/collection-product-grid/collection-product-grid.ts:12:33:
+[37m      12 │   imports: [CurrencyPipe, NgFor, [32mNgIf[37m, PercentPipe],
+         ╵                                  [32m~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgIf is not used within the template of CollectionProductGrid[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/collection-product-grid/collection-product-grid.ts:12:33:
+[37m      12 │   imports: [CurrencyPipe, NgFor, [32mNgIf[37m, PercentPipe],
+         ╵                                  [32m~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgIf is not used within the template of CollectionProductGrid[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/collection-product-grid/collection-product-grid.ts:12:33:
+[37m      12 │   imports: [CurrencyPipe, NgFor, [32mNgIf[37m, PercentPipe],
+         ╵                                  [32m~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgIf is not used within the template of CollectionProductGrid[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/collection-product-grid/collection-product-grid.ts:12:33:
+[37m      12 │   imports: [CurrencyPipe, NgFor, [32mNgIf[37m, PercentPipe],
+         ╵                                  [32m~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgIf is not used within the template of CollectionProductGrid[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/collection-product-grid/collection-product-grid.ts:12:33:
+[37m      12 │   imports: [CurrencyPipe, NgFor, [32mNgIf[37m, PercentPipe],
+         ╵                                  [32m~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgIf is not used within the template of CollectionProductGrid[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/collection-product-grid/collection-product-grid.ts:12:33:
+[37m      12 │   imports: [CurrencyPipe, NgFor, [32mNgIf[37m, PercentPipe],
+         ╵                                  [32m~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgIf is not used within the template of CollectionProductGrid[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/collection/collection-product-grid/collection-product-grid.ts:12:33:
+[37m      12 │   imports: [CurrencyPipe, NgFor, [32mNgIf[37m, PercentPipe],
+         ╵                                  [32m~~~~[0m
+
+[39m[22m

@@ -31,6 +31,16 @@ async function province(provinceId = 20) {
   return queryDatabase('SELECT * FROM provinces WHERE province_id = ?', [provinceId]);
 }
 
+async function ensureUserInformationNameColumns() {
+  await queryDatabase(`
+    IF COL_LENGTH('user_informations', 'first_name') IS NULL
+      ALTER TABLE user_informations ADD first_name VARCHAR(50) NULL;
+
+    IF COL_LENGTH('user_informations', 'last_name') IS NULL
+      ALTER TABLE user_informations ADD last_name VARCHAR(50) NULL;
+  `);
+}
+
 function hashPassword(password) {
   return crypto.createHash('sha256').update(String(password)).digest('hex');
 }
@@ -59,6 +69,8 @@ const accountSelect = `
     ua.username,
     ua.password,
     COALESCE(ui.email, ua.username) AS email,
+    COALESCE(ui.first_name, '') AS firstName,
+    COALESCE(ui.last_name, '') AS lastName,
     COALESCE(ui.address, '') AS address,
     ui.city_id AS cityId,
     c.city_name AS cityName,
@@ -83,6 +95,8 @@ const accountByIdSelect = `
     ua.username,
     ua.password,
     COALESCE(ui.email, ua.username) AS email,
+    COALESCE(ui.first_name, '') AS firstName,
+    COALESCE(ui.last_name, '') AS lastName,
     COALESCE(ui.address, '') AS address,
     ui.city_id AS cityId,
     c.city_name AS cityName,
@@ -114,8 +128,8 @@ function mapAccount(row) {
 
   return {
     id: row.id,
-    firstName: name.firstName,
-    lastName: name.lastName,
+    firstName: row.firstName || name.firstName,
+    lastName: row.lastName || name.lastName,
     email: row.email,
     address: row.address,
     cityId: row.cityId,
@@ -130,6 +144,7 @@ function mapAccount(row) {
 }
 
 async function findUserByEmail(emailOrUsername) {
+  await ensureUserInformationNameColumns();
   const users = await queryDatabase(accountSelect, [emailOrUsername, emailOrUsername]);
   return users.length ? mapAccount(users[0]) : null;
 }
@@ -144,7 +159,7 @@ async function createUserAccount({ firstName, lastName, email, password }) {
     };
   }
 
-  const username = `${String(firstName).trim()} ${String(lastName).trim()}`.trim();
+  const username = String(email).trim();
   const customerRoleId = 2;
   const activeStatusId = 1;
   const createdAccounts = await queryDatabase(
@@ -160,8 +175,19 @@ async function createUserAccount({ firstName, lastName, email, password }) {
 
   await queryDatabase(
     `
-      INSERT INTO user_informations (user_id, email, address, city_id, province_id, phone_no)
+      INSERT INTO user_informations (
+        user_id,
+        email,
+        first_name,
+        last_name,
+        address,
+        city_id,
+        province_id,
+        phone_no
+      )
       VALUES (
+        ?,
+        ?,
         ?,
         ?,
         ?,
@@ -170,7 +196,7 @@ async function createUserAccount({ firstName, lastName, email, password }) {
         ?
       )
     `,
-    [userId, email, 'Not provided', 'Not provided']
+    [userId, email, String(firstName).trim(), String(lastName).trim(), 'Not provided', 'Not provided']
   );
 
   return {
@@ -259,6 +285,8 @@ async function resetUserPassword(emailOrUsername, password) {
 }
 
 async function updateUserProfile(userId, profile) {
+  await ensureUserInformationNameColumns();
+
   const firstName = String(profile.firstName || '').trim();
   const lastName = String(profile.lastName || '').trim();
   const email = String(profile.email || '').trim();
@@ -267,7 +295,7 @@ async function updateUserProfile(userId, profile) {
   const newPassword = String(profile.newPassword || '').trim();
   const cityId = profile.cityId ? Number(profile.cityId) : null;
   const provinceId = profile.provinceId ? Number(profile.provinceId) : null;
-  const username = `${firstName} ${lastName}`.trim();
+  const username = email;
 
   await queryDatabase('UPDATE user_accounts SET username = ? WHERE user_id = ?', [username, userId]);
 
@@ -285,6 +313,8 @@ async function updateUserProfile(userId, profile) {
         UPDATE user_informations
         SET
           email = ?,
+          first_name = ?,
+          last_name = ?,
           address = ?,
           city_id = COALESCE(?, city_id),
           province_id = COALESCE(?, province_id),
@@ -293,8 +323,19 @@ async function updateUserProfile(userId, profile) {
       END
       ELSE
       BEGIN
-        INSERT INTO user_informations (user_id, email, address, city_id, province_id, phone_no)
+        INSERT INTO user_informations (
+          user_id,
+          email,
+          first_name,
+          last_name,
+          address,
+          city_id,
+          province_id,
+          phone_no
+        )
         VALUES (
+          ?,
+          ?,
           ?,
           ?,
           ?,
@@ -307,6 +348,8 @@ async function updateUserProfile(userId, profile) {
     [
       userId,
       email,
+      firstName,
+      lastName,
       address,
       cityId,
       provinceId,
@@ -314,6 +357,8 @@ async function updateUserProfile(userId, profile) {
       userId,
       userId,
       email,
+      firstName,
+      lastName,
       address,
       cityId,
       provinceId,
@@ -502,6 +547,94 @@ async function resolveOrderProduct(item) {
   return createPlaceholderProduct({ ...item, name: productName });
 }
 
+async function ensureUserCart(userId) {
+  await queryDatabase(
+    `
+      IF NOT EXISTS (SELECT 1 FROM carts WHERE user_id = ?)
+        INSERT INTO carts (user_id) VALUES (?);
+    `,
+    [userId, userId]
+  );
+
+  const rows = await queryDatabase(
+    'SELECT TOP 1 cart_id AS id FROM carts WHERE user_id = ? ORDER BY cart_id',
+    [userId]
+  );
+
+  return rows[0].id;
+}
+
+async function getUserCart(userId) {
+  const cartId = await ensureUserCart(Number(userId));
+
+  const rows = await queryDatabase(
+    `
+      SELECT
+        p.product_id AS id,
+        p.product_image AS imagePath,
+        p.product_name AS perfName,
+        p.product_description AS description,
+        bs.size_value AS size,
+        p.price,
+        ci.quantity
+      FROM cart_items ci
+      INNER JOIN products p ON p.product_id = ci.product_id
+      LEFT JOIN bottle_sizes bs ON bs.size_id = p.size_id
+      WHERE ci.cart_id = ?
+      ORDER BY p.product_name
+    `,
+    [cartId]
+  );
+
+  return rows.map((row) => ({
+    id: String(row.id),
+    perfName: row.perfName,
+    description: row.description,
+    imagePath: row.imagePath || 'assets/images/carouselImage/perfBlue.png',
+    size: row.size ? `${row.size}mL` : 'Size unavailable',
+    price: Number(row.price),
+    originalPrice: Number(row.price),
+    discountRate: 0,
+    quantity: Number(row.quantity),
+    addedAt: new Date().toISOString(),
+  }));
+}
+
+async function saveUserCart(userId, items) {
+  const cartId = await ensureUserCart(Number(userId));
+  const cartItemsByProduct = new Map();
+
+  for (const item of Array.isArray(items) ? items : []) {
+    const quantity = Math.max(Number(item.quantity || 0), 0);
+
+    if (quantity <= 0) {
+      continue;
+    }
+
+    const productId = await resolveOrderProduct({
+      ...item,
+      name: item.name || item.perfName,
+      image: item.image || item.imagePath,
+    });
+    const existingQuantity = cartItemsByProduct.get(productId) || 0;
+    cartItemsByProduct.set(productId, existingQuantity + quantity);
+  }
+
+  await queryDatabase('DELETE FROM cart_items WHERE cart_id = ?', [cartId]);
+
+  for (const [productId, quantity] of cartItemsByProduct.entries()) {
+    await queryDatabase(
+      `
+        INSERT INTO cart_items (cart_id, product_id, quantity)
+        VALUES (?, ?, ?)
+      `,
+      [cartId, productId, quantity]
+    );
+  }
+
+  return getUserCart(userId);
+}
+
 async function createOrder(order) {
   const items = Array.isArray(order.items) ? order.items : [];
   const subtotal = items.reduce(
@@ -614,8 +747,10 @@ module.exports = {
   findUserByEmail,
   getLocations,
   getProducts,
+  getUserCart,
   loginUser,
   resetUserPassword,
+  saveUserCart,
   testConnection,
   updateUserProfile,
 };

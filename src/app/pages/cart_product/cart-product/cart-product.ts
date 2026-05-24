@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, CurrentUser, LocationOption } from '../../../services/auth-service';
 import { CartItem, CartService } from '../../../services/cart-service';
+import { apiUrl } from '../../../services/api-url';
 
 type CheckoutStep = 'cart' | 'details' | 'confirmation' | 'finished';
 
@@ -44,7 +45,7 @@ export class CartProduct implements OnInit {
   orderReference = '';
   isSubmittingOrder = false;
   selectedItemIds = new Set<string>();
-  private readonly ordersApiUrl = 'http://localhost:3000/api/orders';
+  private readonly ordersApiUrl = apiUrl('/api/orders');
   readonly contactPattern = '^(09\\d{9}|\\+639\\d{9})$';
   private readonly fullNamePattern =
     /^(?=.{1,80}$)(?=\S+\s+\S+)(?:\p{L}+(?:[.-]\p{L}+)*\.?|Jr\.?|Sr\.?|III|IV|V)(?:\s+(?:\p{L}+(?:[.-]\p{L}+)*\.?|Jr\.?|Sr\.?|III|IV|V))+$/u;

@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, signal } from '@angular/core';
+import { apiUrl } from './api-url';
 
 export interface CartProductItem {
   id: string;
@@ -20,7 +22,10 @@ export interface CartItem extends CartProductItem {
   providedIn: 'root',
 })
 export class CartService {
-  private readonly storageKey = 'votrescent-cart-items';
+  private readonly baseStorageKey = 'votrescent-cart-items';
+  private readonly cartApiUrl = apiUrl('/api/cart');
+  private activeUserId = this.getCurrentUserId();
+  private activeStorageKey = this.getStorageKeyForCurrentUser();
   private readonly cartItemsSignal = signal<CartItem[]>(this.loadCartItems());
   private readonly cartPreviewOpenSignal = signal(false);
 
@@ -41,6 +46,25 @@ export class CartService {
   );
   readonly discountTotal = computed(() => this.originalSubtotal() - this.subtotal());
   readonly total = computed(() => this.subtotal());
+
+  constructor(private readonly http: HttpClient) {
+    if (this.activeUserId) {
+      this.loadDatabaseCart(this.activeUserId);
+    }
+  }
+
+  useUserCart(userId?: string | number | null) {
+    this.activeUserId = this.normalizeUserId(userId);
+    this.activeStorageKey = this.getStorageKey(userId);
+    this.hideCartPreview();
+
+    if (this.activeUserId) {
+      this.loadDatabaseCart(this.activeUserId);
+      return;
+    }
+
+    this.cartItemsSignal.set(this.loadCartItems());
+  }
 
   addToCart(product: CartProductItem) {
     this.cartItemsSignal.update((items) => {
@@ -122,15 +146,87 @@ export class CartService {
       return [];
     }
 
-    const savedItems = localStorage.getItem(this.storageKey);
-    return savedItems ? (JSON.parse(savedItems) as CartItem[]) : [];
+    const savedItems = localStorage.getItem(this.activeStorageKey);
+
+    if (!savedItems) {
+      return [];
+    }
+
+    try {
+      return JSON.parse(savedItems) as CartItem[];
+    } catch {
+      return [];
+    }
   }
 
   private persist(items: CartItem[]) {
+    if (this.activeUserId) {
+      this.saveDatabaseCart(items);
+      return items;
+    }
+
     if (typeof localStorage !== 'undefined') {
-      localStorage.setItem(this.storageKey, JSON.stringify(items));
+      localStorage.setItem(this.activeStorageKey, JSON.stringify(items));
     }
 
     return items;
+  }
+
+  private loadDatabaseCart(userId: string) {
+    this.http.get<{ items: CartItem[] }>(`${this.cartApiUrl}?userId=${encodeURIComponent(userId)}`).subscribe({
+      next: ({ items }) => {
+        if (this.activeUserId === userId) {
+          this.cartItemsSignal.set(items);
+        }
+      },
+      error: () => {
+        if (this.activeUserId === userId) {
+          this.cartItemsSignal.set([]);
+        }
+      },
+    });
+  }
+
+  private saveDatabaseCart(items: CartItem[]) {
+    const userId = this.activeUserId;
+
+    if (!userId) return;
+
+    this.http.put<{ items: CartItem[] }>(this.cartApiUrl, { userId, items }).subscribe({
+      next: ({ items: savedItems }) => {
+        if (this.activeUserId === userId) {
+          this.cartItemsSignal.set(savedItems);
+        }
+      },
+    });
+  }
+
+  private getStorageKeyForCurrentUser() {
+    return this.getStorageKey(this.activeUserId);
+  }
+
+  private getStorageKey(userId?: string | number | null) {
+    const normalizedUserId = this.normalizeUserId(userId);
+    return normalizedUserId
+      ? `${this.baseStorageKey}-user-${normalizedUserId}`
+      : `${this.baseStorageKey}-guest`;
+  }
+
+  private getCurrentUserId() {
+    if (typeof localStorage === 'undefined') {
+      return null;
+    }
+
+    try {
+      const savedUser = localStorage.getItem('currentUser');
+      const user = savedUser ? (JSON.parse(savedUser) as { id?: string | number }) : null;
+      return this.normalizeUserId(user?.id);
+    } catch {
+      return null;
+    }
+  }
+
+  private normalizeUserId(userId?: string | number | null) {
+    return String(userId || '').trim() || null;
   }
 }

@@ -1,6 +1,8 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap, timeout } from 'rxjs';
+import { apiUrl } from './api-url';
+import { CartService } from './cart-service';
 
 export interface UserAccount {
   firstName: string;
@@ -39,14 +41,17 @@ interface AuthResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly apiUrl = 'http://localhost:3000/api/auth';
+  private readonly apiUrl = apiUrl('/api/auth');
   private readonly tokenKey = 'token';
   private readonly currentUserKey = 'currentUser';
   private readonly currentUserSignal = signal<CurrentUser | null>(this.loadCurrentUser());
 
   readonly currentUser = this.currentUserSignal.asReadonly();
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private cartService: CartService
+  ) {}
 
   createAccount(account: UserAccount): Observable<{ message: string; user: CurrentUser }> {
     return this.http.post<{ message: string; user: CurrentUser }>(`${this.apiUrl}/signup`, account);
@@ -65,6 +70,7 @@ export class AuthService {
         localStorage.setItem(this.tokenKey, response.token);
         localStorage.setItem(this.currentUserKey, JSON.stringify(user));
         this.currentUserSignal.set(user);
+        this.cartService.useUserCart(user.id);
       })
     );
   }
@@ -78,7 +84,7 @@ export class AuthService {
 
   getLocations(): Observable<{ cities: LocationOption[]; provinces: LocationOption[] }> {
     return this.http.get<{ cities: LocationOption[]; provinces: LocationOption[] }>(
-      'http://localhost:3000/api/locations'
+      apiUrl('/api/locations')
     );
   }
 
@@ -95,6 +101,7 @@ export class AuthService {
 
           localStorage.setItem(this.currentUserKey, JSON.stringify(updatedUser));
           this.currentUserSignal.set(updatedUser);
+          this.cartService.useUserCart(updatedUser.id);
         })
       );
   }
@@ -103,6 +110,7 @@ export class AuthService {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.currentUserKey);
     this.currentUserSignal.set(null);
+    this.cartService.useUserCart(null);
   }
 
   isLoggedIn(): boolean {

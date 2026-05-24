@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, timeout } from 'rxjs';
+import { apiUrl } from './api-url';
 
 export interface CheckoutOrderItem {
   id: string;
@@ -35,7 +36,7 @@ export interface CreatedOrder {
   providedIn: 'root',
 })
 export class OrderService {
-  private readonly apiUrl = 'http://localhost:3000/api/orders';
+  private readonly apiUrl = apiUrl('/api/orders');
 
   constructor(private readonly http: HttpClient) {}
 
