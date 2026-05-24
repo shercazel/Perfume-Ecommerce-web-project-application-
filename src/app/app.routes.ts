@@ -15,7 +15,6 @@ import { MenCollection } from './pages/collection/men_collection/men-collection/
 import { WomenCollection } from './pages/collection/women_collection/women-collection/women-collection';
 import { AddToCartContainer } from './modal/add_cart_container/add-to-cart-container/add-to-cart-container';
 import { PerfumeQuiz } from './pages/quiz/perfume-quiz/perfume-quiz';
-import { PromoDiscount } from './pages/promo/promo-discount/promo-discount';
 import { CartProduct } from './pages/cart_product/cart-product/cart-product';
 import { authGuard } from './guards/auth-guard';
 import { Login } from './auth/login/login/login';
@@ -107,10 +106,6 @@ export const routes: Routes = [
         path: 'showCart',
         component: AddToCartContainer,
         canActivate: [authGuard],
-      },
-      {
-        path: 'promoDiscount',
-        component: PromoDiscount,
       },
     ],
   },

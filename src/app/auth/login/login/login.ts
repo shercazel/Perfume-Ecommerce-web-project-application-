@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { finalize, TimeoutError } from 'rxjs';
 import { AuthService } from '../../../services/auth-service';
 
 @Component({
@@ -35,22 +36,30 @@ login() {
   this.isLoading = true;
 
   this.authService.login(this.email, this.password)
+    .pipe(finalize(() => {
+      this.isLoading = false;
+    }))
     .subscribe({
       next: () => {
         this.router.navigate(['/']);
       },
 
-      error: (error) => {
-        this.errorMessage =
-          error.error?.message || 'Login failed';
-
-        this.isLoading = false;
+      error: (error: HttpErrorResponse | TimeoutError) => {
+        this.errorMessage = this.getErrorMessage(error, 'Login failed. Please try again.');
       },
-
-      complete: () => {
-        this.isLoading = false;
-      }
     });
+}
+
+private getErrorMessage(error: HttpErrorResponse | TimeoutError, fallbackMessage: string): string {
+  if (error instanceof TimeoutError) {
+    return 'Login is taking too long. Please check if the server is running on localhost:3000.';
+  }
+
+  if (error.status === 0) {
+    return 'Cannot connect to the server. Please start the API server on localhost:3000.';
+  }
+
+  return error.error?.message || fallbackMessage;
 }
 
 }

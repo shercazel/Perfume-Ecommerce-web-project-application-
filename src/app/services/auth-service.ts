@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { delay, Observable, of, throwError } from 'rxjs';
 
 export interface UserAccount {
   firstName: string;
@@ -14,6 +14,7 @@ export interface CurrentUser {
   firstName: string;
   lastName: string;
   email: string;
+  profileImage?: string;
 }
 
 interface AuthResponse {
@@ -21,31 +22,68 @@ interface AuthResponse {
   user: CurrentUser;
 }
 
+interface StoredUser extends CurrentUser {
+  password: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly apiUrl = 'http://localhost:3000/api/auth';
+  private readonly usersKey = 'testUsers';
   private readonly tokenKey = 'token';
   private readonly currentUserKey = 'currentUser';
   private readonly currentUserSignal = signal<CurrentUser | null>(this.loadCurrentUser());
 
   readonly currentUser = this.currentUserSignal.asReadonly();
 
-  constructor(private http: HttpClient) {}
-
   createAccount(account: UserAccount): Observable<{ message: string; user: CurrentUser }> {
-    return this.http.post<{ message: string; user: CurrentUser }>(`${this.apiUrl}/signup`, account);
+    const users = this.loadUsers();
+    const email = account.email.trim().toLowerCase();
+
+    if (users.some((user) => user.email.toLowerCase() === email)) {
+      return this.authError('Email is already registered.');
+    }
+
+    const user: StoredUser = {
+      id: crypto.randomUUID(),
+      firstName: account.firstName.trim(),
+      lastName: account.lastName.trim(),
+      email,
+      password: account.password,
+    };
+
+    users.push(user);
+    localStorage.setItem(this.usersKey, JSON.stringify(users));
+
+    return of({
+      message: 'Account created successfully.',
+      user: this.toCurrentUser(user),
+    }).pipe(delay(300));
   }
 
   login(email: string, password: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, { email, password }).pipe(
-      tap((response) => {
-        localStorage.setItem(this.tokenKey, response.token);
-        localStorage.setItem(this.currentUserKey, JSON.stringify(response.user));
-        this.currentUserSignal.set(response.user);
-      })
+    const user = this.loadUsers().find(
+      (savedUser) =>
+        savedUser.email.toLowerCase() === email.trim().toLowerCase() &&
+        savedUser.password === password
     );
+
+    if (!user) {
+      return this.authError('Invalid email or password.');
+    }
+
+    const currentUser = this.toCurrentUser(user);
+    const response: AuthResponse = {
+      token: `test-token-${user.id}`,
+      user: currentUser,
+    };
+
+    localStorage.setItem(this.tokenKey, response.token);
+    localStorage.setItem(this.currentUserKey, JSON.stringify(currentUser));
+    this.currentUserSignal.set(currentUser);
+
+    return of(response).pipe(delay(300));
   }
 
   logout() {
@@ -67,12 +105,51 @@ export class AuthService {
   }
 
   updateCurrentUser(user: CurrentUser) {
-    localStorage.setItem(this.currentUserKey, JSON.stringify(user));
-    this.currentUserSignal.set(user);
+    const updatedUser = {
+      ...user,
+      firstName: user.firstName.trim(),
+      lastName: user.lastName.trim(),
+      email: user.email.trim().toLowerCase(),
+    };
+    const users = this.loadUsers();
+    const storedUser = users.find((savedUser) => savedUser.id === updatedUser.id);
+
+    if (storedUser) {
+      Object.assign(storedUser, updatedUser);
+      localStorage.setItem(this.usersKey, JSON.stringify(users));
+    }
+
+    localStorage.setItem(this.currentUserKey, JSON.stringify(updatedUser));
+    this.currentUserSignal.set(updatedUser);
   }
 
   private loadCurrentUser(): CurrentUser | null {
     const savedUser = localStorage.getItem(this.currentUserKey);
     return savedUser ? (JSON.parse(savedUser) as CurrentUser) : null;
+  }
+
+  private loadUsers(): StoredUser[] {
+    const savedUsers = localStorage.getItem(this.usersKey);
+    return savedUsers ? (JSON.parse(savedUsers) as StoredUser[]) : [];
+  }
+
+  private toCurrentUser(user: StoredUser): CurrentUser {
+    return {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      profileImage: user.profileImage,
+    };
+  }
+
+  private authError(message: string): Observable<never> {
+    return throwError(
+      () =>
+        new HttpErrorResponse({
+          status: 400,
+          error: { message },
+        })
+    ).pipe(delay(300));
   }
 }
