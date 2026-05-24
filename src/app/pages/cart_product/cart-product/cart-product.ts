@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { CurrencyPipe, NgFor, NgIf, PercentPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService, CurrentUser, LocationOption } from '../../../services/auth-service';
 import { CartItem, CartService } from '../../../services/cart-service';
 
 type CheckoutStep = 'cart' | 'details' | 'confirmation' | 'finished';
 
 type ProvinceOption = {
+  id?: number;
   name: string;
-  cities: string[];
+  cities?: string[];
 };
 
 type CheckoutErrors = {
@@ -17,6 +19,15 @@ type CheckoutErrors = {
   province?: string;
   city?: string;
   address?: string;
+};
+
+type CheckoutCustomer = {
+  name: string;
+  contact: string;
+  province: string;
+  city: string;
+  address: string;
+  paymentMethod: string;
 };
 
 @Component({
@@ -31,7 +42,9 @@ export class CartProduct implements OnInit {
   checkoutStep: CheckoutStep = 'cart';
   orderTotal = 0;
   orderReference = '';
+  isSubmittingOrder = false;
   selectedItemIds = new Set<string>();
+  private readonly ordersApiUrl = 'http://localhost:3000/api/orders';
   readonly contactPattern = '^(09\\d{9}|\\+639\\d{9})$';
   private readonly fullNamePattern =
     /^(?=.{1,80}$)(?=\S+\s+\S+)(?:\p{L}+(?:[.-]\p{L}+)*\.?|Jr\.?|Sr\.?|III|IV|V)(?:\s+(?:\p{L}+(?:[.-]\p{L}+)*\.?|Jr\.?|Sr\.?|III|IV|V))+$/u;
@@ -45,7 +58,8 @@ export class CartProduct implements OnInit {
     address: '',
     paymentMethod: 'cod',
   };
-  readonly provinceOptions: ProvinceOption[] = [
+  allCities: LocationOption[] = [];
+  provinceOptions: ProvinceOption[] = [
     {
       name: 'Metro Manila',
       cities: [
@@ -97,9 +111,12 @@ export class CartProduct implements OnInit {
     public readonly cartService: CartService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
+    private readonly authService: AuthService,
   ) {}
 
   ngOnInit() {
+    this.loadCheckoutLocations();
+
     const checkoutItemId = this.route.snapshot.queryParamMap.get('checkout');
 
     if (!checkoutItemId) return;
@@ -149,6 +166,18 @@ export class CartProduct implements OnInit {
   }
 
   get cityOptions(): string[] {
+    if (this.allCities.length > 0) {
+      const provinceId = this.provinceOptions.find(
+        (province) => province.name === this.customer.province,
+      )?.id;
+
+      return provinceId
+        ? this.allCities
+            .filter((city) => city.provinceId === provinceId)
+            .map((city) => city.name)
+        : [];
+    }
+
     return this.provinceOptions.find((province) => province.name === this.customer.province)?.cities ?? [];
   }
 
@@ -214,6 +243,7 @@ export class CartProduct implements OnInit {
       return;
     }
 
+    this.prefillCustomerFromAccount();
     this.checkoutMessage = '';
     this.checkoutErrors = {};
     this.checkoutStep = 'details';
@@ -244,8 +274,11 @@ export class CartProduct implements OnInit {
     this.customer = this.createEmptyCustomer();
   }
 
-  finishCheckout() {
-    const checkedOutIds = this.selectedItems.map((item) => item.id);
+  async finishCheckout() {
+    if (this.isSubmittingOrder) return;
+
+    const orderedItems = this.selectedItems;
+    const checkedOutIds = orderedItems.map((item) => item.id);
 
     if (checkedOutIds.length === 0) {
       this.checkoutMessage = 'Please select at least one item to checkout.';
@@ -253,11 +286,38 @@ export class CartProduct implements OnInit {
       return;
     }
 
-    this.orderTotal = this.selectedTotal;
-    this.orderReference = `VC-${Date.now().toString().slice(-6)}`;
-    this.cartService.removeItems(checkedOutIds);
-    this.selectedItemIds.clear();
-    this.checkoutStep = 'finished';
+    const user = this.authService.getCurrentUser();
+
+    this.isSubmittingOrder = true;
+    this.checkoutMessage = 'Saving your order...';
+
+    try {
+      const order = await this.createOrderRequest({
+        userId: user?.id,
+        customer: { ...this.customer },
+        items: orderedItems.map((item) => ({
+          id: item.id,
+          name: item.perfName,
+          description: item.description,
+          imagePath: item.imagePath,
+          size: item.size,
+          quantity: item.quantity,
+          price: item.price,
+        })),
+      });
+
+      this.orderTotal = Number(order.total);
+      this.orderReference = order.reference;
+      this.cartService.removeItems(checkedOutIds);
+      this.selectedItemIds.clear();
+      this.checkoutMessage = '';
+      this.checkoutStep = 'finished';
+    } catch (error) {
+      this.checkoutMessage =
+        error instanceof Error ? error.message : 'Unable to save order. Please try again.';
+    } finally {
+      this.isSubmittingOrder = false;
+    }
   }
 
   resetCheckout() {
@@ -280,6 +340,78 @@ export class CartProduct implements OnInit {
       address: '',
       paymentMethod: 'cod',
     };
+  }
+
+  private prefillCustomerFromAccount() {
+    const user = this.authService.getCurrentUser();
+
+    if (!user) return;
+
+    this.customer = {
+      ...this.customer,
+      name: this.customer.name || this.getUserFullName(user),
+      contact: this.customer.contact || user.phoneNumber || '',
+      province: this.customer.province || user.provinceName || '',
+      city: this.customer.city || user.cityName || '',
+      address: this.customer.address || user.address || '',
+    };
+  }
+
+  private getUserFullName(user: CurrentUser): string {
+    return `${user.firstName || ''} ${user.lastName || ''}`.trim();
+  }
+
+  private loadCheckoutLocations() {
+    this.authService.getLocations().subscribe({
+      next: ({ cities, provinces }) => {
+        this.allCities = cities;
+        this.provinceOptions = provinces;
+      },
+    });
+  }
+
+  private async createOrderRequest(order: {
+    userId?: string;
+    customer: CheckoutCustomer;
+    items: {
+      id: string;
+      name: string;
+      description: string;
+      imagePath?: string;
+      size: string;
+      quantity: number;
+      price: number;
+    }[];
+  }): Promise<{ id: number; reference: string; total: number }> {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+    try {
+      const response = await fetch(this.ordersApiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(order),
+        signal: controller.signal,
+      });
+
+      const result = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        throw new Error(result?.message || 'Unable to save order. Please try again.');
+      }
+
+      return result.order;
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        throw new Error('Order saving is taking too long. Please try again.');
+      }
+
+      throw error;
+    } finally {
+      clearTimeout(timeoutId);
+    }
   }
 
   private validateCheckoutDetails(): CheckoutErrors {

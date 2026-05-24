@@ -29,6 +29,22 @@
                 <span>Email Address</span>
                 <strong>{{profile.email}}</strong>
             </div>
+            <div>
+                <span>Phone Number</span>
+                <strong>{{profile.phoneNumber || 'Not provided'}}</strong>
+            </div>
+            <div>
+                <span>Address</span>
+                <strong>{{profile.address || 'Not provided'}}</strong>
+            </div>
+            <div>
+                <span>City</span>
+                <strong>{{profile.cityName || 'Not selected'}}</strong>
+            </div>
+            <div>
+                <span>Province</span>
+                <strong>{{profile.provinceName || 'Not selected'}}</strong>
+            </div>
         </div>
 
         @if (message) {
@@ -76,12 +92,60 @@
                 <input type="email" name="email" [(ngModel)]="editableProfile.email">
             </label>
 
+            <label>
+                Phone Number
+                <input type="tel" name="phoneNumber" [(ngModel)]="editableProfile.phoneNumber">
+            </label>
+
+            <label>
+                Address
+                <input type="text" name="address" [(ngModel)]="editableProfile.address">
+            </label>
+
+            <label>
+                Province
+                <select name="provinceId" [(ngModel)]="editableProfile.provinceId" (ngModelChange)="onProvinceChange()">
+                    <option [ngValue]="null">Select province</option>
+                    @for (province of provinces; track province.id) {
+                    <option [ngValue]="province.id">{{province.name}}</option>
+                    }
+                </select>
+            </label>
+
+            <label>
+                City
+                <select name="cityId" [(ngModel)]="editableProfile.cityId" [disabled]="!editableProfile.provinceId">
+                    <option [ngValue]="null">
+                        {{editableProfile.provinceId ? 'Select city' : 'Select province first'}}
+                    </option>
+                    @for (city of filteredCities; track city.id) {
+                    <option [ngValue]="city.id">{{city.name}}</option>
+                    }
+                </select>
+            </label>
+
+            <div class="password-edit">
+                <label>
+                    New Password
+                    <input type="password" name="newPassword" [(ngModel)]="editableProfile.newPassword"
+                        autocomplete="new-password">
+                </label>
+
+                <label>
+                    Confirm New Password
+                    <input type="password" name="confirmPassword" [(ngModel)]="editableProfile.confirmPassword"
+                        autocomplete="new-password">
+                </label>
+            </div>
+
             @if (message) {
             <p class="account-message">{{message}}</p>
             }
 
             <div class="account-actions">
-                <button class="save-btn" type="submit">Save Account</button>
+                <button class="save-btn" type="submit" [disabled]="isSaving">
+                    {{isSaving ? 'Saving...' : 'Save Account'}}
+                </button>
                 <button class="logout-btn-account" type="button" (click)="cancelEdit()">Cancel</button>
             </div>
         </form>

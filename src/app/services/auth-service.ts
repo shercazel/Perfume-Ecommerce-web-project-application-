@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, timeout } from 'rxjs';
 
 export interface UserAccount {
   firstName: string;
@@ -15,7 +15,19 @@ export interface CurrentUser {
   lastName: string;
   email: string;
   role: string;
+  address?: string;
+  cityId?: number | null;
+  cityName?: string;
+  provinceId?: number | null;
+  provinceName?: string;
+  phoneNumber?: string;
   profileImage?: string;
+}
+
+export interface LocationOption {
+  id: number;
+  name: string;
+  provinceId?: number;
 }
 
 interface AuthResponse {
@@ -62,6 +74,29 @@ export class AuthService {
       email,
       password,
     });
+  }
+
+  getLocations(): Observable<{ cities: LocationOption[]; provinces: LocationOption[] }> {
+    return this.http.get<{ cities: LocationOption[]; provinces: LocationOption[] }>(
+      'http://localhost:3000/api/locations'
+    );
+  }
+
+  updateProfile(user: CurrentUser): Observable<{ message: string; user: CurrentUser }> {
+    return this.http
+      .put<{ message: string; user: CurrentUser }>(`${this.apiUrl}/profile`, user)
+      .pipe(
+        timeout(10000),
+        tap((response) => {
+          const updatedUser = {
+            ...response.user,
+            profileImage: user.profileImage,
+          };
+
+          localStorage.setItem(this.currentUserKey, JSON.stringify(updatedUser));
+          this.currentUserSignal.set(updatedUser);
+        })
+      );
   }
 
   logout() {

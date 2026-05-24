@@ -1,11 +1,14 @@
 const crypto = require('crypto');
 const http = require('http');
 const {
+  createOrder,
   createUserAccount,
+  getLocations,
   getProducts,
   loginUser,
   resetUserPassword,
   testConnection,
+  updateUserProfile,
 } = require('../databse');
 
 const PORT = 3000;
@@ -13,7 +16,7 @@ const PORT = 3000;
 function sendJson(response, statusCode, payload) {
   response.writeHead(statusCode, {
     'Access-Control-Allow-Origin': 'http://localhost:4200',
-    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+    'Access-Control-Allow-Methods': 'GET,POST,PUT,OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Content-Type': 'application/json',
   });
@@ -75,6 +78,12 @@ async function handleLogin(request, response) {
       lastName: user.lastName,
       email: user.email,
       role: String(user.role || 'customer').toLowerCase(),
+      address: user.address,
+      cityId: user.cityId,
+      cityName: user.cityName,
+      provinceId: user.provinceId,
+      provinceName: user.provinceName,
+      phoneNumber: user.phoneNumber,
     },
   });
 }
@@ -126,6 +135,69 @@ async function handleResetPassword(request, response) {
   sendJson(response, 200, { message: 'Password updated successfully.' });
 }
 
+async function handleUpdateProfile(request, response) {
+  const profile = await readBody(request);
+
+  if (!profile.id || !profile.firstName || !profile.lastName || !profile.email) {
+    sendJson(response, 400, { message: 'Please complete all required profile fields.' });
+    return;
+  }
+
+  if (profile.newPassword && String(profile.newPassword).trim().length < 6) {
+    sendJson(response, 400, { message: 'New password must be at least 6 characters.' });
+    return;
+  }
+
+  const updatedUser = await updateUserProfile(profile.id, profile);
+
+  if (!updatedUser) {
+    sendJson(response, 404, { message: 'Account not found.' });
+    return;
+  }
+
+  sendJson(response, 200, { message: 'Profile updated successfully.', user: updatedUser });
+}
+
+async function handleCreateOrder(request, response) {
+  const order = await readBody(request);
+
+  if (
+    !order.userId ||
+    !order.customer?.name ||
+    !order.customer?.contact ||
+    !order.customer?.province ||
+    !order.customer?.city ||
+    !order.customer?.address ||
+    !Array.isArray(order.items) ||
+    order.items.length === 0
+  ) {
+    sendJson(response, 400, { message: 'Please log in, complete checkout details, and select at least one item.' });
+    return;
+  }
+
+  if (
+    order.items.some(
+      (item) =>
+        !item?.id ||
+        !String(item.name || '').trim() ||
+        !Number.isFinite(Number(item.quantity)) ||
+        Number(item.quantity) <= 0 ||
+        !Number.isFinite(Number(item.price)) ||
+        Number(item.price) <= 0,
+    )
+  ) {
+    sendJson(response, 400, { message: 'One or more selected items are missing valid product details.' });
+    return;
+  }
+
+  const createdOrder = await createOrder(order);
+
+  sendJson(response, 201, {
+    message: 'Order created successfully.',
+    order: createdOrder,
+  });
+}
+
 const server = http.createServer(async (request, response) => {
   if (request.method === 'OPTIONS') {
     sendJson(response, 204, {});
@@ -153,8 +225,23 @@ const server = http.createServer(async (request, response) => {
       return;
     }
 
+    if (request.method === 'PUT' && request.url === '/api/auth/profile') {
+      await handleUpdateProfile(request, response);
+      return;
+    }
+
+    if (request.method === 'GET' && request.url === '/api/locations') {
+      sendJson(response, 200, await getLocations());
+      return;
+    }
+
     if (request.method === 'GET' && request.url === '/api/products') {
       sendJson(response, 200, await getProducts());
+      return;
+    }
+
+    if (request.method === 'POST' && request.url === '/api/orders') {
+      await handleCreateOrder(request, response);
       return;
     }
 

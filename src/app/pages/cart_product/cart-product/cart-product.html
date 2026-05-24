@@ -272,14 +272,18 @@
                     <span>{{selectedTotal | currency: 'PHP'}}</span>
                 </div>
 
+                <p class="checkout-message" *ngIf="checkoutMessage">
+                    {{checkoutMessage}}
+                </p>
+
                 <button class="checkout-btn secondary" type="button" (click)="backToDetails()">
                     Back
                 </button>
                 <button class="checkout-btn cancel" type="button" (click)="cancelCheckout()">
                     Cancel Checkout
                 </button>
-                <button class="checkout-btn" type="button" (click)="finishCheckout()">
-                    Confirm Order
+                <button class="checkout-btn" type="button" [disabled]="isSubmittingOrder" (click)="finishCheckout()">
+                    {{isSubmittingOrder ? 'Saving Order...' : 'Confirm Order'}}
                 </button>
             </div>
 

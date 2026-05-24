@@ -143,13 +143,63 @@
     gap: 0.45rem;
 }
 
-.account-form input {
+.password-edit {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    display: grid;
+    gap: 1rem;
+    margin-top: 0.25rem;
+    padding-top: 1rem;
+}
+
+.account-form input,
+.account-form select {
     border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.08);
     color: white;
     font: inherit;
     padding: 0.85rem 0.95rem;
+}
+
+.account-form select {
+    appearance: none;
+    background:
+        linear-gradient(45deg, transparent 50%, #f2b6ff 50%) right 1.15rem center / 7px 7px no-repeat,
+        linear-gradient(135deg, #f2b6ff 50%, transparent 50%) right 0.8rem center / 7px 7px no-repeat,
+        linear-gradient(135deg, rgba(187, 87, 255, 0.24), rgba(255, 255, 255, 0.08));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    padding-right: 2.6rem;
+}
+
+.account-form select:hover {
+    border-color: rgba(242, 182, 255, 0.55);
+    background:
+        linear-gradient(45deg, transparent 50%, white 50%) right 1.15rem center / 7px 7px no-repeat,
+        linear-gradient(135deg, white 50%, transparent 50%) right 0.8rem center / 7px 7px no-repeat,
+        linear-gradient(135deg, rgba(187, 87, 255, 0.32), rgba(255, 255, 255, 0.1));
+}
+
+.account-form input:focus,
+.account-form select:focus {
+    border-color: #f2b6ff;
+    box-shadow: 0 0 0 3px rgba(187, 87, 255, 0.2);
+    outline: none;
+}
+
+.account-form select:disabled {
+    border-color: rgba(255, 255, 255, 0.1);
+    background:
+        linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.34) 50%) right 1.15rem center / 7px 7px no-repeat,
+        linear-gradient(135deg, rgba(255, 255, 255, 0.34) 50%, transparent 50%) right 0.8rem center / 7px 7px no-repeat,
+        rgba(255, 255, 255, 0.045);
+    color: rgba(255, 255, 255, 0.48);
+    cursor: not-allowed;
+}
+
+.account-form select option {
+    background: #18002e;
+    color: white;
 }
 
 .account-message {
