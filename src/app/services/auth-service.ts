@@ -86,6 +86,22 @@ export class AuthService {
     return of(response).pipe(delay(300));
   }
 
+  resetPassword(email: string, password: string): Observable<{ message: string }> {
+    const users = this.loadUsers();
+    const storedUser = users.find(
+      (savedUser) => savedUser.email.toLowerCase() === email.trim().toLowerCase()
+    );
+
+    if (!storedUser) {
+      return this.authError('No account found with that email address.');
+    }
+
+    storedUser.password = password;
+    localStorage.setItem(this.usersKey, JSON.stringify(users));
+
+    return of({ message: 'Password updated successfully.' }).pipe(delay(300));
+  }
+
   logout() {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.currentUserKey);

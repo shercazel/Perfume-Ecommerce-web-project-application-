@@ -93,6 +93,13 @@ export class CartService {
     this.cartItemsSignal.update((items) => this.persist(items.filter((item) => item.id !== productId)));
   }
 
+  removeItems(productIds: string[]) {
+    const idsToRemove = new Set(productIds);
+    this.cartItemsSignal.update((items) =>
+      this.persist(items.filter((item) => !idsToRemove.has(item.id))),
+    );
+  }
+
   clearCart() {
     this.cartItemsSignal.set(this.persist([]));
     this.hideCartPreview();

@@ -15,13 +15,16 @@ export class Login {
   email = '';
   password = '';
   errorMessage = '';
+  returnUrl = '/';
   isLoading = false;
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
+  }
 login() {
 
   if (this.isLoading) return;
@@ -41,7 +44,7 @@ login() {
     }))
     .subscribe({
       next: () => {
-        this.router.navigate(['/']);
+        this.router.navigateByUrl(this.returnUrl);
       },
 
       error: (error: HttpErrorResponse | TimeoutError) => {

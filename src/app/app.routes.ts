@@ -23,92 +23,9 @@ import { ResetPassword } from './auth/resetPassword/reset-password/reset-passwor
 import { AdminDashboard } from './pages/admin/admin-dashboard/admin-dashboard';
 import { AdminModulePage } from './pages/admin/admin-module-page/admin-module-page';
 import { CustomerAccount } from './pages/account/customer-account/customer-account';
+import { NotFound } from './pages/not-found/not-found';
 
 export const routes: Routes = [
-  {
-    path: '',
-    component: UserLayout,
-
-    children: [
-      {
-        path: '',
-        component: HomePage,
-
-        children: [
-          {
-            path: 'quiz',
-            component: PerfumeQuiz,
-          },
-        ],
-      },
-
-      {
-        // for filtering purpose
-        path: 'collection',
-        component: Collection,
-
-        children: [
-          {
-            path: '',
-            component: AllCollection,
-          },
-          {
-            path: 'romance',
-            component: RomanceCollection,
-          },
-          {
-            path: 'brandCollection',
-            component: BrandCollection,
-          },
-          {
-            path: 'Bold',
-            component: BoldCollection,
-          },
-          {
-            path: 'Sweet',
-            component: SweetCollection,
-          },
-          {
-            path: 'NightParty',
-            component: NightCollection,
-          },
-          {
-            path: 'Office',
-            component: OfficeCollection,
-          },
-          {
-            path: 'Men',
-            component: MenCollection,
-          },
-          {
-            path: 'Women',
-            component: WomenCollection,
-          },
-        ],
-      },
-      // end here
-      {
-        path: 'cartProduct',
-        component: CartProduct,
-        canActivate: [authGuard],
-      },
-      {
-        path: 'about',
-        component: About,
-      },
-      {
-        path: 'account',
-        component: CustomerAccount,
-        canActivate: [authGuard],
-      },
-
-      {
-        path: 'showCart',
-        component: AddToCartContainer,
-        canActivate: [authGuard],
-      },
-    ],
-  },
   {
     path: 'login',
     component: Login,
@@ -216,6 +133,94 @@ export const routes: Routes = [
           title: 'Settings',
           description: 'Configure admin panel behavior and system preferences.',
         },
+      },
+    ],
+  },
+  {
+    path: '',
+    component: UserLayout,
+
+    children: [
+      {
+        path: '',
+        component: HomePage,
+
+        children: [
+          {
+            path: 'quiz',
+            component: PerfumeQuiz,
+          },
+        ],
+      },
+
+      {
+        // for filtering purpose
+        path: 'collection',
+        component: Collection,
+
+        children: [
+          {
+            path: '',
+            component: AllCollection,
+          },
+          {
+            path: 'romance',
+            component: RomanceCollection,
+          },
+          {
+            path: 'brandCollection',
+            component: BrandCollection,
+          },
+          {
+            path: 'Bold',
+            component: BoldCollection,
+          },
+          {
+            path: 'Sweet',
+            component: SweetCollection,
+          },
+          {
+            path: 'NightParty',
+            component: NightCollection,
+          },
+          {
+            path: 'Office',
+            component: OfficeCollection,
+          },
+          {
+            path: 'Men',
+            component: MenCollection,
+          },
+          {
+            path: 'Women',
+            component: WomenCollection,
+          },
+        ],
+      },
+      // end here
+      {
+        path: 'cartProduct',
+        component: CartProduct,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'about',
+        component: About,
+      },
+      {
+        path: 'account',
+        component: CustomerAccount,
+        canActivate: [authGuard],
+      },
+
+      {
+        path: 'showCart',
+        component: AddToCartContainer,
+        canActivate: [authGuard],
+      },
+      {
+        path: '**',
+        component: NotFound,
       },
     ],
   },
