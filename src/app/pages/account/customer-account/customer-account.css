@@ -1,8 +1,9 @@
 .account-page {
-    min-height: 100svh;
-    padding: 10rem 1.5rem 5rem;
+    height:a uto;
+    width: 100svw;
+    padding: 10rem 1.5rem 5rem 1.5rem;
     background:
-        radial-gradient(circle at 78% 20%, rgba(179, 67, 180, 0.38), transparent 34%),
+        radial-gradient(circle at 78% 20%, rgba(229, 0, 233, 0.537), transparent 34%),
         linear-gradient(90deg, #050014 0%, #18002e 55%, #320022 100%);
     color: white;
 }
@@ -10,11 +11,13 @@
 .account-shell {
     width: min(860px, 100%);
     margin: 0 auto;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.458);
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.045);
-    backdrop-filter: blur(14px);
-    padding: 2rem;
+    background: rgba(0, 0, 0, 0.097);
+    backdrop-filter: blur(30px);
+    padding: 1rem;
+
+    overflow: hidden;
 }
 
 .account-header {
@@ -46,7 +49,7 @@
 }
 
 .account-header p {
-    color: #f2b6ff;
+    color: var(--c4-color);
     font-size: 0.8rem;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -183,9 +186,15 @@
     color: white;
 }
 
-@media (max-width: 560px) {
+@media (min-width: 728px) {
+    .account-page {
+        width: 100vw;
+        padding: 10rem 5rem;
+
+    }
+
     .account-shell {
-        padding: 1.4rem;
+        padding: 2rem;
     }
 
     .account-header,
@@ -193,4 +202,31 @@
         align-items: flex-start;
         flex-direction: column;
     }
+}
+
+@media (min-width: 1070px) {
+    .account-page {
+        display: inline-block;
+        padding-top: 9rem;
+    }
+
+    .account-shell {
+        
+        width: 600px;
+        position: relative;
+        left: 200px;
+
+    }
+
+
+}
+
+@media (min-width: 1280px) {
+    .account-shell {
+        width: 600px;
+        position: relative;
+        left: 400px;
+        
+    }
+
 }

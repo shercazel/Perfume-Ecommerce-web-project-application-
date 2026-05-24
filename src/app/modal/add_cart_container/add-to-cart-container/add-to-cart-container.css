@@ -1,9 +1,9 @@
 .addTocart {
     position: fixed;
     z-index: 9999;
-    top: 110px;
+    top: 115px;
     right: 0%;
-    height: 420px;
+    height: auto;
     width: 400px;
     background-color: rgba(255, 0, 247, 0.041);
     border: 1px solid #fea1d777;

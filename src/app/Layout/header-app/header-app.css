@@ -1,3 +1,5 @@
+
+
 .navbar {
     width: 100%;
     color: #f8eefc;
@@ -90,6 +92,7 @@ button span {
     margin: 0;
     padding: 0;
 }
+
 .nav-links li {
     list-style: none;
 }
@@ -97,7 +100,7 @@ button span {
 .nav-links a {
     position: relative;
     display: inline-block;
-    width: fit-content; 
+    width: fit-content;
     color: #f5e9ff;
     text-decoration: none;
     font-weight: 300;
@@ -430,12 +433,18 @@ li:hover a::after {
 }
 
 @media (min-width: 1280px) {
+
     .nav-bar {
         padding: 1.5rem 3rem 0.75rem;
+        grid-template-columns: 400px 400px 400px;
+        width: 1280px;
+
+        border: 5px solid white;
     }
 
     .nav-links {
         justify-content: center;
         column-gap: 3rem;
+
     }
 }
