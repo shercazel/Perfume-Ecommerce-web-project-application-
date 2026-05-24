@@ -1,6 +1,12 @@
 const crypto = require('crypto');
 const http = require('http');
-const { createUserAccount, getProducts, loginUser, testConnection } = require('../databse');
+const {
+  createUserAccount,
+  getProducts,
+  loginUser,
+  resetUserPassword,
+  testConnection,
+} = require('../databse');
 
 const PORT = 3000;
 
@@ -102,6 +108,24 @@ async function handleSignup(request, response) {
   });
 }
 
+async function handleResetPassword(request, response) {
+  const { email, password } = await readBody(request);
+
+  if (!email || !password) {
+    sendJson(response, 400, { message: 'Email/username and new password are required.' });
+    return;
+  }
+
+  const result = await resetUserPassword(String(email).trim(), String(password));
+
+  if (result.status === 'not_found') {
+    sendJson(response, 404, { message: 'No account found with that email or username.' });
+    return;
+  }
+
+  sendJson(response, 200, { message: 'Password updated successfully.' });
+}
+
 const server = http.createServer(async (request, response) => {
   if (request.method === 'OPTIONS') {
     sendJson(response, 204, {});
@@ -121,6 +145,11 @@ const server = http.createServer(async (request, response) => {
 
     if (request.method === 'POST' && request.url === '/api/auth/signup') {
       await handleSignup(request, response);
+      return;
+    }
+
+    if (request.method === 'POST' && request.url === '/api/auth/reset-password') {
+      await handleResetPassword(request, response);
       return;
     }
 

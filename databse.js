@@ -166,6 +166,22 @@ async function loginUser(emailOrUsername, password) {
   };
 }
 
+async function resetUserPassword(emailOrUsername, password) {
+  const user = await findUserByEmail(emailOrUsername);
+
+  if (!user) {
+    return {
+      status: 'not_found',
+    };
+  }
+
+  await queryDatabase('UPDATE user_accounts SET password = ? WHERE user_id = ?', [password, user.id]);
+
+  return {
+    status: 'success',
+  };
+}
+
 async function getProducts() {
   return queryDatabase(`
     SELECT
@@ -198,5 +214,6 @@ module.exports = {
   findUserByEmail,
   getProducts,
   loginUser,
+  resetUserPassword,
   testConnection,
 };

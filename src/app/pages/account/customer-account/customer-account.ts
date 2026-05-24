@@ -15,11 +15,8 @@ export class CustomerAccount {
     firstName: '',
     lastName: '',
     email: '',
-<<<<<<< HEAD
     role: 'customer',
-=======
     profileImage: '',
->>>>>>> 40b6d332aec0162550b627198b541a1301a7b004
   };
   editableProfile: CurrentUser = { ...this.profile };
   isEditing = false;
@@ -82,26 +79,17 @@ export class CustomerAccount {
       return;
     }
 
-<<<<<<< HEAD
-    this.authService.updateCurrentUser({
-      ...this.profile,
-      firstName: this.profile.firstName.trim(),
-      lastName: this.profile.lastName.trim(),
-      email: this.profile.email.trim(),
-      role: this.profile.role,
-    });
-=======
     this.profile = {
       ...this.editableProfile,
       firstName: this.editableProfile.firstName.trim(),
       lastName: this.editableProfile.lastName.trim(),
       email: this.editableProfile.email.trim(),
+      role: this.editableProfile.role,
     };
 
     this.authService.updateCurrentUser(this.profile);
     this.editableProfile = { ...this.profile };
     this.isEditing = false;
->>>>>>> 40b6d332aec0162550b627198b541a1301a7b004
     this.message = 'Account details updated.';
   }
 

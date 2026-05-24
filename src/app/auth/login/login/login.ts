@@ -43,20 +43,8 @@ login() {
       this.isLoading = false;
     }))
     .subscribe({
-<<<<<<< HEAD
-      next: (response) => {
-        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
-
-        if (returnUrl) {
-          this.router.navigateByUrl(returnUrl);
-          return;
-        }
-
-        this.router.navigate(['/']);
-=======
       next: () => {
         this.router.navigateByUrl(this.returnUrl);
->>>>>>> 40b6d332aec0162550b627198b541a1301a7b004
       },
 
       error: (error: HttpErrorResponse | TimeoutError) => {
