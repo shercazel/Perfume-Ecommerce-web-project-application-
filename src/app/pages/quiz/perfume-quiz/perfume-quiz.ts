@@ -1,5 +1,6 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CartProductItem, CartService } from '../../../services/cart-service';
 
 type ScentProfile = 'fresh' | 'romance' | 'bold' | 'sweet';
@@ -30,7 +31,10 @@ type RankedRecommendation = CartProductItem & {
   styleUrl: './perfume-quiz.css',
 })
 export class PerfumeQuiz {
-  constructor(private readonly cartService: CartService) {}
+  constructor(
+    private readonly cartService: CartService,
+    private readonly router: Router
+  ) {}
 
   qContent: QuizQuestion[] = [
     {
@@ -302,6 +306,10 @@ export class PerfumeQuiz {
     this.showResult = false;
     this.recommendedProfile = 'fresh';
     this.rankedRecommendations = [];
+  }
+
+  closeQuiz() {
+    this.router.navigate(['/']);
   }
 
   addRecommendationToCart(product: CartProductItem = this.dominantRecommendation) {

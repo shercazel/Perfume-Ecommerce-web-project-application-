@@ -62,32 +62,32 @@
             <ul class="drawer-links">
                 <li>
                     <i class="fa-solid fa-house"></i>
-                    <a href="">Home</a>
+                    <a routerLink="/" (click)="closeMobileMenu()">Home</a>
                 </li>
                 <li>
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <a href="">Find Your Perfume</a>
+                    <a routerLink="/quiz" (click)="closeMobileMenu()">Find Your Perfume</a>
                 </li>
                 <li>
                     <i class="fa-solid fa-box"></i>
-                    <a href="">Collection</a>
+                    <a routerLink="/collection" (click)="closeMobileMenu()">Collection</a>
                 </li>
                 <li>
                     <i class="fa-solid fa-tag"></i>
-                    <a href="">Brand</a>
+                    <a routerLink="/collection/brandCollection" (click)="closeMobileMenu()">Brand</a>
                 </li>
                 <li>
                     <i class="fa-solid fa-info-circle"></i>
-                    <a href="">About</a>
+                    <a routerLink="/about" (click)="closeMobileMenu()">About</a>
                 </li>
             </ul>
             <div class="drawer-actions">
-                <button routerLink="/cartProduct" class="action-btn cart-btn" type="button">
+                <button routerLink="/cartProduct" class="action-btn cart-btn" type="button" (click)="closeMobileMenu()">
                     <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
                     <span>Cart</span>
                 </button>
                 @if (authService.currentUser(); as user) {
-                <button routerLink="/account" class="action-btn login-btn" type="button" (click)="toggleMobileMenu()">
+                <button routerLink="/account" class="action-btn login-btn" type="button" (click)="closeMobileMenu()">
                     <i class="fa-solid fa-user" aria-hidden="true"></i>
                     <span>{{user.firstName}}</span>
                 </button>
@@ -96,7 +96,7 @@
                     <span>Logout</span>
                 </button>
                 } @else {
-                <button routerLink="/login" class="action-btn login-btn" type="button"> <i class="fa-solid fa-user"
+                <button routerLink="/login" class="action-btn login-btn" type="button" (click)="closeMobileMenu()"> <i class="fa-solid fa-user"
                         aria-hidden="true"></i>
                     <span>Login</span>
                 </button>

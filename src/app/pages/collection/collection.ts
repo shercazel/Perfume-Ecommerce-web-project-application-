@@ -15,6 +15,7 @@ interface Category {
 })
 export class Collection {
 
+heroBackgroundImage = 'assets/Background/homeHeroBg.png';
 
 image = '/public/assets/images/carouselImage/honeyPerf.svg.png'
 

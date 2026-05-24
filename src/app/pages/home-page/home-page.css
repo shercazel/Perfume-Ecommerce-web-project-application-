@@ -16,8 +16,9 @@ main {
     padding: 2rem 1rem;
     height: auto;
     background-repeat: no-repeat;
-    background-position: center;
     background-size: cover;
+    background-position: center 20%;
+
 }
 
 .hero-container {
@@ -65,13 +66,15 @@ main {
 }
 
 .hero-badge .badge1 {
-    color: white;
-    font-weight: 500;
+    color: #ff9ee5;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
     text-wrap: nowrap;
 }
 
 .hero-badge .badge2 {
-    color: rgba(255, 255, 255, 0.511);
+    color: rgba(255, 255, 255, 0.82);
     font-weight: 400;
     text-wrap: nowrap;
 
@@ -89,33 +92,34 @@ main {
 
 
 .hero-heading {
-    line-height: 1.2;
+    line-height: 1;
     margin-bottom: 1rem;
-    color: var(--c2-color);
-    font-family: var(--fon-playfairDply);
-    font-weight: 500;
-    font-size: 40px;
-    text-shadow: 0 0 5px var(--c5-color);
+    color: #fff7ff;
+    font-family: inherit;
+    font-weight: 900;
+    font-size: clamp(2rem, 6vw, 4.8rem);
+    letter-spacing: 0;
+    text-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
 
 }
 
 .hero-heading span {
-    color: var(--c4-color);
+    color: #fff7ff;
     display: block;
 }
 
 .hero-description {
-    font-weight: 300;
-    line-height: 1.6;
+    font-weight: 400;
+    line-height: 1.7;
     margin-bottom: 2rem;
-    opacity: 0.9;
+    opacity: 1;
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
-    font-size: 15px;
+    font-size: clamp(1rem, 2vw, 1.2rem);
     width: 80%;
-    color: var(--c2-color);
-    text-shadow: 0 0 5px var(--c5-color);
+    color: rgba(255, 255, 255, 0.82);
+    text-shadow: none;
 
 }
 
@@ -341,18 +345,18 @@ main {
 
 
 #slider-effects {
+    --gallery-gap: 30px;
     display: flex;
-    gap: 30px;
-    animation: slide 30s linear infinite;
+    gap: var(--gallery-gap);
+    animation: slide 28s linear infinite;
     width: max-content;
 }
 
 .vProjectBox {
     height: 100%;
-    width: max-content;
+    width: clamp(190px, 46vw, 360px);
     border-radius: 10px;
     flex: 0 0 auto;
-    object-fit: cover;
     overflow: hidden;
     border: 0.2px solid rgba(128, 128, 128, 0.218);
 
@@ -361,12 +365,12 @@ main {
 }
 
 .vProjectBox img {
-    max-width: 100%;
+    width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: left center;
+    object-position: center;
+    display: block;
 
-    transform: scale(100%);
 }
 
 /* slide-effects-animation */
@@ -788,9 +792,11 @@ article.promo-card:nth-child(2):hover button {
 }
 
 .card-icon {
-    width: 35px;
-    height: 35px;
-    object-fit: contain;
+    width: 72px;
+    height: 72px;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
 }
 
 .card-number {
@@ -832,12 +838,12 @@ article.promo-card:nth-child(2):hover button {
     }
 
     .hero-heading {
-        font-size: 3.8rem;
+        font-size: clamp(2.7rem, 6vw, 4.8rem);
     }
 
     .hero-description {
-        font-size: 1.1rem;
-        font-weight: 300;
+        font-size: clamp(1rem, 2vw, 1.2rem);
+        font-weight: 400;
     }
 
     .hero-buttons {
@@ -890,7 +896,7 @@ article.promo-card:nth-child(2):hover button {
     }
 
     #slider-effects {
-        gap: 50px;
+        --gallery-gap: 50px;
     }
 
     .cards-container {
@@ -934,8 +940,8 @@ article.promo-card:nth-child(2):hover button {
     }
 
     .hero-heading {
-        text-align: justify;
-        font-size: 2.9rem;
+        text-align: left;
+        font-size: clamp(3rem, 5vw, 4.8rem);
     }
 
     .hero-content {
@@ -946,11 +952,11 @@ article.promo-card:nth-child(2):hover button {
     }
 
     .hero-description {
-        text-align: justify;
+        text-align: left;
         margin-left: 0rem;
         font-weight: 400;
-        text-shadow: 0 0 5px var(--c5-color);
-        font-size: 0.9rem;
+        text-shadow: none;
+        font-size: clamp(1rem, 2vw, 1.2rem);
 
     }
 
@@ -1075,12 +1081,12 @@ article.promo-card:nth-child(2):hover button {
 
 
     .hero-heading {
-        font-size: 3.9rem;
+        font-size: clamp(3.4rem, 5vw, 4.8rem);
     }
 
     .hero-description {
-        font-size: 1.4rem;
-        font-weight: 300;
+        font-size: 1.2rem;
+        font-weight: 400;
     }
 
     #visual-container {

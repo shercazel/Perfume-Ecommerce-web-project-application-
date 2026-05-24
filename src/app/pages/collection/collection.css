@@ -1,253 +1,351 @@
-    .collection-page {
-        align-items: center;
-        background-color: #18082d;
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-        height: auto;
-        justify-content: center;
-        overflow: hidden;
-        padding: 100px 0;
-        width: 100%;
+.collection-page {
+    align-items: center;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    min-height: 100vh;
+
+    justify-content: center;
+
+    overflow-x: hidden;
+
+    padding: 120px 0 0 0;
+
+    width: 100%;
+}
+
+.hero-collection {
+    align-items: center;
+    background:
+        radial-gradient(circle at 78% 22%,
+            rgba(179, 67, 180, 0.45) 0%,
+            rgba(120, 30, 120, 0.18) 18%,
+            rgba(0, 0, 0, 0) 42%) linear-gradient(90deg,
+            #050014 0%,
+            #18002e 55%,
+            #320022 100%);
+    box-sizing: border-box;
+    display: flex;
+    height: 80svh;
+    overflow: hidden;
+    padding: clamp(1.5rem, 5vw, 5rem);
+    width: 100%;
+    background-position: center 30%;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+
+}
+
+.hero-copy {
+    color: #fff7ff;
+    max-width: 680px;
+}
+
+.hero-copy .eyebrow {
+    color: #ff9ee5;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    margin: 0 0 0.8rem;
+    text-transform: uppercase;
+}
+
+.hero-copy h1 {
+    color: #fff7ff;
+    font-size: clamp(2rem, 6vw, 4.8rem);
+    font-weight: 900;
+    letter-spacing: 0;
+    line-height: 1;
+    margin: 0;
+    max-width: 760px;
+}
+
+.hero-copy p:last-child {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.7;
+    margin: 1rem 0 0;
+    max-width: 560px;
+}
+
+
+
+.top-bar {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* left aligned */
+    padding: 0 1rem;
+    position: relative;
+    width: 100%;
+    height: auto;
+
+}
+
+.category-drawer-control {
+    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex-direction: column;
+    gap: 0;
+    max-width: auto;
+    overflow: hidden;
+    /* itago ang mga links */
+    padding: 0;
+    width: auto;
+    /* hindi full width agad */
+    transition: width 0.4s ease;
+}
+
+/* Bukas — palawakin */
+.category-drawer-control.open {
+    width: 100%;
+    gap: 0.1rem;
+    padding: 0 1rem 0 0rem;
+    background: linear-gradient(90deg, #ff59d31b, #18082d);
+    border-radius: 10px;
+
+
+}
+
+/* Categories button — palaging visible */
+.category-drawer-control a:first-child {
+
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 3;
+
+    background: linear-gradient(90deg, #ff59d2, #cc54bc);
+    color: #140024;
+    cursor: pointer;
+    flex: 0 0 auto;
+    font-size: 0.92rem;
+    font-weight: 700;
+    justify-content: center;
+    min-height: 56px;
+    min-width: 180px;
+    padding: 0 1.4rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    z-index: 1;
+}
+
+.category-drawer-control a:first-child:hover {
+    color: #140024;
+    opacity: 0.85;
+}
+
+.category-drawer-control a:first-child i {
+    transition: transform 0.4s ease-in;
+}
+
+.category-drawer-control.open a:first-child i {
+    transform: rotate(180deg);
+}
+
+/* Mga category links — nakatago by default */
+.category-drawer-control a:not(:first-child) {
+    align-items: center;
+    color: #f6e9ff;
+    display: inline-flex;
+    flex: 0 0 auto;
+    font-size: 1rem;
+    font-weight: 700;
+    gap: 0.55rem;
+    min-height: 56px;
+    opacity: 0;
+    /* invisible */
+    pointer-events: none;
+    /* hindi clickable */
+    text-decoration: none;
+    transform: translateX(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    white-space: nowrap;
+}
+
+/* Bukas — ipakita ang links */
+.category-drawer-control.open a:not(:first-child) {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateX(0);
+}
+
+/* Staggered animation */
+.category-drawer-control.open a:nth-child(2) {
+    transition-delay: 0.05s;
+}
+
+.category-drawer-control.open a:nth-child(3) {
+    transition-delay: 0.10s;
+}
+
+.category-drawer-control.open a:nth-child(4) {
+    transition-delay: 0.15s;
+}
+
+.category-drawer-control.open a:nth-child(5) {
+    transition-delay: 0.20s;
+}
+
+.category-drawer-control.open a:nth-child(6) {
+    transition-delay: 0.25s;
+}
+
+.category-drawer-control.open a:nth-child(7) {
+    transition-delay: 0.30s;
+}
+
+.category-drawer-control.open a:nth-child(8) {
+    transition-delay: 0.35s;
+}
+
+.category-drawer-control.open a:nth-child(9) {
+    transition-delay: 0.40s;
+}
+
+.category-drawer-control a:not(:first-child) i {
+    color: #8b1fd1;
+    font-size: 0.48rem;
+    margin-left: 2rem;
+}
+
+.category-drawer-control a:hover,
+.category-drawer-control a.active {
+    color: #ff7bd7;
+    transform: translateY(-1px);
+}
+
+.category-drawer-control a:first-child:hover,
+.category-drawer-control a:first-child.active {
+    color: #140024;
+    transform: none;
+}
+
+@media (min-width: 760px) {
+
+    .category-drawer-control {
+        grid-template-columns: 1fr 1fr 1fr;
     }
 
-    .hero-collection {
-        background:
-            radial-gradient(circle at 78% 22%,
-                rgba(179, 67, 180, 0.45) 0%,
-                rgba(120, 30, 120, 0.18) 18%,
-                rgba(0, 0, 0, 0) 42%),
-            linear-gradient(90deg,
-                #050014 0%,
-                #18002e 55%,
-                #320022 100%);
-        box-sizing: border-box;
-        height: 80svh;
-        overflow: hidden;
-        width: 100%;
+    .category-drawer-control a:first-child {
+        min-width: 150px;
+        grid-column-start: 1;
+        grid-column-end: 4;
     }
 
+    .category-drawer-control.open {
+        gap: 1rem;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
 
+    .category-drawer-control.open::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+@media(min-width: 1024px) {
 
     .top-bar {
-        align-self: stretch;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        /* left aligned */
-        padding: 0 1rem;
-        position: relative;
-        width: 100%;
-        height: auto;
-
+        align-items: flex-start;
+        width: min(1120px, calc(100% - 4rem));
+        padding: 0;
+        margin-left: 50px;
+        transform: none;
     }
 
     .category-drawer-control {
-        align-items: flex-start;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        flex-direction: column;
-        gap: 0;
-        max-width: auto;
-        overflow: hidden;
-        /* itago ang mga links */
-        padding: 0;
-        width: auto;
-        /* hindi full width agad */
-        transition: width 0.4s ease;
-    }
-
-    /* Bukas — palawakin */
-    .category-drawer-control.open {
-        width: 100%;
-        gap: 0.1rem;
-        padding: 0 1rem 0 0rem;
-        background: linear-gradient(90deg, #ff59d31b, #18082d);
-        border-radius: 10px;
-
-
-    }
-
-    /* Categories button — palaging visible */
-    .category-drawer-control a:first-child {
-
-        grid-row-start: 1;
-        grid-row-end: 2;
-        grid-column-start: 1;
-        grid-column-end: 3;
-
-        background: linear-gradient(90deg, #ff59d2, #cc54bc);
-        color: #140024;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
         cursor: pointer;
         flex: 0 0 auto;
         font-size: 0.92rem;
         font-weight: 700;
         justify-content: center;
         min-height: 56px;
+        width: 180px;
+        max-width: 100%;
+        border-radius: 10px;
+        background: linear-gradient(90deg, #ff59d2, #18082d);
+        gap: 0;
+        transition:
+            width 0.45s ease,
+            gap 0.35s ease,
+            box-shadow 0.35s ease;
+        will-change: width;
+    }
+
+    .category-drawer-control.open {
+        width: 100%;
+        padding: 0 0.5rem 0 0;
+        gap: 1.45rem;
+        box-shadow: 0 12px 30px rgba(38, 10, 60, 0.26);
+    }
+
+    .category-drawer-control a:first-child {
+        grid-column: auto;
         min-width: 180px;
-        padding: 0 1.4rem;
-        display: inline-flex;
-        align-items: center;
-        gap: 1rem;
-        text-decoration: none;
-        transition: opacity 0.2s;
-        z-index: 1;
     }
 
-    .category-drawer-control a:first-child:hover {
-        color: #140024;
-        opacity: 0.85;
-    }
-
-    .category-drawer-control a:first-child i {
-        transition: transform 0.4s ease-in;
-    }
-
-    .category-drawer-control.open a:first-child i {
-        transform: rotate(180deg);
-    }
-
-    /* Mga category links — nakatago by default */
     .category-drawer-control a:not(:first-child) {
-        align-items: center;
-        color: #f6e9ff;
-        display: inline-flex;
-        flex: 0 0 auto;
-        font-size: 1rem;
-        font-weight: 700;
-        gap: 0.55rem;
-        min-height: 56px;
+        margin-left: 0;
+        max-width: 0;
         opacity: 0;
-        /* invisible */
-        pointer-events: none;
-        /* hindi clickable */
-        text-decoration: none;
-        transform: translateX(-10px);
-        transition: opacity 0.3s ease, transform 0.3s ease;
-        white-space: nowrap;
+        overflow: hidden;
+        transform: translateX(-8px);
+        transition:
+            max-width 0.4s ease,
+            opacity 0.25s ease,
+            transform 0.35s ease,
+            color 0.2s ease;
     }
 
-    /* Bukas — ipakita ang links */
     .category-drawer-control.open a:not(:first-child) {
+        max-width: 150px;
         opacity: 1;
-        pointer-events: all;
         transform: translateX(0);
     }
 
-    /* Staggered animation */
-    .category-drawer-control.open a:nth-child(2) {
-        transition-delay: 0.05s;
-    }
-
-    .category-drawer-control.open a:nth-child(3) {
-        transition-delay: 0.10s;
-    }
-
-    .category-drawer-control.open a:nth-child(4) {
-        transition-delay: 0.15s;
-    }
-
-    .category-drawer-control.open a:nth-child(5) {
-        transition-delay: 0.20s;
-    }
-
-    .category-drawer-control.open a:nth-child(6) {
-        transition-delay: 0.25s;
-    }
-
-    .category-drawer-control.open a:nth-child(7) {
-        transition-delay: 0.30s;
-    }
-
-    .category-drawer-control.open a:nth-child(8) {
-        transition-delay: 0.35s;
-    }
-
-    .category-drawer-control.open a:nth-child(9) {
-        transition-delay: 0.40s;
-    }
-
     .category-drawer-control a:not(:first-child) i {
-        color: #8b1fd1;
-        font-size: 0.48rem;
-        margin-left: 2rem;
+        margin-left: 0;
+    }
+}
+
+@media(min-width: 1280px) {
+    .top-bar {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        ;
     }
 
-    .category-drawer-control a:hover,
-    .category-drawer-control a.active {
-        color: #ff7bd7;
-        transform: translateY(-1px);
+    .category-drawer-control {
+        max-width: 100%;
+        justify-content: center;
+        border-radius: 10px;
+
+
     }
 
-    .category-drawer-control a:first-child:hover,
-    .category-drawer-control a:first-child.active {
-        color: #140024;
-        transform: none;
-    }
-
-    @media (min-width: 760px) {
-
-        .category-drawer-control {
-            grid-template-columns: 1fr 1fr 1fr;
-        }
-
-        .category-drawer-control a:first-child {
-            min-width: 150px;
-            grid-column-start: 1;
-            grid-column-end: 4;
-        }
-
-        .category-drawer-control.open {
-            gap: 1rem;
-            overflow-x: auto;
-            scrollbar-width: none;
-        }
-
-        .category-drawer-control.open::-webkit-scrollbar {
-            display: none;
-        }
-    }
-
-    @media(min-width: 1024px) {
-
-        .category-drawer-control {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-
-            cursor: pointer;
-            flex: 0 0 auto;
-            font-size: 0.92rem;
-            font-weight: 700;
-            justify-content: center;
-            min-height: 56px;
-            min-width: 180px;
-        }
-
-        .category-drawer-control.open {
-            background: linear-gradient(90deg, #ff59d2, #18082d);
-            padding: 0 0.5rem 0 0;
-            gap: 2rem;
-
-
-        }
-    }
-
-    @media(min-width: 1280px) {
-        .category-drawer-control {
-            width: 100%;
-            justify-content: center;
-            border-radius: 10px;
-
-
-        }
-
-        .category-drawer-control.open {
-            gap: 2rem;
-            padding: 0 1rem 0 0;
-            background: linear-gradient(90deg, #ff59d2, #18082d);
-            border-radius: 10px;
-
-        }
+    .category-drawer-control.open {
+        width: 100%;
+        gap: 2rem;
+        padding: 0 1rem 0 0;
+        border-radius: 10px;
 
     }
+
+}
