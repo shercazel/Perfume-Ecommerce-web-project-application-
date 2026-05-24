@@ -1,114 +1,173 @@
 .about-section {
     position: relative;
+    width: 100%;
+
+    overflow-x: hidden;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
     padding-top: 100px;
-    overflow: hidden;
-    background: transparent;
+
+    background:
+        radial-gradient(circle at 78% 22%,
+            rgba(179, 67, 180, 0.45) 0%,
+            rgba(120, 30, 120, 0.18) 18%,
+            rgba(0, 0, 0, 0) 42%),
+        linear-gradient(90deg,
+            #050014 0%,
+            #18002e 55%,
+            #320022 100%);
 }
+
+/* =========================
+   TOP GRID
+========================= */
 
 .about-top-grid {
-    height: auto;
     width: 100%;
-    background:
-        radial-gradient(circle at 78% 12%,
-            rgba(188, 75, 188, 0.35) 0%,
-            rgba(128, 0, 128, 0.15) 18%,
-            transparent 40%),
-        linear-gradient(90deg,
-            #070012 0%,
-            #180025 55%,
-            #2b0025 100%);
+    max-width: 1400px;
 
-    padding: 5rem 5rem;
-
+    padding: 4rem 1.5rem;
 
     display: grid;
-    grid-template-columns: 1fr 420px;
-    gap: 50px;
-    align-items: start;
-    margin-bottom: 70px;
+    grid-template-columns: 1fr;
+    gap: 60px;
+    align-items: center;
 }
 
+/* =========================
+   TEXT
+========================= */
+
 .section-title {
-    font-family: var(--fon-playfairDply);
-    font-size: 5rem;
-    font-weight: 500;
-    color: var(--c4-color);
-    margin-bottom: 20px;
+    margin: 0 0 1rem;
+
+    color: #fff7ff;
+
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    font-weight: 900;
+    line-height: 1;
+
+    text-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
 }
 
 .section-description {
-    max-width: 320px;
-    font-size: 1rem;
+    max-width: 600px;
+
+    color: rgba(255, 255, 255, 0.82);
+
+    font-size: clamp(1rem, 2vw, 1.15rem);
     line-height: 1.8;
-    color: var(--c2-color);
 }
+
+/* =========================
+   BANNER IMAGE
+========================= */
 
 .about-banner-card {
-    height: 350px;
-    padding: 10px;
-    border-radius: 16px;
+    width: 100%;
+    max-width: 900px;
+
+    height: clamp(260px, 42vw, 500px);
+
+    padding: 14px;
+
+    border-radius: 24px;
+
     background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(10px);
+
+    backdrop-filter: blur(12px);
+
+    overflow: hidden;
+
+    margin-inline: auto;
+
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.35);
 }
 
+#about-banner-image,
 .about-banner-image {
     width: 100%;
+    height: 100%;
+
     display: block;
-    border-radius: 12px;
+
+    border-radius: 18px;
+
     object-fit: cover;
+
+    object-position: center 30%;
 }
 
-
-.middle-section {
-    height: auto;
-    width: 100%;
-    padding: 10rem 5rem;
-    background-color: var(--c5-color);
-
-}
-
+/* =========================
+   CONTENT GRID
+========================= */
 
 .about-content-grid {
+    width: 100%;
+    max-width: 1400px;
+
+    padding: 2rem 1.5rem 5rem;
+
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 50px;
-    margin-bottom: 60px;
+    grid-template-columns: 1fr;
+    gap: 40px;
 }
 
+/* =========================
+   TEAM IMAGE
+========================= */
+
 .team-image-wrapper {
-    border-radius: 18px;
+    width: 100%;
+    height: 100%;
+
+    border-radius: 20px;
+
     overflow: hidden;
 }
 
 .team-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+
     display: block;
+
+    object-fit: cover;
+    object-position: center;
 }
 
 /* =========================
-   CONTENT STYLES
+   CONTENT
 ========================= */
 
 .content-label {
     display: inline-block;
+
     margin-bottom: 18px;
-    font-size: 0.9rem;
+
     color: #ff7fe8;
+
+    font-size: 0.95rem;
+    letter-spacing: 1px;
 }
 
 .content-text {
-    font-size: 0.92rem;
+    color: rgba(255, 255, 255, 0.72);
+
+    font-size: 1rem;
     line-height: 1.9;
-    color: rgba(255, 255, 255, 0.68);
 }
 
 .services-text {
-    font-size: 1.5rem;
-    line-height: 1.8;
-    font-weight: 300;
     color: #ffffff;
+
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    font-weight: 300;
+    line-height: 1.8;
 }
 
 /* =========================
@@ -117,17 +176,20 @@
 
 .about-bottom-grid {
     display: grid;
-    grid-template-columns: 320px 1fr;
-    gap: 70px;
+    grid-template-columns: 1fr;
+    gap: 50px;
 }
 
 .text-link {
     display: inline-block;
+
     margin-top: 24px;
-    text-decoration: none;
+
     color: #ff7fe8;
-    font-size: 0.9rem;
-    transition: 0.3s ease;
+
+    text-decoration: none;
+
+    transition: opacity 0.3s ease;
 }
 
 .text-link:hover {
@@ -137,20 +199,23 @@
 .feature-list {
     display: flex;
     flex-direction: column;
-    gap: 26px;
+    gap: 28px;
 }
 
 .feature-title {
-    font-size: 1.1rem;
-    font-weight: 500;
     margin-bottom: 10px;
+
     color: #ffffff;
+
+    font-size: 1.1rem;
+    font-weight: 600;
 }
 
 .feature-description {
     color: rgba(255, 255, 255, 0.65);
-    line-height: 1.7;
-    font-size: 0.92rem;
+
+    font-size: 0.95rem;
+    line-height: 1.8;
 }
 
 /* =========================
@@ -158,9 +223,13 @@
 ========================= */
 
 .cta-section {
-    background: #050010;
+    width: 100%;
+
     padding: 110px 20px;
+
     text-align: center;
+
+    background: #050010;
 }
 
 .cta-container {
@@ -170,17 +239,22 @@
 
 .cta-subtitle {
     display: inline-block;
+
     margin-bottom: 30px;
+
     color: #ff7fe8;
+
     font-size: 0.95rem;
 }
 
 .cta-title {
-    font-size: 3rem;
-    line-height: 1.5;
-    font-weight: 500;
-    color: #f5d7ff;
     margin-bottom: 50px;
+
+    color: #f5d7ff;
+
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 500;
+    line-height: 1.4;
 }
 
 .brand-highlight {
@@ -189,11 +263,16 @@
 
 .cta-button {
     display: inline-block;
-    text-decoration: none;
-    color: #ff7fe8;
-    border-bottom: 1px solid #ff7fe8;
+
     padding-bottom: 6px;
-    transition: 0.3s ease;
+
+    color: #ff7fe8;
+
+    text-decoration: none;
+
+    border-bottom: 1px solid #ff7fe8;
+
+    transition: opacity 0.3s ease;
 }
 
 .cta-button:hover {
@@ -201,5 +280,61 @@
 }
 
 /* =========================
-   RESPONSIVE
+   TABLET
 ========================= */
+
+@media (min-width: 768px) {
+
+    .about-top-grid {
+        padding: 5rem 3rem;
+    }
+
+    .about-content-grid {
+        padding: 2rem 3rem 5rem;
+    }
+
+    .about-banner-card {
+        height: 420px;
+    }
+
+    .content-text {
+        font-size: 1.08rem;
+    }
+}
+
+/* =========================
+   DESKTOP
+========================= */
+
+@media (min-width: 1078px) {
+
+    .about-top-grid {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 80px;
+
+        padding: 5rem;
+    }
+
+    .about-bottom-grid {
+        grid-template-columns: 320px 1fr;
+        gap: 70px;
+    }
+}
+
+/* =========================
+   LARGE DESKTOP
+========================= */
+
+@media (min-width: 1280px) {
+
+    .about-content-grid {
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 40px;
+    }
+
+    .about-banner-card {
+        max-width: 1000px;
+    }
+}

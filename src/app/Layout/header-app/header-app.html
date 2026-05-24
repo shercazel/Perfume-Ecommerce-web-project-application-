@@ -1,106 +1,107 @@
-<nav class="navbar">
-    <div class="strip-status">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
 
-    <div class="navbar-main">
-        <div routerLink="/" class="brand-group">
-            <div class="brand-logo">Logo</div>
-            <div class="brand-text">
-                <span class="brand-title">Votrescent</span>
+    <nav class="navbar">
+        <div class="strip-status">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="navbar-main">
+            <div routerLink="/" class="brand-group">
+                <div class="brand-logo">Logo</div>
+                <div class="brand-text">
+                    <span class="brand-title">Votrescent</span>
+                </div>
+            </div>
+
+            <button class="mobile-toggle" type="button" aria-label="Open menu" (click)="toggleMobileMenu()">
+                <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                <span>Menu</span>
+            </button>
+
+            <ul class="nav-links">
+                <li><a routerLink="">Home</a></li>
+                <li><a routerLink="/quiz">Find Your Perfume</a></li>
+                <li><a routerLink="/collection">Collection</a></li>
+                <li><a routerLink="/about">About</a></li>
+            </ul>
+
+            <div class="action-group desktop-actions">
+                <button routerLink="/cartProduct" class="action-btn cart-btn" type="button">
+                    <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+                    <span>Carts</span>
+                </button>
+                @if (authService.currentUser(); as user) {
+                <button routerLink="/account" class="action-btn login-btn" type="button">
+                    <i class="fa-solid fa-user" aria-hidden="true"></i>
+                    <span>{{user.firstName}}</span>
+                </button>
+                <button class="action-btn logout-btn" type="button" (click)="logout()">
+                    <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+                    <span>Logout</span>
+                </button>
+                } @else {
+                <button routerLink="/login" class="action-btn login-btn" type="button">
+                    <i class="fa-solid fa-user" aria-hidden="true"></i>
+                    <span>Login</span>
+                </button>
+                }
             </div>
         </div>
 
-        <button class="mobile-toggle" type="button" aria-label="Open menu" (click)="toggleMobileMenu()">
-            <i class="fa-solid fa-bars" aria-hidden="true"></i>
-            <span>Menu</span>
-        </button>
 
-        <ul class="nav-links">
-            <li><a routerLink="">Home</a></li>
-            <li><a routerLink="/quiz">Find Your Perfume</a></li>
-            <li><a routerLink="/collection">Collection</a></li>
-            <li><a routerLink="/about">About</a></li>
-        </ul>
-
-        <div class="action-group desktop-actions">
-            <button routerLink="/cartProduct" class="action-btn cart-btn" type="button">
-                <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
-                <span>Carts</span>
-            </button>
-            @if (authService.currentUser(); as user) {
-            <button routerLink="/account" class="action-btn login-btn" type="button">
-                <i class="fa-solid fa-user" aria-hidden="true"></i>
-                <span>{{user.firstName}}</span>
-            </button>
-            <button class="action-btn logout-btn" type="button" (click)="logout()">
-                <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
-                <span>Logout</span>
-            </button>
-            } @else {
-            <button routerLink="/login" class="action-btn login-btn" type="button">
-                <i class="fa-solid fa-user" aria-hidden="true"></i>
-                <span>Login</span>
-            </button>
-            }
+        <!-- for open the mobile menu -->
+        <div class="mobile-drawer" [class.open]="mobileMenuOpen">
+            <div class="drawer-header">
+                <span>Menu</span>
+                <button class="drawer-close" type="button" aria-label="Close menu" (click)="toggleMobileMenu()">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
+            </div>
+            <ul class="drawer-links">
+                <li>
+                    <i class="fa-solid fa-house"></i>
+                    <a routerLink="/" (click)="closeMobileMenu()">Home</a>
+                </li>
+                <li>
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <a routerLink="/quiz" (click)="closeMobileMenu()">Find Your Perfume</a>
+                </li>
+                <li>
+                    <i class="fa-solid fa-box"></i>
+                    <a routerLink="/collection" (click)="closeMobileMenu()">Collection</a>
+                </li>
+                <li>
+                    <i class="fa-solid fa-tag"></i>
+                    <a routerLink="/collection/brandCollection" (click)="closeMobileMenu()">Brand</a>
+                </li>
+                <li>
+                    <i class="fa-solid fa-info-circle"></i>
+                    <a routerLink="/about" (click)="closeMobileMenu()">About</a>
+                </li>
+            </ul>
+            <div class="drawer-actions">
+                <button routerLink="/cartProduct" class="action-btn cart-btn" type="button" (click)="closeMobileMenu()">
+                    <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+                    <span>Cart</span>
+                </button>
+                @if (authService.currentUser(); as user) {
+                <button routerLink="/account" class="action-btn login-btn" type="button" (click)="closeMobileMenu()">
+                    <i class="fa-solid fa-user" aria-hidden="true"></i>
+                    <span>{{user.firstName}}</span>
+                </button>
+                <button class="action-btn logout-btn" type="button" (click)="logout()">
+                    <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+                    <span>Logout</span>
+                </button>
+                } @else {
+                <button routerLink="/login" class="action-btn login-btn" type="button" (click)="closeMobileMenu()"> <i class="fa-solid fa-user"
+                        aria-hidden="true"></i>
+                    <span>Login</span>
+                </button>
+                }
+            </div>
         </div>
-    </div>
 
-
-    <!-- for open the mobile menu -->
-    <div class="mobile-drawer" [class.open]="mobileMenuOpen">
-        <div class="drawer-header">
-            <span>Menu</span>
-            <button class="drawer-close" type="button" aria-label="Close menu" (click)="toggleMobileMenu()">
-                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-            </button>
-        </div>
-        <ul class="drawer-links">
-            <li>
-                <i class="fa-solid fa-house"></i>
-                <a href="">Home</a>
-            </li>
-            <li>
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <a href="">Find Your Perfume</a>
-            </li>
-            <li>
-                <i class="fa-solid fa-box"></i>
-                <a href="">Collection</a>
-            </li>
-            <li>
-                <i class="fa-solid fa-tag"></i>
-                <a href="">Brand</a>
-            </li>
-            <li>
-                <i class="fa-solid fa-info-circle"></i>
-                <a href="">About</a>
-            </li>
-        </ul>
-        <div class="drawer-actions">
-            <button routerLink="/cartProduct" class="action-btn cart-btn" type="button">
-                <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
-                <span>Cart</span>
-            </button>
-            @if (authService.currentUser(); as user) {
-            <button routerLink="/account" class="action-btn login-btn" type="button" (click)="toggleMobileMenu()">
-                <i class="fa-solid fa-user" aria-hidden="true"></i>
-                <span>{{user.firstName}}</span>
-            </button>
-            <button class="action-btn logout-btn" type="button" (click)="logout()">
-                <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
-                <span>Logout</span>
-            </button>
-            } @else {
-            <button routerLink="/login" class="action-btn login-btn" type="button"> <i class="fa-solid fa-user"
-                    aria-hidden="true"></i>
-                <span>Login</span>
-            </button>
-            }
-        </div>
-    </div>
-
-</nav>
+    </nav>

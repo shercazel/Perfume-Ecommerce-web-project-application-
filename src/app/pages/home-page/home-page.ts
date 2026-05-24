@@ -10,79 +10,130 @@ import { UpperCasePipe } from '@angular/common';
 })
 export class HomePage implements OnInit, OnDestroy {
 
-  heroBackgroundImage = './heroSec.png';
+  heroBackgroundImage = 'assets/Background/homeHeroBg.png';
   activeShowcaseSlides = [0, 0, 0, 0, 0];
   private autoSlideTimer?: ReturnType<typeof setInterval>;
 
-  showcaseSlides = [
+  readonly infiniteCarouselImages = [
+    {
+      id: 'home-carousel-image-1',
+      imagePath: 'assets/images/carosuelsahome/image1.png',
+      alt: 'Featured perfume carousel image 1',
+    },
+    {
+      id: 'home-carousel-image-2',
+      imagePath: 'assets/images/carosuelsahome/img2.png',
+      alt: 'Featured perfume carousel image 2',
+    },
+    {
+      id: 'home-carousel-image-4',
+      imagePath: 'assets/images/carosuelsahome/img4.png',
+      alt: 'Featured perfume carousel image 4',
+    },
+    {
+      id: 'home-carousel-image-5',
+      imagePath: 'assets/images/carosuelsahome/img5.png',
+      alt: 'Featured perfume carousel image 5',
+    },
+    {
+      id: 'home-carousel-flower-1',
+      imagePath: 'assets/images/carosuelsahome/Flower1.png',
+      alt: 'Flower perfume carousel image',
+    },
+    {
+      id: 'home-carousel-people-2',
+      imagePath: 'assets/images/carosuelsahome/People2.png',
+      alt: 'Lifestyle perfume carousel image',
+    },
+    {
+      id: 'home-carousel-reed-1',
+      imagePath: 'assets/images/carosuelsahome/Reed1.png',
+      alt: 'Reed perfume carousel image',
+    },
+    {
+      id: 'home-carousel-verte-1',
+      imagePath: 'assets/images/carosuelsahome/Verte1.png',
+      alt: 'Verte perfume carousel image',
+    },
+    {
+      id: 'home-carousel-vstease-1',
+      imagePath: 'assets/images/carosuelsahome/vstease1.png',
+      alt: 'Vstease perfume carousel image',
+    },
+  ];
+  readonly galleryImages = [
+    ...this.infiniteCarouselImages,
+    ...this.infiniteCarouselImages,
+  ];
+  readonly showcaseSlides = [
     [
       {
-        image: 'assets/images/carouselImage/honeyPerf.svg',
-        alt: 'Honey perfume collection',
+        image: 'assets/images/carosuelsahome/Flower1.png',
+        alt: 'Flower perfume showcase 1',
       },
       {
-        image: 'assets/images/carouselImage/perfBlue.png',
-        alt: 'Blue perfume collection',
+        image: 'assets/images/carosuelsahome/Flower2.png',
+        alt: 'Flower perfume showcase 2',
       },
       {
-        image: 'assets/images/carouselImage/romanceImg.svg',
-        alt: 'Romance perfume collection',
+        image: 'assets/images/carosuelsahome/Flower3.png',
+        alt: 'Flower perfume showcase 3',
       },
     ],
     [
       {
-        image: 'assets/images/carouselImage/perfBlue.png',
-        alt: 'Fresh perfume collection',
+        image: 'assets/images/carosuelsahome/People2.png',
+        alt: 'People perfume showcase 1',
       },
       {
-        image: 'assets/images/carouselImage/romanceImg.svg',
-        alt: 'Romantic perfume collection',
+        image: 'assets/images/carosuelsahome/People3.png',
+        alt: 'People perfume showcase 2',
       },
       {
-        image: 'assets/images/carouselImage/honeyPerf.svg',
-        alt: 'Sweet perfume collection',
-      },
-    ],
-    [
-      {
-        image: 'assets/images/carouselImage/romanceImg.svg',
-        alt: 'Romance fragrance bottle',
-      },
-      {
-        image: 'assets/images/carouselImage/honeyPerf.svg',
-        alt: 'Honey fragrance bottle',
-      },
-      {
-        image: 'assets/images/carouselImage/perfBlue.png',
-        alt: 'Blue fragrance bottle',
+        image: 'assets/images/carosuelsahome/Peoplenight1.png',
+        alt: 'Night perfume showcase',
       },
     ],
     [
       {
-        image: 'assets/images/carouselImage/honeyPerf.svg',
-        alt: 'Sweet scent highlight',
+        image: 'assets/images/carosuelsahome/Reed1.png',
+        alt: 'Reed perfume showcase 1',
       },
       {
-        image: 'assets/images/carouselImage/perfBlue.png',
-        alt: 'Clean scent highlight',
+        image: 'assets/images/carosuelsahome/Reed2.png',
+        alt: 'Reed perfume showcase 2',
       },
       {
-        image: 'assets/images/carouselImage/romanceImg.svg',
-        alt: 'Romantic scent highlight',
+        image: 'assets/images/carosuelsahome/Reed3.png',
+        alt: 'Reed perfume showcase 3',
       },
     ],
     [
       {
-        image: 'assets/images/carouselImage/perfBlue.png',
-        alt: 'Everyday perfume highlight',
+        image: 'assets/images/carosuelsahome/Verte1.png',
+        alt: 'Verte perfume showcase 1',
       },
       {
-        image: 'assets/images/carouselImage/honeyPerf.svg',
-        alt: 'Warm perfume highlight',
+        image: 'assets/images/carosuelsahome/verte3.png',
+        alt: 'Verte perfume showcase 2',
       },
       {
-        image: 'assets/images/carouselImage/romanceImg.svg',
-        alt: 'Evening perfume highlight',
+        image: 'assets/images/carosuelsahome/HermesA.png',
+        alt: 'Hermes perfume showcase',
+      },
+    ],
+    [
+      {
+        image: 'assets/images/carosuelsahome/vstease1.png',
+        alt: 'Vstease perfume showcase 1',
+      },
+      {
+        image: 'assets/images/carosuelsahome/vstease2.png',
+        alt: 'Vstease perfume showcase 2',
+      },
+      {
+        image: 'assets/images/carosuelsahome/vstease3.png',
+        alt: 'Vstease perfume showcase 3',
       },
     ],
   ];
@@ -164,21 +215,24 @@ export class HomePage implements OnInit, OnDestroy {
       cardsTitle: 'Personalized Scent Matching',
       cardsDescription:
         'We don’t just sell perfumes we match scents to your personality. Take our quiz and find your signature fragrance in seconds.',
-      imagePath: 'assets/images/carouselImage/womanPerf.svg',
+      imagePath:
+        'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=300&q=80',
       cardNumber: '01',
     },
     {
       cardsTitle: 'Long-Lasting Performance',
       cardsDescription:
         'Our perfumes are crafted to stay with you for hours, delivering a consistent and elegant scent from day to night.',
-      imagePath: 'assets/images/carouselImage/womanPerf.svg',
+      imagePath:
+        'https://images.unsplash.com/photo-1615634260167-c8cdede054de?auto=format&fit=crop&w=300&q=80',
       cardNumber: '02',
     },
     {
       cardsTitle: 'Premium Perfume Selection',
       cardsDescription:
         'Discover carefully curated perfumes made with high-quality fragrance oils for a luxurious scent experience.',
-      imagePath: 'assets/images/carouselImage/womanPerf.svg',
+      imagePath:
+        'https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=300&q=80',
       cardNumber: '03',
     },
   ];

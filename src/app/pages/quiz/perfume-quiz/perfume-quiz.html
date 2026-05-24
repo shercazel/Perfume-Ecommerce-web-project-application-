@@ -1,4 +1,13 @@
 <div class="question-container">
+    <button
+        class="close-quiz-btn"
+        type="button"
+        aria-label="Close quiz"
+        (click)="closeQuiz()"
+    >
+        &times;
+    </button>
+
     @if (!showResult) {
     <p class="question-number">
         {{ currentQuestion.questionNumber }}

@@ -21,6 +21,10 @@ export class HeaderApp {
     this.mobileMenuOpen = !this.mobileMenuOpen;
   }
 
+  closeMobileMenu() {
+    this.mobileMenuOpen = false;
+  }
+
   logout() {
     this.authService.logout();
     this.mobileMenuOpen = false;

@@ -1,40 +1,38 @@
 <section class="collection-page">
-    <div class="hero-collection">
+
+    <div  [style.background-image]="'url(' + heroBackgroundImage + ')'" class="hero-collection">
+        <div class="hero-copy">
+            <p class="eyebrow">Votre Scent Collection</p>
+            <h1>Find a fragrance for every mood.</h1>
+            <p>
+                Browse curated perfume categories, compare scents, and add your favorites to cart.
+            </p>
+        </div>
     </div>
 
     <div class="top-bar">
-        <div class="category-drawer-control">
-            <button class="category-btn" type="button" (click)="openDrawer()">
-                <i class="fa-solid fa-bars" aria-hidden="true"></i>
-                Categories
-            </button>
-        </div>
-    </div>
-
-    @if (drawerOpen) {
-    <button class="drawer-backdrop" type="button" aria-label="Close category menu" (click)="closeDrawer()"></button>
-    }
-
-    <aside class="category-drawer" [class.open]="drawerOpen" aria-label="Collection categories">
-        <div class="drawer-header">
-            <div>
-                <span>Browse</span>
-                <h2>Categories</h2>
-            </div>
-            <button class="drawer-close" type="button" aria-label="Close category menu" (click)="closeDrawer()">
-                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-            </button>
-        </div>
-
-        <nav class="drawer-menu">
+        <nav class="category-drawer-control" [class.open]="isDrawerOpen" aria-label="Collection categories">
             @for (category of categories; track category.path) {
-            <a [routerLink]="category.path" (click)="closeDrawer()">
-                {{category.label}}
-                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+
+            @if (category.path === '/collection') {
+            <a [routerLink]="category.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+                (click)="toggleDrawer($event)">
+                <span>Categories</span>
+                <i class="fa-solid fa-angles-right" aria-hidden="true"></i>
             </a>
             }
+
+            @if (category.path !== '/collection') {
+            <a [routerLink]="category.path" routerLinkActive="active">
+                <i class="fa-solid fa-circle" aria-hidden="true"></i>
+                <span>{{ category.label }}</span>
+            </a>
+            }
+
+            }
         </nav>
-    </aside>
+    </div>
 
     <router-outlet></router-outlet>
+
 </section>

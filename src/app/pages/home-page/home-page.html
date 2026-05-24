@@ -38,13 +38,6 @@
                 </div>
             </div>
 
-            <div class="hero-images">
-                <img class="main-bottle" src="" alt="Main Perfume Bottle" />
-                <img class="floating-bottle bottle-1" src="assets/image/perfume-1.png" alt="Perfume 1" />
-                <img class="floating-bottle bottle-2" src="assets/image/perfume-2.png" alt="Perfume 2" />
-                <img class="floating-bottle bottle-3" src="assets/image/perfume-3.png" alt="Perfume 3" />
-                <img class="floating-bottle bottle-4" src="assets/image/perfume-4.png" alt="Perfume 4" />
-            </div>
         </div>
         <router-outlet></router-outlet>
 
@@ -57,40 +50,11 @@
 
                 <div id="slider-effects">
 
+                    @for (image of galleryImages; track image.id + '-' + $index) {
                     <div class="vProjectBox">
-                        <img src="assets/images/carouselImage/perfBlue.png" alt="Mobile Project">
+                        <img [src]="image.imagePath" [alt]="image.alt">
                     </div>
-                    <div class="vProjectBox">
-                        <img src="assets/images/carouselImage/honeyPerf.svg" alt="Mobile Project">
-                    </div>
-                    <div class="vProjectBox">
-                        <img src="assets/images/carouselImage/perfBlue.png" alt="Mobile Project">
-                    </div>
-                    <div class="vProjectBox">
-                        <img src="assets/images/carouselImage/perfBlue.png" alt="Mobile Project">
-                    </div>
-                    <div class="vProjectBox">
-                        <img src="assets/images/carouselImage/perfBlue.png" alt="Mobile Project">
-                    </div>
-
-                    <!-- duplication -->
-                    <div class="vProjectBox">
-                        <img src="assets/images/carouselImage/perfBlue.png" alt="Mobile Project">
-                    </div>
-                    <div class="vProjectBox">
-                        <img src="assets/images/carouselImage/perfBlue.png" alt="Mobile Project">
-                    </div>
-                    <div class="vProjectBox">
-                        <img src="assets/images/carouselImage/perfBlue.png" alt="Mobile Project">
-                    </div>
-                    <div class="vProjectBox">
-                        <img src="assets/images/carouselImage/perfBlue.png" alt="Mobile Project">
-                    </div>
-                    <div class="vProjectBox">
-                        <img src="assets/images/carouselImage/perfBlue.png" alt="Mobile Project">
-                    </div>
-
-
+                    }
 
                 </div>
             </div>
@@ -101,6 +65,7 @@
         <div id="showcase-container">
             @for (showcase of showcaseSlides; track $index; let showcaseIndex = $index) {
             <div class="showcase">
+                @if (showcase.length > 1) {
                 <button
                     class="slider-control prev-control"
                     type="button"
@@ -109,6 +74,7 @@
                 >
                     <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
                 </button>
+                }
 
                 <div class="carousel-track" [style.transform]="getShowcaseTransform(showcaseIndex)">
                     @for (slide of showcase; track slide.image) {
@@ -118,6 +84,7 @@
                     }
                 </div>
 
+                @if (showcase.length > 1) {
                 <button
                     class="slider-control next-control"
                     type="button"
@@ -126,7 +93,9 @@
                 >
                     <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
                 </button>
+                }
 
+                @if (showcase.length > 1) {
                 <div class="dots" aria-label="Slide navigation">
                     @for (slide of showcase; track slide.image; let slideIndex = $index) {
                     <button
@@ -138,6 +107,7 @@
                     ></button>
                     }
                 </div>
+                }
             </div>
             }
         </div>
