@@ -1,0 +1,106 @@
+.account-page {
+    min-height: 100svh;
+    padding: 10rem 1.5rem 5rem;
+    background:
+        radial-gradient(circle at 78% 20%, rgba(179, 67, 180, 0.38), transparent 34%),
+        linear-gradient(90deg, #050014 0%, #18002e 55%, #320022 100%);
+    color: white;
+}
+
+.account-shell {
+    width: min(860px, 100%);
+    margin: 0 auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.045);
+    backdrop-filter: blur(14px);
+    padding: 2rem;
+}
+
+.account-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.account-avatar {
+    width: 74px;
+    height: 74px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #f6b5ff, #bf81ff);
+    color: #24062c;
+    font-size: 1.4rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.account-header p {
+    color: #f2b6ff;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.account-header h1 {
+    font-size: 1.8rem;
+    margin: 0.35rem 0;
+}
+
+.account-header span {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.account-form {
+    display: grid;
+    gap: 1rem;
+}
+
+.account-form label {
+    color: rgba(255, 255, 255, 0.78);
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.account-form input {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    font: inherit;
+    padding: 0.85rem 0.95rem;
+}
+
+.account-message {
+    color: #f2b6ff;
+}
+
+.account-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.save-btn,
+.logout-btn-account {
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 700;
+    padding: 0.9rem 1.3rem;
+}
+
+.save-btn {
+    border: 1px solid #bb57ff;
+    background: #bb57ff;
+    color: white;
+}
+
+.logout-btn-account {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+    color: white;
+}

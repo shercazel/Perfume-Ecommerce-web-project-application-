@@ -59,21 +59,54 @@
         <p class="question-number">YOUR SCENT MATCH</p>
 
         <h1 class="question-title">
-            Recommended Perfume
+            {{ dominantRecommendation.perfName }}
         </h1>
 
-        <div class="result-card">
+        <div class="result-card dominant-result">
             <div class="result-image">
-                <span>VS</span>
+                <img [src]="dominantRecommendation.imagePath" [alt]="dominantRecommendation.perfName">
             </div>
 
             <div class="result-content">
-                <h2>Result Container</h2>
+                <span class="match-badge">Best Match</span>
+                <h2>{{ dominantRecommendation.description }}</h2>
                 <p>
-                    Placeholder muna ito for the recommended perfume. Pwede mo na
-                    i-polish later with real product image, scent notes, and CTA.
+                    {{ dominantRecommendation.reason }}
                 </p>
+                <p>
+                    Notes: {{ dominantRecommendation.notes }}
+                </p>
+                <p>
+                    Size: {{ dominantRecommendation.size }}
+                </p>
+                <div class="result-price">
+                    <span>{{ dominantRecommendation.price | currency: 'PHP' }}</span>
+                    <span>{{ dominantRecommendation.originalPrice | currency: 'PHP' }}</span>
+                </div>
+                <button class="btn add-result-btn" type="button" (click)="addRecommendationToCart(dominantRecommendation)">
+                    ADD TO CART
+                </button>
             </div>
+        </div>
+
+        <div class="alternative-results">
+            @for (product of alternativeRecommendations; track product.id) {
+            <article class="mini-result-card">
+                <img [src]="product.imagePath" [alt]="product.perfName">
+                <div>
+                    <span class="match-badge small">Alternative</span>
+                    <h3>{{ product.perfName }}</h3>
+                    <p>{{ product.notes }}</p>
+                    <div class="result-price mini">
+                        <span>{{ product.price | currency: 'PHP' }}</span>
+                        <span>{{ product.originalPrice | currency: 'PHP' }}</span>
+                    </div>
+                    <button class="mini-add-btn" type="button" (click)="addRecommendationToCart(product)">
+                        Add to Cart
+                    </button>
+                </div>
+            </article>
+            }
         </div>
 
         <div class="button-group">

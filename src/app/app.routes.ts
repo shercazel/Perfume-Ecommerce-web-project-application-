@@ -23,6 +23,7 @@ import { Signup } from './auth/signUp/signup/signup';
 import { ResetPassword } from './auth/resetPassword/reset-password/reset-password';
 import { AdminDashboard } from './pages/admin/admin-dashboard/admin-dashboard';
 import { AdminModulePage } from './pages/admin/admin-module-page/admin-module-page';
+import { CustomerAccount } from './pages/account/customer-account/customer-account';
 
 export const routes: Routes = [
   {
@@ -95,6 +96,11 @@ export const routes: Routes = [
       {
         path: 'about',
         component: About,
+      },
+      {
+        path: 'account',
+        component: CustomerAccount,
+        canActivate: [authGuard],
       },
 
       {

@@ -56,47 +56,138 @@
         </div>
 
         <aside class="summary-card">
-            <h2 class="summary-title">Summary</h2>
+            <h2 class="summary-title">
+                {{checkoutStep === 'details' ? 'Checkout Details' : checkoutStep === 'confirmation' ? 'Confirm Order' : checkoutStep === 'finished' ? 'Finished' : 'Summary'}}
+            </h2>
 
-            <div class="summary-row">
-                <span>Basic Price</span>
-                <span>{{cartService.originalSubtotal() | currency: 'PHP'}}</span>
+            <ng-container *ngIf="checkoutStep === 'cart'">
+                <div class="summary-row">
+                    <span>Basic Price</span>
+                    <span>{{cartService.originalSubtotal() | currency: 'PHP'}}</span>
+                </div>
+
+                <div class="summary-row">
+                    <span>Discount</span>
+                    <span>-{{cartService.discountTotal() | currency: 'PHP'}}</span>
+                </div>
+
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span>{{cartService.subtotal() | currency: 'PHP'}}</span>
+                </div>
+
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span>Free</span>
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span>{{cartService.total() | currency: 'PHP'}}</span>
+                </div>
+
+                <p class="checkout-message" *ngIf="checkoutMessage">
+                    {{checkoutMessage}}
+                </p>
+
+                <button
+                    class="checkout-btn"
+                    type="button"
+                    [disabled]="cartService.cartItems().length === 0"
+                    (click)="startCheckout()"
+                >
+                    Proceed to Checkout
+                </button>
+            </ng-container>
+
+            <form class="checkout-form" *ngIf="checkoutStep === 'details'" (ngSubmit)="continueToConfirmation()">
+                <label>
+                    Full Name
+                    <input type="text" name="name" [(ngModel)]="customer.name" placeholder="Customer name">
+                </label>
+
+                <label>
+                    Contact Number
+                    <input type="tel" name="contact" [(ngModel)]="customer.contact" placeholder="09XXXXXXXXX">
+                </label>
+
+                <label>
+                    Address
+                    <textarea name="address" [(ngModel)]="customer.address" rows="4" placeholder="Delivery address"></textarea>
+                </label>
+
+                <div class="payment-options">
+                    <label class="payment-option">
+                        <input type="radio" name="paymentMethod" value="cod" [(ngModel)]="customer.paymentMethod">
+                        Cash on Delivery
+                    </label>
+
+                    <label class="payment-option disabled">
+                        <input type="radio" name="paymentMethod" value="gcash" disabled>
+                        GCash not applicable today
+                    </label>
+                </div>
+
+                <p class="checkout-message" *ngIf="checkoutMessage">
+                    {{checkoutMessage}}
+                </p>
+
+                <button class="checkout-btn" type="submit">
+                    Continue to Confirmation
+                </button>
+            </form>
+
+            <div class="confirmation-panel" *ngIf="checkoutStep === 'confirmation'">
+                <div class="summary-row">
+                    <span>Name</span>
+                    <span>{{customer.name}}</span>
+                </div>
+                <div class="summary-row">
+                    <span>Contact</span>
+                    <span>{{customer.contact}}</span>
+                </div>
+                <div class="summary-row address-row">
+                    <span>Address</span>
+                    <span>{{customer.address}}</span>
+                </div>
+                <div class="summary-row">
+                    <span>Payment</span>
+                    <span>Cash on Delivery</span>
+                </div>
+                <div class="summary-divider"></div>
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span>{{cartService.total() | currency: 'PHP'}}</span>
+                </div>
+
+                <button class="checkout-btn secondary" type="button" (click)="backToDetails()">
+                    Back
+                </button>
+                <button class="checkout-btn" type="button" (click)="finishCheckout()">
+                    Confirm Order
+                </button>
             </div>
 
-            <div class="summary-row">
-                <span>Discount</span>
-                <span>-{{cartService.discountTotal() | currency: 'PHP'}}</span>
+            <div class="confirmation-panel" *ngIf="checkoutStep === 'finished'">
+                <p class="checkout-message">Checkout complete.</p>
+                <div class="summary-row">
+                    <span>Reference</span>
+                    <span>{{orderReference}}</span>
+                </div>
+                <div class="summary-row">
+                    <span>Payment</span>
+                    <span>Cash on Delivery</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span>{{orderTotal | currency: 'PHP'}}</span>
+                </div>
+                <button class="checkout-btn" type="button" (click)="resetCheckout()">
+                    Done
+                </button>
             </div>
-
-            <div class="summary-row">
-                <span>Subtotal</span>
-                <span>{{cartService.subtotal() | currency: 'PHP'}}</span>
-            </div>
-
-            <div class="summary-row">
-                <span>Shipping</span>
-                <span>Free</span>
-            </div>
-
-            <div class="summary-divider"></div>
-
-            <div class="summary-row total">
-                <span>Total</span>
-                <span>{{cartService.total() | currency: 'PHP'}}</span>
-            </div>
-
-            <p class="checkout-message" *ngIf="checkoutMessage">
-                {{checkoutMessage}}
-            </p>
-
-            <button
-                class="checkout-btn"
-                type="button"
-                [disabled]="cartService.cartItems().length === 0"
-                (click)="proceedToCheckout()"
-            >
-                Proceed to Checkout
-            </button>
         </aside>
     </div>
 </section>

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
@@ -28,6 +28,9 @@ export class AuthService {
   private readonly apiUrl = 'http://localhost:3000/api/auth';
   private readonly tokenKey = 'token';
   private readonly currentUserKey = 'currentUser';
+  private readonly currentUserSignal = signal<CurrentUser | null>(this.loadCurrentUser());
+
+  readonly currentUser = this.currentUserSignal.asReadonly();
 
   constructor(private http: HttpClient) {}
 
@@ -40,6 +43,7 @@ export class AuthService {
       tap((response) => {
         localStorage.setItem(this.tokenKey, response.token);
         localStorage.setItem(this.currentUserKey, JSON.stringify(response.user));
+        this.currentUserSignal.set(response.user);
       })
     );
   }
@@ -47,6 +51,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.currentUserKey);
+    this.currentUserSignal.set(null);
   }
 
   isLoggedIn(): boolean {
@@ -55,5 +60,19 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
+  }
+
+  getCurrentUser(): CurrentUser | null {
+    return this.currentUser();
+  }
+
+  updateCurrentUser(user: CurrentUser) {
+    localStorage.setItem(this.currentUserKey, JSON.stringify(user));
+    this.currentUserSignal.set(user);
+  }
+
+  private loadCurrentUser(): CurrentUser | null {
+    const savedUser = localStorage.getItem(this.currentUserKey);
+    return savedUser ? (JSON.parse(savedUser) as CurrentUser) : null;
   }
 }

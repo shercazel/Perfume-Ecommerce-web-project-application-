@@ -21,29 +21,36 @@ export class Login {
     private router: Router,
     private route: ActivatedRoute
   ) {}
+login() {
 
-  login() {
-    this.errorMessage = '';
+  if (this.isLoading) return;
 
-    if (!this.email.trim() || !this.password) {
-      this.errorMessage = 'Please enter your email and password.';
-      return;
-    }
+  this.errorMessage = '';
 
-    this.isLoading = true;
-    this.authService.login(this.email, this.password).subscribe({
+  if (!this.email.trim() || !this.password.trim()) {
+    this.errorMessage = 'Please enter email and password.';
+    return;
+  }
+
+  this.isLoading = true;
+
+  this.authService.login(this.email, this.password)
+    .subscribe({
       next: () => {
-        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
-        this.router.navigateByUrl(returnUrl);
+        this.router.navigate(['/']);
       },
-      error: (error: HttpErrorResponse) => {
-        this.errorMessage = error.error?.message || 'Unable to login. Please try again.';
+
+      error: (error) => {
+        this.errorMessage =
+          error.error?.message || 'Login failed';
+
         this.isLoading = false;
       },
+
       complete: () => {
         this.isLoading = false;
-      },
+      }
     });
-  }
+}
 
 }

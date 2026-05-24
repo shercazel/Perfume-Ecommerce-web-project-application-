@@ -1,0 +1,40 @@
+<section class="account-page">
+    <div class="account-shell">
+        <div class="account-header">
+            <div class="account-avatar">
+                {{profile.firstName.charAt(0) || 'V'}}{{profile.lastName.charAt(0) || 'S'}}
+            </div>
+            <div>
+                <p>Customer Account</p>
+                <h1>{{profile.firstName}} {{profile.lastName}}</h1>
+                <span>{{profile.email}}</span>
+            </div>
+        </div>
+
+        <form class="account-form" (ngSubmit)="saveProfile()">
+            <label>
+                First Name
+                <input type="text" name="firstName" [(ngModel)]="profile.firstName">
+            </label>
+
+            <label>
+                Last Name
+                <input type="text" name="lastName" [(ngModel)]="profile.lastName">
+            </label>
+
+            <label>
+                Email Address
+                <input type="email" name="email" [(ngModel)]="profile.email">
+            </label>
+
+            @if (message) {
+            <p class="account-message">{{message}}</p>
+            }
+
+            <div class="account-actions">
+                <button class="save-btn" type="submit">Save Account</button>
+                <button class="logout-btn-account" type="button" (click)="logout()">Logout</button>
+            </div>
+        </form>
+    </div>
+</section>
