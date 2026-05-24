@@ -15,6 +15,7 @@ export class CustomerAccount {
     firstName: '',
     lastName: '',
     email: '',
+    role: 'customer',
   };
   message = '';
 
@@ -36,6 +37,7 @@ export class CustomerAccount {
       firstName: this.profile.firstName.trim(),
       lastName: this.profile.lastName.trim(),
       email: this.profile.email.trim(),
+      role: this.profile.role,
     });
     this.message = 'Account details updated.';
   }

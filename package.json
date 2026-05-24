@@ -1,6 +1,20 @@
 {
   "name": "perfume-collection-eccomerce",
   "version": "0.0.0",
+  "private": true,
+  "description": "This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.2.",
+  "homepage": "https://github.com/shercazel/Perfume-Ecommerce-web-project-application-#readme",
+  "bugs": {
+    "url": "https://github.com/shercazel/Perfume-Ecommerce-web-project-application-/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shercazel/Perfume-Ecommerce-web-project-application-.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "databse.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,6 +22,26 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
+  },
+  "dependencies": {
+    "@angular/common": "^21.1.0",
+    "@angular/compiler": "^21.1.0",
+    "@angular/core": "^21.1.0",
+    "@angular/forms": "^21.1.0",
+    "@angular/platform-browser": "^21.1.0",
+    "@angular/router": "^21.1.0",
+    "msnodesqlv8": "^5.2.0",
+    "mssql": "^11.0.1",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^21.1.2",
+    "@angular/cli": "^21.1.2",
+    "@angular/compiler-cli": "^21.1.0",
+    "jsdom": "^27.1.0",
+    "typescript": "~5.9.2",
+    "vitest": "^4.0.8"
   },
   "prettier": {
     "printWidth": 100,
@@ -21,25 +55,5 @@
       }
     ]
   },
-  "private": true,
-  "packageManager": "npm@10.9.2",
-  "dependencies": {
-    "@angular/common": "^21.1.0",
-    "@angular/compiler": "^21.1.0",
-    "@angular/core": "^21.1.0",
-    "@angular/forms": "^21.1.0",
-    "@angular/platform-browser": "^21.1.0",
-    "@angular/router": "^21.1.0",
-    "mssql": "^11.0.1",
-    "rxjs": "~7.8.0",
-    "tslib": "^2.3.0"
-  },
-  "devDependencies": {
-    "@angular/build": "^21.1.2",
-    "@angular/cli": "^21.1.2",
-    "@angular/compiler-cli": "^21.1.0",
-    "jsdom": "^27.1.0",
-    "typescript": "~5.9.2",
-    "vitest": "^4.0.8"
-  }
+  "packageManager": "npm@10.9.2"
 }

@@ -28,7 +28,7 @@ login() {
   this.errorMessage = '';
 
   if (!this.email.trim() || !this.password.trim()) {
-    this.errorMessage = 'Please enter email and password.';
+    this.errorMessage = 'Please enter username/email and password.';
     return;
   }
 
@@ -36,7 +36,14 @@ login() {
 
   this.authService.login(this.email, this.password)
     .subscribe({
-      next: () => {
+      next: (response) => {
+        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+
+        if (returnUrl) {
+          this.router.navigateByUrl(returnUrl);
+          return;
+        }
+
         this.router.navigate(['/']);
       },
 

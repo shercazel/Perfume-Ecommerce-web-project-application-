@@ -1,3 +1,7 @@
+@if (errorMessage) {
+<p class="collection-error">{{errorMessage}}</p>
+}
+
 <div class="product-grid">
     <div class="card" *ngFor="let product of allCollection">
         <span class="badge">{{product.discountRate ?? 0 | percent}} OFF</span>
