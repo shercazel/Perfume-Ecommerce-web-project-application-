@@ -52,11 +52,25 @@
     margin-bottom: 1.2rem;
 }
 
+.select-all-row.locked {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
 .select-all-row input,
 .item-select input {
     accent-color: #bb57ff;
     height: 18px;
     width: 18px;
+}
+
+select {
+    scrollbar-width: none;
+}
+
+select::-webkit-scrollbar {
+    display: none;
+  
 }
 
 .cart-card {
@@ -155,6 +169,11 @@
     font-size: 0.95rem;
 }
 
+.checkout-link:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
 .quantity-wrapper {
     width: fit-content;
 
@@ -190,7 +209,7 @@
 
 
 .summary-card {
-    padding: 5rem 1.5rem; 
+    padding: 5rem 1.5rem;
     border-radius: 1.5rem;
 
     background:
@@ -216,12 +235,14 @@
     font-size: 1rem;
 }
 
+
 .summary-divider {
     height: 1px;
     margin: 1.5rem 0;
 
     background: rgba(255, 255, 255, 0.1);
 }
+
 
 .total {
     font-weight: 700;
@@ -272,6 +293,11 @@
     gap: 1rem;
 }
 
+.location-grid {
+    display: grid;
+    gap: 1rem;
+}
+
 .checkout-form label {
     color: rgba(255, 255, 255, 0.78);
     display: flex;
@@ -281,6 +307,7 @@
 }
 
 .checkout-form input,
+.checkout-form select,
 .checkout-form textarea {
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.18);
@@ -291,9 +318,30 @@
     padding: 0.8rem 0.9rem;
 }
 
+.checkout-form select {
+    cursor: pointer;
+}
+
+.checkout-form select:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+.checkout-form option {
+    background: #211637;
+    color: white;
+}
+
 .checkout-form input:focus,
+.checkout-form select:focus,
 .checkout-form textarea:focus {
     border-color: #bb57ff;
+}
+
+.field-error {
+    color: #fecaca;
+    font-size: 0.78rem;
+    line-height: 1.45;
 }
 
 .payment-options {
@@ -363,6 +411,16 @@
     margin-top: 1rem;
 }
 
+.checkout-btn.cancel {
+    border-color: rgba(255, 255, 255, 0.24);
+    color: rgba(255, 255, 255, 0.78);
+    margin-top: 1rem;
+}
+
+.checkout-btn.cancel:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
 .empty-cart {
     color: rgba(255, 255, 255, 0.75);
     padding: 2rem 0;
@@ -404,6 +462,10 @@
 
     .section-title {
         font-size: 2rem;
+    }
+
+    .location-grid {
+        grid-template-columns: 1fr 1fr;
     }
 }
 

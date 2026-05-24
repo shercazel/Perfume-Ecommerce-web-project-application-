@@ -1,23 +1,40 @@
 <section class="collection-page">
     <div class="hero-collection">
     </div>
+
     <div class="top-bar">
-        <div class="dropdown">
-            <button class="category-btn" routerLink="/collection">
-                All Categories »
+        <div class="category-drawer-control">
+            <button class="category-btn" type="button" (click)="openDrawer()">
+                <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                Categories
             </button>
-            <div class="dropdown-menu">
-                <a routerLink="/collection/brandCollection">Brand</a>
-                <a routerLink="/collection/romance">Romance</a>
-                <a routerLink="/collection/Bold">Bold</a>
-                <a routerLink="/collection/Sweet">Sweet</a>
-                <a routerLink="/collection/NightParty">Night Party</a>
-                <a routerLink="/collection/Office">Office</a>
-                <a routerLink="/collection/Men">Men</a>
-                <a routerLink="/collection/Women">Women</a>
-            </div>
         </div>
     </div>
-    <router-outlet></router-outlet>
 
+    @if (drawerOpen) {
+    <button class="drawer-backdrop" type="button" aria-label="Close category menu" (click)="closeDrawer()"></button>
+    }
+
+    <aside class="category-drawer" [class.open]="drawerOpen" aria-label="Collection categories">
+        <div class="drawer-header">
+            <div>
+                <span>Browse</span>
+                <h2>Categories</h2>
+            </div>
+            <button class="drawer-close" type="button" aria-label="Close category menu" (click)="closeDrawer()">
+                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <nav class="drawer-menu">
+            @for (category of categories; track category.path) {
+            <a [routerLink]="category.path" (click)="closeDrawer()">
+                {{category.label}}
+                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </a>
+            }
+        </nav>
+    </aside>
+
+    <router-outlet></router-outlet>
 </section>

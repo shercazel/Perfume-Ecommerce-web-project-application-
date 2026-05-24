@@ -7,14 +7,24 @@
                 Your cart is empty.
             </div>
 
-            <label class="select-all-row" *ngIf="cartService.cartItems().length > 0">
-                <input type="checkbox" [checked]="allItemsSelected" (change)="toggleAllItems()">
+            <label class="select-all-row" *ngIf="cartService.cartItems().length > 0" [class.locked]="isCartLocked">
+                <input
+                    type="checkbox"
+                    [checked]="allItemsSelected"
+                    [disabled]="isCartLocked"
+                    (change)="toggleAllItems()"
+                >
                 Select all items
             </label>
 
             <article class="cart-card" *ngFor="let item of cartService.cartItems()">
                 <label class="item-select" [attr.aria-label]="'Select ' + item.perfName">
-                    <input type="checkbox" [checked]="isSelected(item)" (change)="toggleItemSelection(item)">
+                    <input
+                        type="checkbox"
+                        [checked]="isSelected(item)"
+                        [disabled]="isCartLocked"
+                        (change)="toggleItemSelection(item)"
+                    >
                 </label>
 
                 <img [src]="item.imagePath" [alt]="item.perfName" class="product-image">
@@ -41,24 +51,41 @@
                         </div>
                     </div>
 
-                    <button class="checkout-link" type="button" (click)="checkoutItem(item)">
+                    <button
+                        class="checkout-link"
+                        type="button"
+                        [disabled]="isCartLocked"
+                        (click)="checkoutItem(item)"
+                    >
                         Checkout this item
                     </button>
 
                     <div class="quantity-wrapper">
-                        <button class="qty-btn" type="button" (click)="cartService.removeItem(item.id)">
+                        <button
+                            class="qty-btn"
+                            type="button"
+                            [disabled]="isCartLocked"
+                            (click)="cartService.removeItem(item.id)"
+                        >
                             <i class="fa-solid fa-trash"></i>
                         </button>
                         <button
                             class="qty-btn"
                             type="button"
-                            [disabled]="item.quantity === 1"
+                            [disabled]="item.quantity === 1 || isCartLocked"
                             (click)="decreaseQuantity(item)"
                         >
                             -
                         </button>
                         <span class="qty-value">{{item.quantity}}</span>
-                        <button class="qty-btn" type="button" (click)="cartService.increaseQuantity(item.id)">+</button>
+                        <button
+                            class="qty-btn"
+                            type="button"
+                            [disabled]="isCartLocked"
+                            (click)="cartService.increaseQuantity(item.id)"
+                        >
+                            +
+                        </button>
                     </div>
                 </div>
             </article>
@@ -119,17 +146,67 @@
             <form class="checkout-form" *ngIf="checkoutStep === 'details'" (ngSubmit)="continueToConfirmation()">
                 <label>
                     Full Name
-                    <input type="text" name="name" [(ngModel)]="customer.name" placeholder="Customer name">
+                    <input
+                        type="text"
+                        name="name"
+                        [(ngModel)]="customer.name"
+                        placeholder="Juan Dela Cruz Jr."
+                        maxlength="80"
+                        autocomplete="name"
+                    >
+                    <span class="field-error" *ngIf="checkoutErrors.name">{{checkoutErrors.name}}</span>
                 </label>
 
                 <label>
                     Contact Number
-                    <input type="tel" name="contact" [(ngModel)]="customer.contact" placeholder="09XXXXXXXXX">
+                    <input
+                        type="tel"
+                        name="contact"
+                        [(ngModel)]="customer.contact"
+                        placeholder="09XXXXXXXXX"
+                        [pattern]="contactPattern"
+                        maxlength="13"
+                        inputmode="tel"
+                        autocomplete="tel"
+                    >
+                    <span class="field-error" *ngIf="checkoutErrors.contact">{{checkoutErrors.contact}}</span>
                 </label>
 
+                <div class="location-grid">
+                    <label>
+                        Province
+                        <select name="province" [(ngModel)]="customer.province" (ngModelChange)="onProvinceChange()">
+                            <option value="">Select province</option>
+                            <option *ngFor="let province of provinceOptions" [value]="province.name">
+                                {{province.name}}
+                            </option>
+                        </select>
+                        <span class="field-error" *ngIf="checkoutErrors.province">{{checkoutErrors.province}}</span>
+                    </label>
+
+                    <label>
+                        City
+                        <select name="city" [(ngModel)]="customer.city" [disabled]="!customer.province">
+                            <option value="">Select city</option>
+                            <option *ngFor="let city of cityOptions" [value]="city">
+                                {{city}}
+                            </option>
+                        </select>
+                        <span class="field-error" *ngIf="checkoutErrors.city">{{checkoutErrors.city}}</span>
+                    </label>
+                </div>
+
                 <label>
-                    Address
-                    <textarea name="address" [(ngModel)]="customer.address" rows="4" placeholder="Delivery address"></textarea>
+                    Street / Barangay Address
+                    <textarea
+                        name="address"
+                        [(ngModel)]="customer.address"
+                        rows="4"
+                        placeholder="123 Sampaguita St., Brgy. San Isidro"
+                        minlength="10"
+                        maxlength="200"
+                    ></textarea>
+                    <span class="field-error" *ngIf="checkoutErrors.address">{{checkoutErrors.address}}</span>
                 </label>
 
                 <div class="payment-options">
@@ -151,6 +228,9 @@
                 <button class="checkout-btn" type="submit">
                     Continue to Confirmation
                 </button>
+                <button class="checkout-btn cancel" type="button" (click)="cancelCheckout()">
+                    Cancel Checkout
+                </button>
             </form>
 
             <div class="confirmation-panel" *ngIf="checkoutStep === 'confirmation'">
@@ -170,6 +250,14 @@
                     <span>Contact</span>
                     <span>{{customer.contact}}</span>
                 </div>
+                <div class="summary-row">
+                    <span>Province</span>
+                    <span>{{customer.province}}</span>
+                </div>
+                <div class="summary-row">
+                    <span>City</span>
+                    <span>{{customer.city}}</span>
+                </div>
                 <div class="summary-row address-row">
                     <span>Address</span>
                     <span>{{customer.address}}</span>
@@ -186,6 +274,9 @@
 
                 <button class="checkout-btn secondary" type="button" (click)="backToDetails()">
                     Back
+                </button>
+                <button class="checkout-btn cancel" type="button" (click)="cancelCheckout()">
+                    Cancel Checkout
                 </button>
                 <button class="checkout-btn" type="button" (click)="finishCheckout()">
                     Confirm Order
